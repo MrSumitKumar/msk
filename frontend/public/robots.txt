@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://msk.shikohabad.in/sitemap.xml

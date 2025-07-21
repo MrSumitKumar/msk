@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://msk.shikohabad.in/</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/about</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/contact</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/login</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/register</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/admin-dashboard</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/teacher-dashboard</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/student-dashboard</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/courses</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://msk.shikohabad.in/courses/html-basic</loc>
+    <lastmod>2025-07-19T07:37:00.546Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
