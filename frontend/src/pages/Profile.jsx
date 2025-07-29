@@ -77,7 +77,7 @@ const Profile = () => {
   return (
     <>
       <Helmet>
-        <title>My Profile - MSK Institute</title>
+        <title>My Profile - MSK</title>
       </Helmet>
 
 

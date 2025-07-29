@@ -2,8 +2,8 @@
 from rest_framework import serializers
 from .models import CustomUser
 from backend.utils import generate_username
-from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password
+from django.db import IntegrityError
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,16 +15,18 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         username = generate_username(validated_data.get('first_name', 'user'))
-
-        user = CustomUser.objects.create_user(
-            username=username,
-            email=validated_data.get('email'),
-            password=validated_data.get('password'),
-            role=validated_data.get('role'),
-            phone=validated_data.get('phone'),
-            first_name=validated_data.get('first_name'),
-            last_name=validated_data.get('last_name')
-        )
+        try:
+            user = CustomUser.objects.create_user(
+                username=username,
+                email=validated_data.get('email'),
+                password=validated_data.get('password'),
+                role=validated_data.get('role'),
+                phone=validated_data.get('phone'),
+                first_name=validated_data.get('first_name'),
+                last_name=validated_data.get('last_name')
+            )
+        except IntegrityError as e:
+            raise serializers.ValidationError({'detail': 'A user with this phone/email already exists.'})
         return user
 
 class UserSerializer(serializers.ModelSerializer):
@@ -58,7 +60,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return None
 
     def update(self, instance, validated_data):
-        # Allow image upload
         picture = self.context['request'].FILES.get('picture')
         if picture:
             instance.picture = picture

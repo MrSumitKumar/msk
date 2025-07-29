@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import RegisterView, LogoutView, CurrentUserView, UserProfileUpdateView, LoginAPIView, check_phone_unique, CheckEmailExistsView
+from .views import RegisterView, LogoutView, CurrentUserView, UserProfileUpdateView, LoginAPIView, check_phone_unique, check_email_unique
 
 urlpatterns = [
     # 🔐 Authentication
@@ -7,7 +7,7 @@ urlpatterns = [
     path('login/', LoginAPIView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('check-phone/', check_phone_unique, name='check-phone'),
-    path('check-email/', CheckEmailExistsView, name='check-email'),
+    path('check-email/', check_email_unique, name='check-email'),
 
     # 👤 Current Authenticated User Profile
     path('user/', CurrentUserView.as_view(), name='current_user'),

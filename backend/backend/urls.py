@@ -17,8 +17,8 @@ def api_root(request):
 urlpatterns = [
     path('', api_root),
     path('admin/', admin.site.urls),
-    path('api/auth/', include('users.urls')),
-    path('api/courses/', include('courses.urls')),
+    path('auth/', include('users.urls')),
+    path('courses/', include('courses.urls')), 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

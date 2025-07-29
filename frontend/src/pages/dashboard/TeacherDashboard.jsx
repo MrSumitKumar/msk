@@ -23,7 +23,8 @@ const TeacherDashboard = () => {
   const deleteCourse = async (slug) => {
     if (!window.confirm("Are you sure you want to delete this course?")) return;
     try {
-      await api.delete(`/courses/${slug}/`);
+      await api.delete(`/courses/${slug}/delete/`);
+
       toast.success("Course deleted successfully!");
       fetchCourses(); // Refresh the list
     } catch (error) {

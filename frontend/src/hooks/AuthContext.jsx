@@ -3,6 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import api from '../api/api';
+import Spinner from '../components/Spinner';
 
 const AuthContext = createContext();
 
@@ -53,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await api.get('auth/user/');
+      const res = await api.get('/auth/user/');
       setUser(res.data);
     } catch (err) {
       setUser(null);
@@ -66,7 +67,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, login, logout, loading }}>
-      {loading ? <div>Loading...</div> : children}
+      {loading ? <Spinner/> : children}
     </AuthContext.Provider>
   );
 

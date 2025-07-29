@@ -40,4 +40,32 @@ def github_link_to_content(url):
     except requests.exceptions.RequestException as e:
         print("❌ Failed to fetch the note.")
         print("Error:", e)
-    
+
+
+
+
+
+
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.conf import settings
+
+def send_email(to_email, subject, text_body, html_template=None, context=None):
+    """
+    Sends an email with optional HTML content using EmailMultiAlternatives.
+
+    :param to_email: recipient email address
+    :param subject: subject line
+    :param text_body: plain text fallback content
+    :param html_template: path to HTML template (optional)
+    :param context: context dict for HTML template (optional)
+    """
+    from_email = settings.DEFAULT_FROM_EMAIL
+
+    msg = EmailMultiAlternatives(subject, text_body, from_email, [to_email])
+
+    if html_template:
+        html_content = render_to_string(html_template, context or {})
+        msg.attach_alternative(html_content, "text/html")
+
+    msg.send()

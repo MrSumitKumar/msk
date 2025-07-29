@@ -15,7 +15,7 @@ const HeroSection: React.FC = () => {
         {/* Left Content */}
         <div className={`text-center md:text-left ${imageExists ? "w-full md:w-1/2" : "w-full"}`}>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            Learn to Code with <span className="text-blue-500">MSK Institute</span>
+            Learn to Code with <span className="text-blue-500">MSK</span>
           </h1>
           <p className="text-lg md:text-xl text-gray-400 mb-8">
             Join hands-on courses in Python, Web Development, MS-Office & more. Designed for beginners to advance learners.

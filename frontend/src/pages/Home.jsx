@@ -3,16 +3,17 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { Rocket, BookOpenCheck, GraduationCap } from "lucide-react";
 import HeroSection from '../components/HeroSection';
+import Reviews from '../components/Reviews';
 
 const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Home - MSK Institute</title>
-        <meta name="description" content="Join MSK Institute in Shikohabad for hands-on computer courses like Python, HTML, CSS, JavaScript, Excel, and more." />
+        <title>Home - MSK</title>
+        <meta name="description" content="Join MSK in Shikohabad for hands-on computer courses like Python, HTML, CSS, JavaScript, Excel, and more." />
         <link rel="canonical" href="https://msk.shikohabad.in/" />
 
-        <meta property="og:title" content="MSK Institute - Learn Coding Practically" />
+        <meta property="og:title" content="MSK - Learn Coding Practically" />
         <meta property="og:description" content="Practical computer education in Shikohabad. Learn coding, web development, and digital tools." />
         <meta property="og:url" content="https://msk.shikohabad.in/" />
         <meta property="og:type" content="website" />
@@ -53,18 +54,20 @@ const Home = () => {
         {/* About Section */}
         <section className="py-16 px-6 bg-gray-950">
           <div className="max-w-5xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-6">Why Choose MSK Institute?</h2>
+            <h2 className="text-3xl font-bold mb-6">Why Choose MSK?</h2>
             <p className="text-gray-400 text-lg">
               We believe in empowering students through technology. Our curriculum is designed for practical outcomes—whether you're aiming for a job, a freelance career, or higher education.
             </p>
           </div>
         </section>
 
+        <Reviews/>
+
         {/* Call to Action */}
         <section className="py-16 px-6 bg-blue-600 text-white text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Start Learning?</h2>
           <p className="mb-6 text-lg">
-            Join MSK Institute and unlock your full potential today.
+            Join MSK and unlock your full potential today.
           </p>
           <Link
             to="/register"

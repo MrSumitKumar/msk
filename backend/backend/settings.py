@@ -8,9 +8,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-l3@)^b86g7567^dmoypwgcbol8mn*c@v-^2-re)#i!024)m1d6'
 
 
-# DEBUG = True
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = [ "api.shikohabad.in", "www.api.shikohabad.in" ]
+DEBUG = True
+if DEBUG: ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = [ "api.shikohabad.in", "www.api.shikohabad.in" ]
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",    # ✅ no trailing slash
+    "https://msk.shikohabad.in",
+    "https://www.msk.shikohabad.in",
+]
+
+
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -118,16 +131,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.CustomUser'
-
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOWED_ORIGINS = [
-    # "http://localhost:3000",                  # For development
-    "https://msk.shikohabad.in",                  # If your frontend is hosted here
-    "https://www.msk.shikohabad.in",              # Add both with and without www
-]
-
-
 
 
 REST_FRAMEWORK = {

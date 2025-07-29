@@ -140,11 +140,11 @@ const Register = () => {
     <>
       <Helmet>
         <html lang="en" />
-        <title>Register - Enroll at MSK Institute</title>
-        <meta name="description" content="Create your student account at MSK Institute and start learning top computer and coding courses. Registration is free and easy." />
+        <title>Register - Enroll at MSK</title>
+        <meta name="description" content="Create your student account at MSK and start learning top computer and coding courses. Registration is free and easy." />
         <link rel="canonical" href="https://msk.shikohabad.in/register" />
-        <meta property="og:title" content="Register – MSK Institute" />
-        <meta property="og:description" content="Enroll now at MSK Institute and gain access to hands-on computer and programming courses in Shikohabad." />
+        <meta property="og:title" content="Register – MSK" />
+        <meta property="og:description" content="Enroll now at MSK and gain access to hands-on computer and programming courses in Shikohabad." />
         <meta property="og:url" content="https://msk.shikohabad.in/register" />
         <meta property="og:type" content="website" />
       </Helmet>

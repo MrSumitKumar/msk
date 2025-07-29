@@ -8,12 +8,15 @@ import { Helmet } from 'react-helmet-async';
 const CourseDetail = () => {
   const { slug } = useParams();
   const [course, setCourse] = useState(null);
+  const [reviews, setReviews] = useState([])
   const [loading, setLoading] = useState(true);
 
   const fetchCourse = async () => {
     try {
-      const response = await api.get(`/courses/${slug}/`);
-      setCourse(response.data);
+      const course_api = await api.get(`/courses/${slug}/`);
+      setCourse(course_api.data);
+      const reviews_api = await api.get(`/courses/${slug}/reviews/`)
+      setReviews(reviews_api.data)
     } catch (error) {
       toast.error('Course not found.');
     } finally {

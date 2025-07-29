@@ -39,16 +39,16 @@ const Login = () => {
   return (
     <>
       <Helmet>
-        <title>Login - MSK Institute</title>
+        <title>Login - MSK</title>
         <meta
           name="description"
-          content="Access your MSK Institute account to view dashboard, courses, and progress. Secure login for students, teachers, and admins."
+          content="Access your MSK account to view dashboard, courses, and progress. Secure login for students, teachers, and admins."
         />
         <link rel="canonical" href="https://msk.shikohabad.in/login" />
-        <meta property="og:title" content="Login – MSK Institute Portal" />
+        <meta property="og:title" content="Login – MSK Portal" />
         <meta
           property="og:description"
-          content="Secure login to your MSK Institute account. For students, teachers, and administrators."
+          content="Secure login to your MSK account. For students, teachers, and administrators."
         />
         <meta property="og:url" content="https://msk.shikohabad.in/login" />
         <meta property="og:type" content="website" />
@@ -56,7 +56,7 @@ const Login = () => {
 
       <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4">
         <div className="bg-gray-900 text-white rounded-xl shadow-lg w-full max-w-md p-6 md:p-8">
-          <h2 className="text-2xl font-semibold text-center mb-6">Login to MSK Institute</h2>
+          <h2 className="text-2xl font-semibold text-center mb-6">Login to MSK</h2>
 
           <form onSubmit={handleLogin} className="space-y-5">
             <div>

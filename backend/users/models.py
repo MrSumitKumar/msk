@@ -36,4 +36,5 @@ class CustomUser(AbstractUser):
         ordering = ['username']
     
     def __str__(self):
-        return f"{self.username} ({self.role})"
+        return f"{self.get_full_name()} ({self.username}) - {self.role}"
+
