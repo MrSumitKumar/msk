@@ -1,3 +1,5 @@
+// src/main.jsx
+
 import './index.css';
 import App from './App';
 import React from 'react';
@@ -23,4 +25,19 @@ if (rootElement) {
       </HelmetProvider>
     </React.StrictMode>
   );
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then(reg => {
+        if (import.meta.env.MODE === 'development') {
+          console.log('✅ Service Worker registered:', reg);
+        }
+      })
+      .catch(err => {
+        console.error('❌ Service Worker registration failed:', err);
+      });
+  });
 }

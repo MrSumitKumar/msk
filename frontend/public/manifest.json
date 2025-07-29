@@ -1,11 +1,18 @@
 {
     "name": "MSK Institute",
     "short_name": "MSK",
-    "description": "MSK Institute - Empowering learners with coding and computer skills, offering beginner to intermediate courses in HTML, CSS, JavaScript, SQL, and Django for web development. best computer coching for learn coding and computer course in Shikohabad",
-    "start_url": "/",
+    "description": "MSK Institute - Learn coding, web development, and digital tools with practical courses in HTML, CSS, JavaScript, Python, and Computer Courses in Shikohabad.",
+    "scope": "/",
+    "id": "/?source=pwa",
+    "start_url": "/?utm_source=homescreen",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#002060",
+    "display_override": [
+        "window-controls-overlay",
+        "standalone",
+        "browser"
+    ],
     "orientation": "portrait-primary",
     "categories": [
         "education",
@@ -161,6 +168,57 @@
             "url": "https://www.msk.shikohabad.in"
         }
     ],
+    "shortcuts": [
+        {
+            "name": "Courses",
+            "short_name": "Courses",
+            "description": "Browse our available courses",
+            "url": "/courses",
+            "icons": [
+                {
+                    "src": "/brand/favicon-96x96.png",
+                    "sizes": "96x96",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "Contact",
+            "short_name": "Contact",
+            "description": "Get in touch with us",
+            "url": "/contact",
+            "icons": [
+                {
+                    "src": "/brand/favicon-96x96.png",
+                    "sizes": "96x96",
+                    "type": "image/png"
+                }
+            ]
+        },
+        {
+            "name": "Student Login",
+            "short_name": "Login",
+            "description": "Login to your student dashboard",
+            "url": "/login",
+            "icons": [
+                {
+                    "src": "/brand/favicon-96x96.png",
+                    "sizes": "96x96",
+                    "type": "image/png"
+                }
+            ]
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshots/home-375x812.png",
+            "sizes": "375x812",
+            "type": "image/png"
+        }
+    ],
+    "launch_handler": {
+        "client_mode": "navigate-existing"
+    },
     "prefer_related_applications": false,
     "version": "1.0.0",
     "update_url": "https://www.msk.shikohabad.in/updates"

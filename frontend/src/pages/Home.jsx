@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Rocket, BookOpenCheck, GraduationCap } from "lucide-react";
 import HeroSection from '../components/HeroSection';
 import Reviews from '../components/Reviews';
+import InstallPWAButton from '../components/InstallPWAButton';
 
 const Home = () => {
   return (
@@ -62,6 +63,8 @@ const Home = () => {
         </section>
 
         <Reviews/>
+
+        <InstallPWAButton />
 
         {/* Call to Action */}
         <section className="py-16 px-6 bg-blue-600 text-white text-center">

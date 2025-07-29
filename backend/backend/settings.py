@@ -22,9 +22,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-
-
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
