@@ -1,6 +1,8 @@
-import random, smtplib
-from email.message import EmailMessage
+import random
 import requests
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.conf import settings
 
 
 def generate_username(first_name: str) -> str:
@@ -13,23 +15,6 @@ def create_otp(digits:int):
 def generate_random_numbers(digits:int):
     return random.randint(10**(digits - 1), 10**digits - 1)
 
-def send_email(receiver_email, subject, message):
-    try:
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login('mskshikohabad@gmail.com', 'rxge rmww zykw befg')  # Replace with your credentials
-        email = EmailMessage()
-        email['From'] = 'MSK Shikohabad'
-        email['To'] = receiver_email
-        email['Subject'] = subject
-        email.set_content(message)
-        server.send_message(email)
-        server.quit()
-    except Exception as e:
-        print(f"Error sending email: {e}")
-        return False
-    return True
-
 def github_link_to_content(url):
     if "github.com" in url and "blob" in url:
         url = url.replace("github.com", "raw.githubusercontent.com").replace("/blob/", "/")
@@ -41,31 +26,39 @@ def github_link_to_content(url):
         print("❌ Failed to fetch the note.")
         print("Error:", e)
 
-
-
-
-
-
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.conf import settings
-
-def send_email(to_email, subject, text_body, html_template=None, context=None):
+def send_email(to_email, subject, text_body, html_string=None, html_template=None, context=None, fail_silently=False):
     """
-    Sends an email with optional HTML content using EmailMultiAlternatives.
+    Send email with optional HTML template or HTML string fallback.
 
-    :param to_email: recipient email address
-    :param subject: subject line
-    :param text_body: plain text fallback content
-    :param html_template: path to HTML template (optional)
-    :param context: context dict for HTML template (optional)
+    Args:
+        to_email (str): Recipient's email
+        subject (str): Subject line
+        text_body (str): Plaintext message (always required)
+        html_template (str, optional): Path to Django HTML template
+        html_string (str, optional): Raw HTML string (if not using template)
+        context (dict, optional): Context for template rendering
+        fail_silently (bool): Whether to suppress errors
     """
+
     from_email = settings.DEFAULT_FROM_EMAIL
+    context = context or {}
 
-    msg = EmailMultiAlternatives(subject, text_body, from_email, [to_email])
+    try:
+        # Create the base message
+        msg = EmailMultiAlternatives(subject, text_body, from_email, [to_email])
 
-    if html_template:
-        html_content = render_to_string(html_template, context or {})
-        msg.attach_alternative(html_content, "text/html")
+        # If template is provided, render and attach HTML
+        if html_template:
+            html_content = render_to_string(html_template, context)
+            msg.attach_alternative(html_content, "text/html")
 
-    msg.send()
+        # If raw HTML string is provided instead
+        elif html_string:
+            msg.attach_alternative(html_string, "text/html")
+
+        # Send email
+        msg.send(fail_silently=fail_silently)
+        return True
+
+    except Exception as e:
+        return False

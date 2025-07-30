@@ -9,14 +9,14 @@ SECRET_KEY = 'django-insecure-l3@)^b86g7567^dmoypwgcbol8mn*c@v-^2-re)#i!024)m1d6
 
 
 DEBUG = True
-if DEBUG: ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = [ "api.shikohabad.in", "www.api.shikohabad.in" ]
+# if DEBUG: ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "api.shikohabad.in", "www.api.shikohabad.in" ]
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",    # ✅ no trailing slash
+    # "http://localhost:5173",    # ✅ no trailing slash
     "https://msk.shikohabad.in",
     "https://www.msk.shikohabad.in",
 ]
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -158,4 +158,14 @@ AUTHENTICATION_BACKENDS = [
     'users.backends.MultiFieldLoginBackend',
     'django.contrib.auth.backends.ModelBackend', 
 ]
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'iamtrynow@gmail.com'
+EMAIL_HOST_PASSWORD = 'uwpl okbl kock oeec'
+DEFAULT_FROM_EMAIL = 'MSK Institute <iamtrynow@gmail.com>'
 

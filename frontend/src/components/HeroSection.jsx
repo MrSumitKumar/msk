@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import codingImage from "../assets/laptop.webp"; // replace or comment out if not using
 
-const HeroSection: React.FC = () => {
-  const imageExists: boolean = Boolean(codingImage); // Type-safe conditional check
+const HeroSection = () => {
+  const imageExists = Boolean(codingImage); // Conditional check for image
 
   return (
     <section className="min-h-screen w-full bg-gray-950 text-white flex items-center px-4 md:px-10 py-10">

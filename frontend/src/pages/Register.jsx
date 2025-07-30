@@ -9,7 +9,11 @@ const Register = () => {
   const navigate = useNavigate();
 
   const { user } = useAuth();
-  if (user) { navigate("/") }
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
 
 
@@ -30,6 +34,8 @@ const Register = () => {
   const [checkingPhone, setCheckingPhone] = useState(false);
   const [emailExists, setEmailExists] = useState(false);
   const [checkingEmail, setCheckingEmail] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   // Password strength validator
   useEffect(() => {
@@ -123,18 +129,30 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    setIsSubmitting(true); // 🔒 Lock right away
+
+    if (!validateForm()) {
+      setIsSubmitting(false); // 🔓 Unlock on fail
+      return;
+    }
+
 
     try {
       const { confirmPassword, ...submitData } = { ...form };
       await api.post('auth/register/', submitData);
-      toast.success('Registration successful!');
+      toast.success('🎉 Registration successful!');
       navigate('/login');
     } catch (error) {
       console.error(error);
-      toast.error('Registration failed. Please check your inputs.');
+      toast.error('❌ Registration failed. Please check your inputs.');
+    } finally {
+      setIsSubmitting(false); // 🔓 Unlock after API
     }
   };
+
+
+
+
 
   return (
     <>
@@ -275,13 +293,27 @@ const Register = () => {
               {errors.confirmPassword && <p className="text-red-400 text-sm">{errors.confirmPassword}</p>}
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
-              className="col-span-1 md:col-span-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition duration-200 ease-in-out"
+              disabled={isSubmitting}
+              className={`col-span-1 md:col-span-2 text-white font-semibold py-3 rounded-lg transition duration-200 ease-in-out 
+    bg-indigo-600 hover:bg-indigo-700 
+    ${isSubmitting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
             >
-              Register
+              {isSubmitting ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg className="animate-spin w-4 h-4 text-white" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                  </svg>
+                  Registering...
+                </span>
+              ) : (
+                "Register"
+              )}
             </button>
+
+
+
           </form>
         </div>
       </div>

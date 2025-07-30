@@ -9,6 +9,8 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
+from backend.utils import send_email
+from django.utils import timezone
 
 
 @api_view(['POST'])
@@ -28,6 +30,24 @@ class RegisterView(generics.CreateAPIView):
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
 
+    def perform_create(self, serializer):
+        user = serializer.save()
+
+        try:
+            send_email(
+                to_email=user.email,
+                subject="🎉 Welcome to MSK Institute",
+                text_body=f"Hi {user.first_name or user.username},\n\nWelcome to MSK Institute!",
+                html_template="emails/welcome.html",
+                context={
+                    "username": user.first_name or user.username,
+                    "now": timezone.now(),
+                }
+            )
+            print(f"Welcome email sent to {user.email}")
+        except Exception as e:
+            print(f"Failed to send welcome email to {user.email}: {e}")
+        
 class LoginAPIView(APIView):
     def post(self, request):
         identifier = request.data.get("username")  # can be username/email/phone

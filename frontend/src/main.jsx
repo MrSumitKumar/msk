@@ -27,17 +27,46 @@ if (rootElement) {
   );
 }
 
+// Register service worker and handle updates
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('/sw.js')
-      .then(reg => {
-        if (import.meta.env.MODE === 'development') {
-          console.log('✅ Service Worker registered:', reg);
+      .then(registration => {
+
+        // Listen for waiting SW
+        if (registration.waiting) {
+          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+          window.location.reload();
         }
+
+        // Listen for new SW found
+        registration.onupdatefound = () => {
+          const installingWorker = registration.installing;
+          if (installingWorker) {
+            installingWorker.onstatechange = () => {
+              if (
+                installingWorker.state === 'installed' &&
+                navigator.serviceWorker.controller
+              ) {
+                // New update is available — auto activate and reload
+                installingWorker.postMessage({ type: 'SKIP_WAITING' });
+                window.location.reload();
+              }
+            };
+          }
+        };
       })
       .catch(err => {
         console.error('❌ Service Worker registration failed:', err);
       });
+  });
+
+  // Force reload after controller change
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (refreshing) return;
+    refreshing = true;
+    window.location.reload();
   });
 }

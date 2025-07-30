@@ -1,6 +1,6 @@
 // public/sw.js
 
-const CACHE_NAME = 'msk-institute-v1';
+const CACHE_NAME = 'msk-institute-v2'; // Increment version with every deployment
 const urlsToCache = [
   '/',
   '/courses',
@@ -12,35 +12,37 @@ const urlsToCache = [
   '/icons/icon-512x512.png'
 ];
 
-// Install event: cache defined assets
+// Install event: cache assets
 self.addEventListener('install', event => {
+  console.log('[ServiceWorker] Installing new service worker...');
+  self.skipWaiting(); // Activate immediately
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       console.log('[ServiceWorker] Caching app shell...');
       return cache.addAll(urlsToCache);
     })
   );
-  self.skipWaiting(); // Activate immediately after install
 });
 
-// Activate event: clean old caches
+// Activate event: clean up old caches
 self.addEventListener('activate', event => {
+  console.log('[ServiceWorker] Activating new service worker...');
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
+    caches.keys().then(cacheNames =>
+      Promise.all(
         cacheNames.map(cache => {
           if (cache !== CACHE_NAME) {
             console.log('[ServiceWorker] Deleting old cache:', cache);
             return caches.delete(cache);
           }
         })
-      );
-    })
+      )
+    )
   );
-  self.clients.claim(); // Claim clients immediately
+  self.clients.claim(); // Control pages immediately
 });
 
-// Fetch event: serve from cache, then fallback to network
+// Fetch event: serve from cache, fallback to network, then to offline
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
@@ -50,29 +52,38 @@ self.addEventListener('fetch', event => {
         return cachedResponse;
       }
 
-      return fetch(event.request).then(networkResponse => {
-        // Only cache valid responses
-        if (
-          !networkResponse ||
-          networkResponse.status !== 200 ||
-          networkResponse.type !== 'basic'
-        ) {
+      return fetch(event.request)
+        .then(networkResponse => {
+          // Check for valid response
+          if (
+            !networkResponse ||
+            networkResponse.status !== 200 ||
+            networkResponse.type !== 'basic'
+          ) {
+            return networkResponse;
+          }
+
+          // Clone and store in cache
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseClone);
+          });
+
           return networkResponse;
-        }
-
-        // Cache new response
-        const responseClone = networkResponse.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, responseClone);
+        })
+        .catch(() => {
+          // Serve offline fallback for HTML pages
+          if (event.request.destination === 'document') {
+            return caches.match('/offline.html');
+          }
         });
-
-        return networkResponse;
-      }).catch(() => {
-        // Fallback to offline page for navigation requests
-        if (event.request.destination === 'document') {
-          return caches.match('/offline.html');
-        }
-      });
     })
   );
+});
+
+// Listen for skipWaiting message from client (optional)
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
