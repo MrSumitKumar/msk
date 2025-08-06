@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../api/api';
-import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
+import {
+  Play, CalendarDays, BookOpenCheck, Users, Languages
+} from 'lucide-react';
 
-const CourseDetail = () => {
+const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
   const { slug } = useParams();
   const [course, setCourse] = useState(null);
-  const [reviews, setReviews] = useState([])
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('overview');
 
   const fetchCourse = async () => {
     try {
-      const course_api = await api.get(`/courses/${slug}/`);
-      setCourse(course_api.data);
-      const reviews_api = await api.get(`/courses/${slug}/reviews/`)
-      setReviews(reviews_api.data)
-    } catch (error) {
-      toast.error('Course not found.');
+      const courseRes = await api.get(`/courses/${slug}/`);
+      const reviewRes = await api.get(`/courses/${slug}/reviews/`);
+      setCourse(courseRes.data);
+      setReviews(reviewRes.data);
+    } catch (err) {
+      toast.error('Course not found');
     } finally {
       setLoading(false);
     }
@@ -28,58 +31,170 @@ const CourseDetail = () => {
     fetchCourse();
   }, [slug]);
 
-  if (loading) {
-    return <div className="text-center mt-10">Loading course details...</div>;
-  }
+  if (loading) return <div className="text-center mt-10 text-white">Loading...</div>;
+  if (!course) return <div className="text-center mt-10 text-red-500">Course not found</div>;
 
-  if (!course) {
-    return <div className="text-center mt-10 text-red-600">Course not found.</div>;
-  }
+  const discountedPrice =
+    course.discount === 100 || course.price === 0
+      ? 'Free'
+      : `₹ ${Math.round(course.price * (1 - course.discount / 100))}`;
 
   return (
     <>
       <Helmet>
         <title>{course.title} - MSK Institute</title>
-        <meta name="description" content={course.description || course.description?.slice(0, 160)} />
+        <meta name="description" content={course.description?.slice(0, 160)} />
         <link rel="canonical" href={`https://msk.shikohabad.in/courses/${course.slug}`} />
-
-        <meta property="og:title" content={`${course.title} - MSK Institute`} />
-        <meta property="og:description" content={course.description || course.description?.slice(0, 160)} />
-        <meta property="og:url" content={`https://msk.shikohabad.in/courses/${course.slug}`} />
-        <meta property="og:type" content="article" />
       </Helmet>
 
-      <motion.div
-        className="max-w-5xl mx-auto mt-8 p-6 bg-white shadow-md rounded-xl"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-      >
-        <div className="flex flex-col md:flex-row gap-6">
-          <img
-            src={course.featured_image}
-            alt={course.title}
-            className="w-full md:w-1/3 h-60 object-cover rounded-lg border"
-          />
+      <div className="bg-gray-900 min-h-screen px-5 md:px-8 py-10 text-white">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold text-blue-800 mb-2">{course.title}</h1>
-            <p className="text-gray-600 mb-4">{course.description}</p>
+          {/* Left: Video + Price */}
+          <div>
+            <a
+              href={`https://www.youtube.com/watch?v=${course.featured_video}`}
+              className="block aspect-video rounded-lg overflow-hidden relative group"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                src={course.featured_image?.url}
+                alt="Course thumbnail"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition">
+                <div className="h-16 w-16 bg-white rounded-full flex items-center justify-center">
+                  <Play className="text-black w-6 h-6" />
+                </div>
+              </div>
+            </a>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              <p><strong>Price:</strong> ₹{course.price}</p>
-              <p><strong>Discount:</strong> {course.discount}%</p>
-              <p><strong>Duration:</strong> {course.duration} months</p>
-              <p><strong>Level:</strong> {course.level?.name}</p>
-              <p><strong>Mode:</strong> {course.mode}</p>
-              <p><strong>Certificate:</strong> {course.certificate}</p>
-              <p><strong>Languages:</strong> {course.language?.map(lang => lang.language).join(', ')}</p>
-              <p><strong>Status:</strong> {course.status}</p>
-              <p className="text-sm text-gray-500">Created by: {course.created_by}</p>
+            <div className="mt-4 flex items-center gap-4">
+              <span className="text-green-400 text-2xl font-bold">{discountedPrice}</span>
+              {course.discount !== 100 && course.price !== 0 && (
+                <>
+                  <del className="text-red-400 text-xl">₹ {course.price}</del>
+                  <span className="bg-yellow-500 text-black px-2 py-1 text-sm rounded-md font-semibold">
+                    {course.discount}% OFF
+                  </span>
+                </>
+              )}
+            </div>
+
+            <div className="mt-2 flex items-center text-sm text-gray-300 gap-2">
+              <CalendarDays className="w-4 h-4" />
+              <span>10 days left at this price</span>
+            </div>
+
+            <div className="mt-6">
+              {checkEnroll === null ? (
+                <a
+                  href={`/course/checkout/${course.slug}`}
+                  className="block w-full bg-indigo-600 text-white text-center font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"
+                >
+                  Enroll Now
+                </a>
+              ) : (
+                <button className="w-full bg-gray-700 text-white py-3 rounded-lg cursor-not-allowed">
+                  Already Enrolled
+                </button>
+              )}
             </div>
           </div>
+
+          {/* Right: Info */}
+          <div>
+            <h1 className="text-3xl font-semibold mb-3">{course.title}</h1>
+            <p className="text-gray-300 mb-6">{course.description?.slice(0, 120)}...</p>
+
+            <ul className="space-y-4 text-sm">
+              <li className="flex justify-between border-b border-gray-700 py-2">
+                <span className="flex items-center gap-2"><CalendarDays className="w-4 h-4" /> Duration</span>
+                <span>{course.duration} Month</span>
+              </li>
+
+              <li className="flex justify-between border-b border-gray-700 py-2">
+                <span className="flex items-center gap-2">
+                  <BookOpenCheck className="w-4 h-4" />
+                  {course.is_combo_course ? "Included Courses" : "Chapters"}
+                </span>
+                <span>
+                  {course.is_combo_course
+                    ? `${singleCoursesCount} Courses`
+                    : `${chaptersCount} Chapters`}
+                </span>
+              </li>
+
+              <li className="flex justify-between border-b border-gray-700 py-2">
+                <span className="flex items-center gap-2"><Users className="w-4 h-4" /> Enrolled</span>
+                <span>{course.enrollments}</span>
+              </li>
+
+              <li className="flex justify-between border-b border-gray-700 py-2">
+                <span className="flex items-center gap-2"><Languages className="w-4 h-4" /> Language</span>
+                <span>{course.get_languages}</span>
+              </li>
+            </ul>
+          </div>
         </div>
-      </motion.div>
+
+        {/* Tabs */}
+        <div className="max-w-6xl mx-auto mt-12 bg-gray-800 rounded-xl overflow-hidden">
+          <div className="flex border-b border-gray-700">
+            {['overview', 'curriculum', 'reviews'].map(tab => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`flex-1 py-3 text-sm font-medium tracking-wide transition-colors
+                  ${activeTab === tab
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          {/* Tab Content */}
+          <div className="p-6">
+            {activeTab === 'overview' && (
+              <div>
+                <h2 className="text-lg font-semibold mb-3">Course Description</h2>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {course.description}
+                </p>
+              </div>
+            )}
+
+            {activeTab === 'curriculum' && (
+              <div>
+                <h2 className="text-lg font-semibold mb-3">Curriculum</h2>
+                <p className="text-gray-400">[TODO: Show curriculum details here]</p>
+              </div>
+            )}
+
+            {activeTab === 'reviews' && (
+              <div>
+                <h2 className="text-lg font-semibold mb-3">Student Feedback</h2>
+                {reviews.length === 0 ? (
+                  <p className="text-gray-400">No reviews yet.</p>
+                ) : (
+                  <ul className="space-y-4">
+                    {reviews.map((review, idx) => (
+                      <li key={idx} className="bg-gray-700 p-4 rounded-md text-sm text-white">
+                        <p className="font-bold">{review.reviewer_name}</p>
+                        <p className="text-yellow-400">Rating: {review.rating} / 5</p>
+                        <p className="mt-2 text-gray-200">{review.comment}</p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 };
