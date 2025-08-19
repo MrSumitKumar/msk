@@ -91,7 +91,6 @@ class CourseCreateSerializer(serializers.ModelSerializer):
         return course
 
 
-
 class AdminCourseSerializer(serializers.ModelSerializer):
     created_by = serializers.StringRelatedField(read_only=True)
     single_courses = SimpleCourseSerializer(many=True, read_only=True)
@@ -139,7 +138,6 @@ class CourseReviewSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'user', 'created_at', 'updated_at']
 
 
-
 class ChapterTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChapterTopic
@@ -152,6 +150,7 @@ class CourseChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseChapter
         fields = ['id', 'course', 'title', 'topics']
+
 
 class CourseWhyLearnSerializer(serializers.ModelSerializer):
     class Meta:
@@ -192,13 +191,16 @@ class CourseEMISerializer(serializers.ModelSerializer):
 class EnrollmentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     course = SimpleCourseSerializer(read_only=True)
-    course_id = serializers.PrimaryKeyRelatedField(queryset=Course.objects.all(), source='course',write_only=True )
-
+    course_id = serializers.PrimaryKeyRelatedField(
+        queryset=Course.objects.all(),
+        source='course',
+        write_only=True
+    )
 
     class Meta:
         model = Enrollment
         fields = [
-            'id', 'user', 'course', 'enrollment_no',
+            'id', 'user', 'course', 'course_id', 'enrollment_no',
             'amount', 'total_due_amount', 'total_paid_amount',
             'payment_complete', 'total_emi', 'emi', 'payment_method',
             'status', 'is_active', 'certificate',
@@ -207,52 +209,8 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         read_only_fields = ['enrollment_no', 'payment_complete', 'enrolled_at']
 
 
-
-
-class EnrollmentEmiSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EnrollmentEmi
-        fields = [
-            'id', 'enrollment', 'emi_number', 'amount',
-            'due_date', 'status', 'paid_at'
-        ]
-        read_only_fields = ['due_date', 'paid_at']
-
-
-class EnrollmentRequestSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(read_only=True)
-    course = SimpleCourseSerializer(read_only=True)
-
-    class Meta:
-        model = EnrollmentRequest
-        fields = [
-            'id', 'user', 'course', 'order_id',
-            'payment_screenshot', 'payment_amount',
-            'monthly_otp_emi', 'status', 'request_at'
-        ]
-        read_only_fields = ['order_id', 'request_at']
-
-
 class EnrollmentFeeHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = EnrollmentFeeHistory
         fields = ['id', 'enrollment', 'payment_method', 'payment_gateway', 'amount', 'paid_at']
-
-
-class EnrollmentEmiPaymentRequestSerializer(serializers.ModelSerializer):
-    enrollment_emi = EnrollmentEmiSerializer(read_only=True)
-    enrollment_emi_id = serializers.PrimaryKeyRelatedField(
-        queryset=EnrollmentEmi.objects.all(),
-        source='enrollment_emi',
-        write_only=True
-    )
-
-    class Meta:
-        model = EnrollmentEmiPaymentRequest
-        fields = [
-            'id', 'enrollment_emi', 'enrollment_emi_id',
-            'payment_screenshot', 'payment_amount',
-            'paid_at', 'payment_method', 'status'
-        ]
-        read_only_fields = ['paid_at']
 

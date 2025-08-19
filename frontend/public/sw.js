@@ -1,6 +1,10 @@
 // public/sw.js
 
-const CACHE_NAME = 'msk-institute-v2'; // Increment version with every deployment
+const CACHE_VERSION = 'v5'; // Har nayi release par badlo
+// Increment version with every deployment
+
+const CACHE_NAME = `msk-institute-${CACHE_VERSION}`;
+
 const urlsToCache = [
   '/',
   '/courses',
@@ -14,11 +18,9 @@ const urlsToCache = [
 
 // Install event: cache assets
 self.addEventListener('install', event => {
-  console.log('[ServiceWorker] Installing new service worker...');
   self.skipWaiting(); // Activate immediately
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('[ServiceWorker] Caching app shell...');
       return cache.addAll(urlsToCache);
     })
   );
@@ -26,21 +28,23 @@ self.addEventListener('install', event => {
 
 // Activate event: clean up old caches
 self.addEventListener('activate', event => {
-  console.log('[ServiceWorker] Activating new service worker...');
   event.waitUntil(
     caches.keys().then(cacheNames =>
       Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== CACHE_NAME) {
-            console.log('[ServiceWorker] Deleting old cache:', cache);
-            return caches.delete(cache);
-          }
-        })
+        cacheNames.filter(name => name !== CACHE_NAME).map(name => caches.delete(name))
       )
-    )
+    ).then(() => self.clients.claim())
+     .then(() => {
+       return self.clients.matchAll({ type: 'window' }).then(clients => {
+         clients.forEach(client => {
+           client.postMessage({ type: 'NEW_VERSION' });
+         });
+       });
+     })
   );
-  self.clients.claim(); // Control pages immediately
 });
+
+
 
 // Fetch event: serve from cache, fallback to network, then to offline
 self.addEventListener('fetch', event => {

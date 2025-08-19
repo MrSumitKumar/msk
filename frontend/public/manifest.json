@@ -4,7 +4,7 @@
     "description": "MSK Institute - Learn coding, web development, and digital tools with practical courses in HTML, CSS, JavaScript, Python, and Computer Courses in Shikohabad.",
     "scope": "/",
     "id": "/?source=pwa",
-    "start_url": "/?utm_source=homescreen",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#002060",
@@ -220,6 +220,5 @@
         "client_mode": "navigate-existing"
     },
     "prefer_related_applications": false,
-    "version": "1.0.0",
-    "update_url": "https://www.msk.shikohabad.in/updates"
+    "version": "1.0.5"
 }

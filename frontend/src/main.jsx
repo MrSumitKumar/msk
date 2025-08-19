@@ -5,7 +5,7 @@ import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from './context/ThemeContext';
-import { AuthProvider } from './hooks/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 

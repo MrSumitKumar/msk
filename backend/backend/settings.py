@@ -9,14 +9,14 @@ SECRET_KEY = 'django-insecure-l3@)^b86g7567^dmoypwgcbol8mn*c@v-^2-re)#i!024)m1d6
 
 
 DEBUG = True
-if DEBUG: ALLOWED_HOSTS = []
+if DEBUG: ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = [ "api.shikohabad.in", "www.api.shikohabad.in" ]
 
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",    # ✅ no trailing slash
+    # "http://localhost:5173",
     "https://msk.shikohabad.in",
     "https://www.msk.shikohabad.in",
 ]
@@ -33,8 +33,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'users',
-    'students',
     'courses',
+    'mlm',
     'notifications',
     'django_extensions',
     'django.contrib.sitemaps',

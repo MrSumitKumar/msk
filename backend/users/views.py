@@ -3,15 +3,47 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import CustomUser
-from .serializers import RegisterSerializer, UserSerializer, UserProfileSerializer
+from .models import *
+from mlm.models import *
+from .serializers import *
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
-from backend.utils import send_email
+from backend.utils import *
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+from django.db import transaction
+from decimal import Decimal
+from rest_framework.authtoken.models import Token
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+import logging
 
+logger = logging.getLogger(__name__)
+
+@api_view(['POST'])
+def check_sponsor(request):
+    username = request.data.get('username')
+    try:
+        sponsor = CustomUser.objects.get(username=username)
+        sponsor_member = sponsor.mlm_profile
+        left_team_size = sponsor_member.left_count
+        right_team_size = sponsor_member.right_count
+        return Response({
+            'exists': True,
+            'details': {
+                'name': f"{sponsor.first_name} {sponsor.last_name}".strip(),
+                'left_team_size': left_team_size,
+                'right_team_size': right_team_size,
+                'recommended_position': 'Left' if left_team_size <= right_team_size else 'Right'
+            }
+        })
+    except CustomUser.DoesNotExist:
+        return Response({'exists': False}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def check_phone_unique(request):
@@ -25,13 +57,14 @@ def check_email_unique(request):
     exists = CustomUser.objects.filter(email=email).exists()
     return Response({'exists': exists})
 
-class RegisterView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
+
+class UserRegistrationView(generics.CreateAPIView):
+    serializer_class = UserRegistrationSerializer
     permission_classes = [permissions.AllowAny]
-    serializer_class = RegisterSerializer
 
     def perform_create(self, serializer):
-        user = serializer.save()
+        response_data = serializer.save()
+        user = CustomUser.objects.get(username=response_data['user']['username'])
 
         try:
             send_email(
@@ -44,13 +77,25 @@ class RegisterView(generics.CreateAPIView):
                     "now": timezone.now(),
                 }
             )
-            print(f"Welcome email sent to {user.email}")
+            logger.info(f"Welcome email sent to {user.email}")
         except Exception as e:
-            print(f"Failed to send welcome email to {user.email}: {e}")
-        
+            logger.exception(f"Failed to send welcome email to {user.email}: {str(e)}")
+
+        return response_data
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        response_data = self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+
+
 class LoginAPIView(APIView):
     def post(self, request):
-        identifier = request.data.get("username")  # can be username/email/phone
+        identifier = request.data.get("identifier") or request.data.get("username")  # can be username/email/phone
         password = request.data.get("password")
 
         if not identifier or not password:
@@ -70,12 +115,16 @@ class LoginAPIView(APIView):
         if user is not None:
             refresh = RefreshToken.for_user(user)
             return Response({
+                "id": user.id,
                 "refresh": str(refresh),
                 "access": str(refresh.access_token),
                 "user": {
                     "username": user.username,
                     "email": user.email,
                     "role": user.role if hasattr(user, 'role') else None,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "phone": user.phone,
                 },
             })
         return Response({"detail": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -100,8 +149,7 @@ class CurrentUserView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        user = request.user
-        serializer = UserSerializer(user)
+        serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
 

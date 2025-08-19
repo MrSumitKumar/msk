@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../api/api';
+import axios from "../../api/axios";
 import { toast } from 'react-hot-toast';
-import { useAuth } from '../../hooks/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 const CourseForm = () => {
   const { id } = useParams();

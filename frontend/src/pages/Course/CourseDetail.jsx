@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import api from '../../api/api';
+import axios from "../../api/axios";
 import { toast } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import {

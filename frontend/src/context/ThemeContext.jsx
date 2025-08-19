@@ -10,10 +10,10 @@ export const ThemeProvider = ({ children }) => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('theme');
       if (stored) return stored;
-      // Default to dark but respect system preference
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'dark';
+      // Default to system preference or dark
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { Helmet } from "react-helmet-async";
-import api from '../../api/api';
+import axios from "../../api/axios";
 
 
 const TeacherDashboard = () => {

@@ -2,27 +2,34 @@
 from django.urls import reverse
 from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_save, post_delete
-from django.db.models import Avg, Count, F
-from backend.utils import send_email, generate_random_numbers
-from django.dispatch import receiver
-from django.utils.timezone import now, timedelta
-from celery import shared_task
-import os, uuid
-from django.conf import settings
-from decimal import Decimal
 from django.db import models, transaction
+from django.dispatch import receiver
+from django.utils.timezone import now
+from datetime import timedelta
+from celery import shared_task
+import os
+import logging
+from decimal import Decimal
 from django.utils.crypto import get_random_string
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
-from django.db.models import F, Q
+from django.db.models import Avg
+from django.core.validators import MinValueValidator, MaxValueValidator
+from typing import Optional
+import re
+import json
+
+
 
 User = get_user_model()
+logger = logging.getLogger(__name__)
 
 # ----------------------------------
 # Constants & Global Config
 # ----------------------------------
 
+# Default EMI discounts (months -> percentage)
 DEFAULT_EMI_DISCOUNTS = {
     2: Decimal("10.0"),
     3: Decimal("8.0"),
@@ -30,6 +37,72 @@ DEFAULT_EMI_DISCOUNTS = {
     5: Decimal("4.0"),
     6: Decimal("2.0"),
 }
+
+# Default OTP discount if PlatformSettings is not present
+DEFAULT_OTP_DISCOUNT = Decimal("10.00")
+
+
+def validate_youtube_url(value):
+    youtube_regex = (
+        r'^(https?://)?(www\.)?'
+        r'(youtube\.com/watch\?v=|youtu\.be/)'
+        r'[\w-]{11}($|&)'
+    )
+    if not re.search(youtube_regex, value):
+        raise ValidationError("Only valid YouTube URLs are allowed.")
+
+
+class PlatformSettings(models.Model):
+    """Global settings for the courses platform. Only one instance allowed."""
+    otp_discount = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=Decimal('10.00'),
+        validators=[
+            MinValueValidator(Decimal('0.00')),
+            MaxValueValidator(Decimal('100.00'))
+        ],
+        help_text="OTP (one-time-payment) discount percentage for all courses."
+    )
+    referral_distribution = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        default=Decimal('0.00'),
+        validators=[
+            MinValueValidator(Decimal('0.00')),
+            MaxValueValidator(Decimal('100.00'))
+        ],
+        help_text="Referral distribution percentage for the platform."
+    )
+    default_emi_discounts = models.TextField(
+        default="[]",
+        help_text="Default EMI discounts for all courses. Example: [{'months': 3, 'discount': 5}]"
+    )
+
+    def set_default_emi_discounts(self, data_list):
+        """Save list as JSON string."""
+        self.default_emi_discounts = json.dumps(data_list)
+
+    def get_default_emi_discounts(self):
+        """Return JSON string as Python list."""
+        try:
+            return json.loads(self.default_emi_discounts)
+        except json.JSONDecodeError:
+            return []
+
+    def save(self, *args, **kwargs):
+        """Ensure only one PlatformSettings instance exists."""
+        if not self.pk and PlatformSettings.objects.exists():
+            raise ValidationError("Only one PlatformSettings instance allowed.")
+        return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return "Platform Settings"
+
+    class Meta:
+        verbose_name = "Platform Settings"
+        verbose_name_plural = "Platform Settings"
+
 
 
 
@@ -63,7 +136,7 @@ class CourseLanguage(models.Model):
 # ----------------------------------
 
 class Course(models.Model):
-    class Status(models.TextChoices):
+    class StatusChoices(models.TextChoices):
         PUBLISH = 'PUBLISH', 'Publish'
         DRAFT = 'DRAFT', 'Draft'
 
@@ -76,13 +149,14 @@ class Course(models.Model):
         OFFLINE = 'OFFLINE', 'Offline'
         BOTH = 'BOTH', 'Both'
 
-    class CourseType(models.TextChoices):
+    class CourseTypeChoices(models.TextChoices):
         SINGLE = 'SINGLE', 'Single Course'
         COMBO = 'COMBO', 'Combo Course'
 
-    course_type = models.CharField(choices=CourseType.choices, max_length=10, default=CourseType.SINGLE)
+    status = models.CharField(choices=StatusChoices.choices, max_length=10, default=StatusChoices.DRAFT)
     featured_image = models.ImageField(upload_to="course/poster/", default="course/poster/default.jpg")
-    featured_video = models.CharField(max_length=50, null=True, blank=True)
+    # featured_video is a YouTube URL (optional)
+    featured_video = models.URLField(max_length=255, null=True, blank=True, validators=[validate_youtube_url])
     title = models.CharField(max_length=500, unique=True)
     description = models.TextField(null=True, blank=True)
     categories = models.ManyToManyField(Category, related_name="courses", blank=True)
@@ -91,25 +165,23 @@ class Course(models.Model):
     duration = models.PositiveIntegerField(default=6, validators=[MinValueValidator(1)])
 
     # Pricing
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    discount = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    referral_comission = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    discount = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
     discount_end_date = models.DateField(null=True, blank=True)
-    otp_discount = models.DecimalField(max_digits=5, decimal_places=2, default=15.00)
+
+    # Rating (aggregated average, 0.00 - 5.00)
+    rating = models.DecimalField(max_digits=3, decimal_places=2, default=Decimal('0.00'))
 
     # Features
     certificate = models.CharField(choices=CertificateChoices.choices, max_length=10, default=CertificateChoices.NO)
     mode = models.CharField(choices=ModeChoices.choices, max_length=10, default=ModeChoices.ONLINE)
+    course_type = models.CharField(choices=CourseTypeChoices.choices, max_length=10, default=CourseTypeChoices.SINGLE)
     single_courses = models.ManyToManyField('self', blank=True, related_name="combo_courses", symmetrical=False)
 
-    enrollments = models.PositiveIntegerField(default=0)
-    rating = models.FloatField(default=0.0)
-    slug = models.SlugField(unique=True, blank=True)
-
-    status = models.CharField(choices=Status.choices, max_length=10, default=Status.DRAFT)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='courses_created')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -117,34 +189,64 @@ class Course(models.Model):
     def get_absolute_url(self):
         return reverse("course_details", kwargs={'slug': self.slug})
 
-    def get_discounted_price(self, use_emi=False, total_emi=None):
-        price = self.price
+    def get_discounted_price(self, use_emi: bool = False, total_emi: Optional[int] = None) -> Decimal:
+        """
+        Return discounted price as Decimal:
+        - If use_emi=False => apply otp_discount (one-time payment discount).
+          Uses course's otp_discount if set; otherwise falls back to PlatformSettings.otp_discount or DEFAULT_OTP_DISCOUNT.
+        - If use_emi=True and total_emi provided and present in DEFAULT_EMI_DISCOUNTS => apply that EMI discount.
+        - Otherwise return base price.
+        """
+        price = Decimal(self.price or Decimal("0.00"))
         if not use_emi:
-            return price - (price * self.otp_discount / Decimal('100.0'))
+            # Determine OTP discount percent
+            if self.otp_discount is not None:
+                discount_pct = Decimal(self.otp_discount)
+            else:
+                settings_obj = PlatformSettings.objects.first()
+                discount_pct = Decimal(settings_obj.otp_discount) if settings_obj else DEFAULT_OTP_DISCOUNT
+
+            discounted = price - (price * discount_pct / Decimal("100.0"))
+            return discounted.quantize(Decimal("0.01"))
+        # EMI case
         if total_emi and total_emi >= 2:
             discount_percent = DEFAULT_EMI_DISCOUNTS.get(total_emi, Decimal("0.0"))
-            return price - (price * discount_percent / Decimal('100.0'))
-        return price
+            discounted = price - (price * Decimal(discount_percent) / Decimal("100.0"))
+            return discounted.quantize(Decimal("0.01"))
+        return price.quantize(Decimal("0.01"))
 
     def save(self, *args, **kwargs):
-        if self.otp_discount is None:
-            self.otp_discount = Decimal("15.0")
+        # keep save simple; slug is generated in pre_save signal
         super().save(*args, **kwargs)
 
 
 @receiver(post_save, sender=Course)
-def create_course_emi(sender, instance, created, **kwargs):
-    if instance.course_type == Course.CourseType.COMBO and instance.price > 999 and instance.duration >= 3:
-        CourseEMI.objects.filter(course=instance).delete()
-        for months, discount in DEFAULT_EMI_DISCOUNTS.items():
-            if months <= instance.duration:
+def create_or_update_course_emi(sender, instance: Course, created, **kwargs):
+    """
+    Ensure CourseEMI entries exist for months defined in DEFAULT_EMI_DISCOUNTS
+    and that are <= course.duration.
+    """
+    try:
+        # Only generate EMIs when price > 0 and duration allows EMIs
+        if instance.price > Decimal("0.00") and instance.duration >= 2:
+            desired_months = [m for m in DEFAULT_EMI_DISCOUNTS.keys() if m <= instance.duration]
+            # Create/update desired EMI plans
+            for months in desired_months:
                 discounted_price = instance.get_discounted_price(use_emi=True, total_emi=months)
-                emi_amount = discounted_price / months
+                emi_amount = (discounted_price / Decimal(months)).quantize(Decimal("0.01"))
                 CourseEMI.objects.update_or_create(
                     course=instance,
                     total_emi=months,
-                    defaults={"emi_amount": emi_amount}
+                    defaults={"emi_amount": emi_amount},
                 )
+            # Remove EMI plans that are no longer desired (if any)
+            instance.emi_plans.exclude(total_emi__in=desired_months).delete()
+        else:
+            # If price is zero or duration < 2, remove any existing emi plans
+            instance.emi_plans.all().delete()
+    except Exception:
+        logger.exception("Error creating/updating EMI plans for Course id=%s", instance.pk)
+
 
 @receiver(pre_save, sender=Course)
 def generate_course_slug(sender, instance, **kwargs):
@@ -164,9 +266,8 @@ def delete_course_image(sender, instance, **kwargs):
             file_path = instance.featured_image.path
             if os.path.exists(file_path):
                 os.remove(file_path)
-        except Exception as e:
-            pass  # optionally log
-
+        except Exception:
+            logger.exception("Failed to delete course image for Course id=%s", getattr(instance, 'pk', None))
 
 
 # ----------------------------------
@@ -176,7 +277,7 @@ def delete_course_image(sender, instance, **kwargs):
 class CourseEMI(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="emi_plans")
     total_emi = models.PositiveIntegerField(default=0)
-    emi_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    emi_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
     class Meta:
         unique_together = ['course', 'total_emi']
@@ -231,8 +332,7 @@ class ChapterTopic(models.Model):
     chapter = models.ForeignKey(CourseChapter, on_delete=models.CASCADE, related_name="topics")
     title = models.CharField(max_length=255)
     video_url = models.URLField(null=True, blank=True)
-    notes_url = models.URLField(null=True, blank=True)  # Not Use PDF only use link because our notes on github
-    
+    notes_url = models.URLField(null=True, blank=True)  # use link (e.g., notes hosted on GitHub)
 
     def __str__(self):
         return f"{self.chapter.course.title} - {self.chapter.title} - {self.title}"
@@ -268,380 +368,140 @@ class CourseReview(models.Model):
 
 @receiver(post_save, sender=CourseReview)
 def update_course_rating(sender, instance, **kwargs):
-    avg_rating = CourseReview.objects.filter(course=instance.course).aggregate(avg=Avg("rating"))["avg"] or 0
-    instance.course.rating = round(avg_rating, 2)
-    instance.course.save(update_fields=["rating"])
+    """
+    Recalculate and update Course.rating when reviews change.
+    """
+    try:
+        avg_rating = CourseReview.objects.filter(course=instance.course).aggregate(avg=Avg("rating"))["avg"] or 0
+        instance.course.rating = round(Decimal(avg_rating), 2)
+        instance.course.save(update_fields=["rating"])
+    except Exception:
+        logger.exception("Failed updating course rating for Course id=%s", getattr(instance, 'course_id', None))
 
 
+# ----------------------------------
+# Enrollment & Payment Models
+# ----------------------------------
 
+class PaymentMethod(models.TextChoices):
+    MONTHLY = 'monthly', 'Monthly'
+    ONE_TIME = 'one_time', 'One-Time Payment'
+
+
+class EnrollmentStatus(models.TextChoices):
+    PENDING = 'Pending', 'Pending'
+    APPROVED = 'Approved', 'Approved'
+    REJECTED = 'Rejected', 'Rejected'
 
 
 class Enrollment(models.Model):
-    class Status(models.TextChoices):
-        PENDING = 'Pending', 'Pending'
-        APPROVED = 'Approved', 'Approved'
-        REJECTED = 'Rejected', 'Rejected'
-
-
-    PAYMENT_METHOD_CHOICES = [
-        ('emi', 'EMI'),
-        ('monthly', 'Monthly'),
-        ('otp', 'One-Time Payment'),
-    ]
-    
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="course_enrollments")
-    enrollment_no = models.BigIntegerField(unique=True, default=0)
-    
-    amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=Decimal('0.00'))
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name="enrollments")
+    # Allow null initially; save() will populate unique enrollment_no
+    enrollment_no = models.BigIntegerField(unique=True, null=True, blank=True, default=None)
+
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     total_due_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     total_paid_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     payment_complete = models.BooleanField(default=False)
-  
-    total_emi = models.IntegerField(default=0)
-    emi = models.BooleanField(default=False)
 
-    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHOD_CHOICES, default='monthly')
+    # EMI-related fields (optional)
+    total_emi = models.PositiveIntegerField(null=True, blank=True)
+    emi = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
+    payment_method = models.CharField(max_length=20, choices=PaymentMethod.choices, default=PaymentMethod.MONTHLY)
 
     is_active = models.BooleanField(default=True)
-
     certificate = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, choices=EnrollmentStatus.choices, default=EnrollmentStatus.PENDING)
+
     enrolled_at = models.DateField(null=True, blank=True)
     end_at = models.DateField(null=True, blank=True)
 
-    def __str__(self):  
+    def __str__(self):
         return f"{self.user} - {self.course.title} - {self.status}"
 
     @transaction.atomic
     def save(self, *args, **kwargs):
-        if not self.enrolled_at:
-            self.enrolled_at = now()
+        # Generate unique enrollment number if not present
         if not self.enrollment_no:
+            enrollment_number = None
+            # generate_random_numbers should return integer-like (12 digits) — imported from backend.utils
+            from backend.utils import generate_random_numbers
             enrollment_number = generate_random_numbers(12)
+            # ensure uniqueness
             while Enrollment.objects.filter(enrollment_no=enrollment_number).exists():
                 enrollment_number = generate_random_numbers(12)
             self.enrollment_no = enrollment_number
-
         super().save(*args, **kwargs)
-
-        if (
-            self.status == "Approved"
-            and self.emi
-            and self.total_emi > 0 
-            and self.course.course_type == "COMBO" 
-            and not EnrollmentEmi.objects.filter(enrollment=self).exists()
-            and self.payment_method == 'emi'
-        ):
-            emi_plan = self.course.emi_plans.filter(total_emi=self.total_emi).first()
-            if emi_plan:
-                emi_objs = [
-                    EnrollmentEmi(
-                        enrollment=self,
-                        emi_number=i,
-                        amount=emi_plan.emi_amount
-                    )
-                    for i in range(1, emi_plan.total_emi + 1)
-                ]
-                EnrollmentEmi.objects.bulk_create(emi_objs)
-
-                first_emi = self.emis.order_by("emi_number").first()
-                if first_emi and first_emi.status != "Paid":
-                    first_emi.status = "Paid"
-                    first_emi.paid_at = now()
-                    first_emi.save(update_fields=["status", "paid_at"])
 
     @property
     def payment_status(self):
         return "Completed" if self.payment_complete else "Pending"
 
 
-    def delete(self, *args, **kwargs):
-        self.course.enrollments -= 1
-        self.course.save(update_fields=['enrollments'])
-        super().delete(*args, **kwargs)
-
-
-class EnrollmentEmi(models.Model):
-    class Status(models.TextChoices):
-        PENDING = 'Pending', 'Pending'
-        APPROVED = 'Approved', 'Approved'
-        REJECTED = 'Rejected', 'Rejected'
-
-
-    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE, related_name="emis")
-    emi_number = models.IntegerField()
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    due_date = models.DateField()
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
-    paid_at = models.DateTimeField(null=True, blank=True)
-
-    def __str__(self):
-        return f"EMI {self.emi_number} - {self.enrollment.user} - {self.enrollment.course.title} - {self.status}"
-
-    def save(self, *args, **kwargs):
-        if not self.paid_at:
-            self.paid_at = now()
-        if not self.due_date and self.enrollment.enrolled_at:
-            self.due_date = self.enrollment.enrolled_at + timedelta(days=30 * self.emi_number)
-        super().save(*args, **kwargs)
-
-        if self.status == "Paid":
-            enrollment = self.enrollment
-            enrollment.total_paid_amount += self.amount
-            enrollment.total_due_amount = enrollment.amount - enrollment.total_paid_amount
-            enrollment.save(update_fields=['total_paid_amount', 'total_due_amount'])
-
-            """Send email notification to user."""
-            subject = f"EMI {self.emi_number} Paid for {self.enrollment.course.title}"
-            message = f"""
-            Dear {self.enrollment.user.username},\n\n
-            Your EMI {self.emi_number} for the course {self.enrollment.course.title} has been successfully paid.\n\n
-            Here are your EMI details:\n
-            ---------------------------------------------\n
-            🆔 Enrollment No: {self.enrollment.enrollment_no}\n
-            📚 Course: {self.enrollment.course.title}\n
-            💰 Total Course Fee: ₹{self.enrollment.amount}\n
-            💳 Total Amount Paid: ₹{self.enrollment.total_paid_amount}\n
-            ❗ Due Amount: ₹{self.enrollment.total_due_amount}\n
-            📅 EMI Number: {self.emi_number}\n
-            💰 EMI Amount: ₹{self.amount}\n
-            📆 Due Date: {self.due_date.strftime('%Y-%m-%d')}\n
-            ---------------------------------------------\n\n
-            Thank you for your enrollment.\n
-            Best Regards,\n
-            MSK Institute
-            """
-            send_email(self.enrollment.user.email, subject, message)
-
-            EnrollmentFeeHistory.objects.create(
-                enrollment = enrollment,
-                payment_method = 'online',
-                amount = self.amount,
-            )
-
-            is_payment_complete = enrollment.total_paid_amount == enrollment.amount
-            
-            if is_payment_complete:
-                enrollment.payment_complete = True
-                enrollment.save(update_fields=['total_paid_amount', 'total_due_amount', 'payment_complete'])
-
-                # Send email notification for full payment completion
-                subject_complete = f"Course Fee Fully Paid for {self.enrollment.course.title}"
-                message_complete = f"""
-                Dear {self.enrollment.user.username},\n\n
-                Congratulations! You have successfully completed the payment for your course {self.enrollment.course.title}.\n\n
-                Here are your payment details:\n
-                ---------------------------------------------\n
-                🆔 Enrollment No: {self.enrollment.enrollment_no}\n
-                📚 Course: {self.enrollment.course.title}\n
-                💰 Total Course Fee: ₹{self.enrollment.amount}\n
-                💳 Total Amount Paid: ₹{self.enrollment.total_paid_amount}\n
-                ✅ Payment Status: Completed\n
-                ---------------------------------------------\n\n
-                Thank you for choosing MSK Institute.\n
-                Best Regards,\n
-                MSK Institute
-                """
-                send_email(self.enrollment.user.email, subject_complete, message_complete)
-
-
 @shared_task
 def auto_reject_pending_enrollments():
-    """Rejects enrollments that have been pending for more than 3 days."""
-    three_days_ago = now() - timedelta(days=3)
-    pending_enrollments = Enrollment.objects.filter(status="Pending", enrolled_at__lte=three_days_ago)
-    
-    for enrollment in pending_enrollments:
-        enrollment.status = "Rejected"
-        enrollment.save()
+    """Reject enrollments that have been pending for more than 3 days."""
+    try:
+        three_days_ago = now() - timedelta(days=3)
+        pending_enrollments = Enrollment.objects.filter(status=EnrollmentStatus.PENDING, enrolled_at__lte=three_days_ago)
+        for enrollment in pending_enrollments:
+            enrollment.status = EnrollmentStatus.REJECTED
+            enrollment.save(update_fields=['status'])
+    except Exception:
+        logger.exception("Error auto-rejecting pending enrollments")
 
 
-class EnrollmentRequest(models.Model):
-    class Status(models.TextChoices):
-        PENDING = 'Pending', 'Pending'
-        APPROVED = 'Approved', 'Approved'
-        REJECTED = 'Rejected', 'Rejected'
-
-    FEE_TYPE = [
-        ('Admission', 'Admission'),
-        ('Course', 'Course'),
-    ]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey("Course", on_delete=models.CASCADE, related_name="enrollment_requests")
-    order_id = models.CharField(max_length=20, unique=True, editable=False, default=uuid.uuid4().hex[:12].upper())
-    payment_screenshot = models.ImageField(upload_to="payment_screenshots/", null=True, blank=True)
-    payment_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
-    monthly_otp_emi = models.CharField(max_length=5, null=True, blank=True)
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
-    request_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return f"Order {self.order_id} - {self.user} for {self.course.title} - {self.status}"
-
-    def delete(self, *args, **kwargs):
-        """Delete screenshot file when object is deleted."""
-        if self.payment_screenshot:
-            screenshot_path = os.path.join(settings.MEDIA_ROOT, str(self.payment_screenshot))
-            if os.path.exists(screenshot_path):
-                os.remove(screenshot_path)
-        super().delete(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        if self.status == 'Approved':
-            enrollment, created = Enrollment.objects.get_or_create(user=self.user, course=self.course, defaults={'status': self.status} )
-            if not created:
-                enrollment.status = self.status
-                enrollment.save(update_fields=['status'])
-            
-            subject = f"You're enrolled in {self.course.title}!"
-            message = f"Hi {self.user.username},\n\nYou have successfully enrolled in {self.course.title}.\nStart learning now! \n\nYour Enrollment No: {enrollment.enrollment_no}"
-            send_email(self.user.email, subject, message)
-
-            Course.objects.filter(id=self.course.id).update(enrollments=F('enrollments') + 1)
-
-            profile = self.user.profile
-            if profile.status != "Active":
-                profile.status = "Active"
-                profile.save(update_fields=['status'])
-
-            if profile.sponsor:
-                referral_commission = self.course.get_referral_commission() if hasattr(self.course, 'get_referral_commission') else Decimal('0.00')
-                if hasattr(profile.sponsor, 'add_earnings'):
-                    profile.sponsor.add_earnings(referral_commission)
-
-            
-            Enrollment.objects.filter(user=self.user, course=self.course, status="Pending").delete()
-            self.delete()
-
-        elif self.status == 'Pending':
-            subject = f"Your request for {self.course.title} has been submitted."
-            message = f"Hi {self.user.username},\n\nYour request for {self.course.title} has been successfully submitted.\nPlease wait 1 to 3 days for approval.\nYour Order ID: {self.order_id}"
-            send_email(self.user.email, subject, message)
-            
-            enrollment = Enrollment.objects.create(
-                user=self.user,
-                course=self.course,
-                amount=self.course.get_discounted_price(),
-                total_emi=int(self.monthly_otp_emi or 0),
-                emi=(self.monthly_otp_emi != "0"),
-            )
-            enrollment.save()
-
-        elif self.status == 'Rejected':
-            subject = f"Your enrollment for {self.course.title} was rejected!"
-            message = f"Hi {self.user.username},\n\nYour enrollment in {self.course.title} has been rejected because your payment was not approved."
-            send_email(self.user.email, subject, message)
-            Enrollment.objects.filter(user=self.user, course=self.course).delete()
-            self.delete()
+class FeePaymentMethod(models.TextChoices):
+    ONLINE = 'online', 'Online'
+    OFFLINE = 'offline', 'Offline'
 
 
+class FeePaymentGateway(models.TextChoices):
+    PAYTM = 'paytm', 'Paytm'
+    PHONEPE = 'phonepe', 'PhonePe'
+    GOOGLEPAY = 'googlepay', 'Google Pay'
+    UPI = 'upi', 'UPI'
+    CASH = 'cash', 'Cash'
+    BANK = 'bank', 'Bank Transfer'
+    OTHER = 'other', 'Other'
 
 
 class EnrollmentFeeHistory(models.Model):
-    PAYMENT_METHOD_CHOICES = [
-        ('online', 'Online'),
-        ('offline', 'Offline'),
-    ]
-
-    PAYMENT_GATEWAY_CHOICES = [
-        ('paytm', 'Paytm'),
-        ('phonepe', 'PhonePe'),
-        ('googlepay', 'Google Pay'),
-        ('upi', 'UPI'),
-        ('cash', 'Cash'),
-        ('bank', 'Bank Transfer'),
-        ('other', 'Other'),
-    ]
-
-    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE, related_name="fee_history")
-    payment_method = models.CharField(max_length=10, choices=PAYMENT_METHOD_CHOICES, default="online")
-    payment_gateway = models.CharField(max_length=20, choices=PAYMENT_GATEWAY_CHOICES, default='upi')
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    enrollment = models.ForeignKey(
+        'Enrollment',
+        on_delete=models.CASCADE,
+        related_name="fee_histories"
+    )
+    payment_method = models.CharField(
+        max_length=10,
+        choices=FeePaymentMethod.choices,
+        default=FeePaymentMethod.ONLINE
+    )
+    payment_gateway = models.CharField(
+        max_length=20,
+        choices=FeePaymentGateway.choices,
+        default=FeePaymentGateway.UPI
+    )
+    amount = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=Decimal('0.00')
+    )
+    transaction_id = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        help_text="Payment transaction reference number"
+    )
+    gateway_note = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text="Additional details like UPI handle, bank name, etc."
+    )
     paid_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.enrollment.user} - {self.enrollment.course.title} - ₹{self.amount} [{self.payment_gateway}]"
-
-class EnrollmentEmiPaymentRequest(models.Model):
-    class Status(models.TextChoices):
-        PENDING = 'Pending', 'Pending'
-        APPROVED = 'Approved', 'Approved'
-        REJECTED = 'Rejected', 'Rejected'
-
-    PAYMENT_METHOD_CHOICES = [
-        ('cash', 'Cash'),
-        ('paytm', 'Paytm'),
-        ('phonepe', 'PhonePe'),
-        ('googlepay', 'Google Pay'),
-        ('upi', 'UPI'),
-        ('other', 'Other'),
-    ]
-
-    enrollment_emi = models.ForeignKey(EnrollmentEmi, on_delete=models.CASCADE, related_name="emi_payments")
-    payment_screenshot = models.ImageField(upload_to="emi_payments/", null=True, blank=True)
-    payment_amount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
-    paid_at = models.DateTimeField(auto_now_add=True)
-    payment_method = models.CharField(max_length=20, choices=PAYMENT_METHOD_CHOICES, null=True, blank=True)
-    status = models.CharField(max_length=10, choices=Status.choices, default=Status.PENDING)
-
-
-    def __str__(self):
-        return f"{self.enrollment_emi.enrollment.user} - {self.enrollment_emi.enrollment.course.title} - {self.enrollment_emi.emi_number} - {self.payment_method}"
-
-    def delete(self, *args, **kwargs):
-        if self.payment_screenshot:
-            try:
-                screenshot_path = os.path.join(settings.MEDIA_ROOT, str(self.payment_screenshot))
-                if os.path.exists(screenshot_path):
-                    os.remove(screenshot_path)
-            except Exception:
-                pass
-        super().delete(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        if self.status == 'Approved':
-            self.enrollment_emi.status = "Paid"
-            self.enrollment_emi.save(update_fields=['status'])
-            
-            self.enrollment_emi.enrollment.total_paid_amount = F('total_paid_amount') + self.payment_amount
-            self.enrollment_emi.enrollment.total_due_amount = F('total_due_amount') - self.payment_amount
-            self.enrollment_emi.enrollment.save(update_fields=['total_paid_amount', 'total_due_amount'])
-            
-            EnrollmentFeeHistory.objects.create(
-                enrollment = self.enrollment_emi.enrollment,
-                payment_method = self.payment_method,
-                amount = self.payment_amount,
-            )
-            self.delete()
-
-        elif self.status == 'Pending':
-            subject = f"Your payment request for EMI {self.enrollment_emi.emi_number} is pending."
-            message = f"Hi {self.enrollment_emi.enrollment.user.username},\n\nYour payment for EMI {self.enrollment_emi.emi_number} is pending.\nPlease wait for approval."
-            send_email(self.enrollment_emi.enrollment.user.email, subject, message)
-
-        elif self.status == 'Rejected':
-            subject = f"Your payment request for EMI {self.enrollment_emi.emi_number} was rejected!"
-            message = f"Hi {self.enrollment_emi.enrollment.user.username},\n\nYour payment for EMI {self.enrollment_emi.emi_number} has been rejected because your payment was not approved."
-            send_email(self.enrollment_emi.enrollment.user.email, subject, message)
-            self.delete()
-
-
-@receiver(post_delete, sender=EnrollmentRequest)
-@receiver(post_delete, sender=EnrollmentEmiPaymentRequest)
-def delete_uploaded_file(sender, instance, **kwargs):
-    if hasattr(instance, 'payment_screenshot') and instance.payment_screenshot:
-        try:
-            file_path = instance.payment_screenshot.path
-            if os.path.exists(file_path):
-                os.remove(file_path)
-        except Exception:
-            pass
-
-
+        return f"{self.enrollment.user} | {self.amount} | {self.payment_gateway}"

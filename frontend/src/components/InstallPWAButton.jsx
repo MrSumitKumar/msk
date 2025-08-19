@@ -49,12 +49,11 @@ const InstallPWAButton = () => {
   if (!isVisible || isStandalone) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-1 right-1 z-50">
       <button
         onClick={handleInstallClick}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition"
-      >
-        📲 Install App
+        className="bg-blue-600 text-white px-2 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition"
+      >📲 Install App
       </button>
     </div>
   );

@@ -1,8 +1,8 @@
 import About from './pages/About.jsx';
 import Home from './pages/Home.jsx';
 import Contact from './pages/Contact.jsx';
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
+import Login from './pages/auth/Login.jsx';
+import Register from './pages/auth/Register.jsx';
 import CourseList from './pages/Course/CourseList.jsx';
 import CourseDetail from './pages/Course/CourseDetail.jsx';
 import CourseForm from './pages/Course/CourseForm.jsx';
@@ -31,3 +31,4 @@ export const routes = [
   { path: "/courses/:slug", element: <CourseDetail /> },
 
 ];
+ 
