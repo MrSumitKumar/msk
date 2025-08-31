@@ -16,8 +16,8 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
 
   const fetchCourse = async () => {
     try {
-      const courseRes = await api.get(`/courses/${slug}/`);
-      const reviewRes = await api.get(`/courses/${slug}/reviews/`);
+      const courseRes = await axios.get(`/courses/${slug}/`);
+      const reviewRes = await axios.get(`/courses/${slug}/reviews/`);
       setCourse(courseRes.data);
       setReviews(reviewRes.data);
     } catch (err) {
@@ -43,9 +43,57 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
     <>
       <Helmet>
         <title>{course.title} - MSK Institute</title>
-        <meta name="description" content={course.description?.slice(0, 160)} />
+        <meta
+          name="description"
+          content={course.description?.slice(0, 160) || `Learn ${course.title} at MSK Institute. High-quality, hands-on coding and computer courses in Shikohabad.`}
+        />
+        <meta name="keywords" content={`${course.title}, online course, ${course.get_languages}, coding classes, MSK Institute, Shikohabad`} />
+        <meta name="author" content="MSK Institute" />
+        <meta name="robots" content="index, follow" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={`${course.title} - MSK Institute`} />
+        <meta property="og:description" content={course.description?.slice(0, 160)} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://msk.shikohabad.in/courses/${course.slug}`} />
+        <meta property="og:image" content={course.featured_image?.url} />
+        <meta property="og:locale" content="en_IN" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${course.title} - MSK Institute`} />
+        <meta name="twitter:description" content={course.description?.slice(0, 160)} />
+        <meta name="twitter:image" content={course.featured_image?.url} />
+
+        {/* Canonical */}
         <link rel="canonical" href={`https://msk.shikohabad.in/courses/${course.slug}`} />
+
+        {/* Schema.org Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Course",
+            "name": course.title,
+            "description": course.description,
+            "provider": {
+              "@type": "Organization",
+              "name": "MSK Institute",
+              "sameAs": "https://msk.shikohabad.in"
+            },
+            "educationalCredentialAwarded": "Certificate",
+            "timeRequired": `${course.duration}M`,
+            "inLanguage": course.get_languages,
+            "offers": {
+              "@type": "Offer",
+              "price": course.price,
+              "priceCurrency": "INR",
+              "url": `https://msk.shikohabad.in/courses/${course.slug}`,
+              "availability": "https://schema.org/InStock"
+            }
+          })}
+        </script>
       </Helmet>
+
 
       <div className="bg-gray-900 min-h-screen px-5 md:px-8 py-10 text-white">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -111,7 +159,7 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
             <ul className="space-y-4 text-sm">
               <li className="flex justify-between border-b border-gray-700 py-2">
                 <span className="flex items-center gap-2"><CalendarDays className="w-4 h-4" /> Duration</span>
-                <span>{course.duration} Month</span>
+                <span> {course.duration} {course.duration === 1 ? "Month" : "Months"} </span>
               </li>
 
               <li className="flex justify-between border-b border-gray-700 py-2">
@@ -128,12 +176,12 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
 
               <li className="flex justify-between border-b border-gray-700 py-2">
                 <span className="flex items-center gap-2"><Users className="w-4 h-4" /> Enrolled</span>
-                <span>{course.enrollments}</span>
+                <span>{course.enrollments?.count ?? 0}</span>
               </li>
 
               <li className="flex justify-between border-b border-gray-700 py-2">
                 <span className="flex items-center gap-2"><Languages className="w-4 h-4" /> Language</span>
-                <span>{course.get_languages}</span>
+                <span>{course.languages}</span>
               </li>
             </ul>
           </div>

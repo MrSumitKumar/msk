@@ -5,7 +5,7 @@ from .models import (
     PlatformSettings, Course, CourseWhyLearn, CourseWhoCanJoin, 
     CourseCareerOpportunities, CourseRequirements, CourseWhatYouLearn, 
     CourseChapter, Enrollment, EnrollmentFeeHistory, ChapterTopic, 
-    CourseEMI, Category, Label, CourseLanguage
+    Category, Label, CourseLanguage
 )
 
 
@@ -46,7 +46,7 @@ class CourseAdmin(admin.ModelAdmin):
         'created_by__first_name',
         'created_by__last_name'
     )
-    filter_horizontal = ('language', 'single_courses')
+    filter_horizontal = ( 'categories', 'language', 'single_courses')
 
     inlines = [
         type('CourseWhyLearnInline', (BaseCourseInline,), {
@@ -120,7 +120,6 @@ class EnrollmentFeeHistoryAdmin(admin.ModelAdmin):
 
 # Register remaining simple models
 admin.site.register(ChapterTopic)
-admin.site.register(CourseEMI)
 admin.site.register(Category)
 admin.site.register(Label)
 admin.site.register(CourseLanguage)

@@ -26,6 +26,7 @@ class CustomUser(AbstractUser):
     date_of_birth = models.DateField(blank=True, null=True, verbose_name='Date of Birth')
     gender = models.CharField(max_length=10, choices=Gender.choices, null=True, blank=True)
     status = models.CharField(max_length=10, choices=Status.choices, default=Status.INACTIVE)
+    is_approved = models.BooleanField(default=False, verbose_name='Is Approved')
 
     class Meta:
         verbose_name = 'Custom User'

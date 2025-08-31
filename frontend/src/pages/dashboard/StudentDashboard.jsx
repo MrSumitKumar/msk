@@ -17,10 +17,8 @@ const StudentDashboard = () => {
       </Helmet>
 
 
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-4">Student Dashboard</h2>
-        <p>Welcome, Student. View your profile, attendance, and results here.</p>
-      </div>
+      <h2 className="text-2xl font-bold mb-4">Student Dashboard</h2>
+
     </>
   );
 };

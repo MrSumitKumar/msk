@@ -1,0 +1,38 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  min-width: 200px;
+  z-index: 50;
+  margin-top: 0.5rem;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+  display: block;
+}
+
+.dropdown .dropdown-content button {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.2s;
+}
+
+/* Animation */
+.dropdown .dropdown-content {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+  opacity: 1;
+  transform: translateY(0);
+}

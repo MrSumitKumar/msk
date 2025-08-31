@@ -159,24 +159,68 @@ const Register = () => {
   return (
     <>
       <Helmet>
+        {/* Title & Description */}
         <title>Register - MSK Institute</title>
         <meta
           name="description"
-          content="Create your MSK account to access courses, track progress, and join our learning community. Secure registration for students, teachers, and admins."
+          content="Register at MSK Institute to access computer courses, coding classes, and track your learning progress. Secure sign-up for students, teachers, and admins."
         />
+        <meta
+          name="keywords"
+          content="MSK Institute register, signup MSK Institute, student registration, teacher account creation, join MSK Shikohabad"
+        />
+        <meta name="author" content="MSK Institute" />
+
+        {/* Prevent indexing (recommended for registration pages) */}
+        <meta name="robots" content="noindex, nofollow" />
+
+        {/* Canonical */}
         <link rel="canonical" href="https://msk.shikohabad.in/register" />
-        <meta property="og:title" content="Register – MSK Portal" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Register – MSK Institute Portal" />
         <meta
           property="og:description"
-          content="Sign up for your MSK account securely. For students, teachers, and administrators."
+          content="Sign up securely at MSK Institute. For students, teachers, and administrators to join our learning community."
         />
-        <meta property="og:url" content="https://msk.shikohabad.in/register" />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://msk.shikohabad.in/register" />
+        <meta property="og:image" content="https://msk.shikohabad.in/static/images/msk-register-banner.jpg" />
+        <meta property="og:locale" content="en_IN" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Register – MSK Institute Portal" />
+        <meta
+          name="twitter:description"
+          content="Create your MSK Institute account to enroll in computer courses, coding classes, and certifications."
+        />
+        <meta name="twitter:image" content="https://msk.shikohabad.in/static/images/msk-register-banner.jpg" />
+
+        {/* Schema.org Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Register - MSK Institute",
+            "url": "https://msk.shikohabad.in/register",
+            "description": "Registration page for MSK Institute students, teachers, and admins to join and access courses.",
+            "potentialAction": {
+              "@type": "RegisterAction",
+              "target": "https://msk.shikohabad.in/register"
+            },
+            "publisher": {
+              "@type": "EducationalOrganization",
+              "name": "MSK Institute",
+              "url": "https://msk.shikohabad.in"
+            }
+          })}
+        </script>
       </Helmet>
 
-      <div className={`min-h-screen flex flex-col items-center justify-center px-4 py-12 transition-colors duration-300 ${
-        theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'
-      }`}>
+
+      <div className={`min-h-screen flex flex-col items-center justify-center px-4 py-12 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'
+        }`}>
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{
@@ -186,8 +230,8 @@ const Register = () => {
 
         <div className="relative z-10">
           <RegisterCard>
-            <RegisterForm 
-              onSubmit={handleSubmit} 
+            <RegisterForm
+              onSubmit={handleSubmit}
               loading={loading}
               referralUsername={referralUsername}
               referralPosition={referralPosition}

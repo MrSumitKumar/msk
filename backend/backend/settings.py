@@ -1,22 +1,34 @@
+# backend/backend/settings.py
+
 import os
 from pathlib import Path
 from datetime import timedelta
-
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-l3@)^b86g7567^dmoypwgcbol8mn*c@v-^2-re)#i!024)m1d6'
+
+# -------------------------
+# Load environment
+# -------------------------
+
+# Local or Production override
+if os.getenv("DJANGO_ENV") == "production":
+    load_dotenv(BASE_DIR / ".env.production", override=True)
+else:
+    load_dotenv(BASE_DIR / ".env.local", override=True)
+
+# Django settings
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "insecure-default-key")
+DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 
-DEBUG = True
-if DEBUG: ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = [ "api.shikohabad.in", "www.api.shikohabad.in" ]
 
 
 CORS_ALLOW_ALL_ORIGINS = True
-
 CORS_ALLOWED_ORIGINS = [
-    # "http://localhost:5173",
+    "http://localhost:5173",
     "https://msk.shikohabad.in",
     "https://www.msk.shikohabad.in",
 ]
@@ -31,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
+    'django_filters',
     'corsheaders',
     'users',
     'courses',
@@ -73,45 +86,43 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 
-# When DEBUG is True, it uses SQLite for local development.
-# When DEBUG is False, it uses PostgreSQL with the provided credentials for production.
+# -------------------------
+# Database
+# -------------------------
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
+if os.getenv("DJANGO_ENV") == "production":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'postgres',
-            'USER': 'masteruser',
-            'PASSWORD': '12345678',
-            'HOST': 'w3-django-project.cdxmgq9zqqlr.us-east-1.rds.amazonaws.com',
-            'PORT': '5432'
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT'),
+        }
+    }
+else:
+    # Local default SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / "db.sqlite3",
         }
     }
 
 
 
 
+# -------------------------
+# Authentication
+# -------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
+
 
 
 
@@ -121,7 +132,9 @@ USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -135,12 +148,17 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20,
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler'
 }
 
 
@@ -160,12 +178,13 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+# -------------------------
+# Email
+# -------------------------
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'iamtrynow@gmail.com'
-EMAIL_HOST_PASSWORD = 'uwpl okbl kock oeec'
-DEFAULT_FROM_EMAIL = 'MSK Institute <iamtrynow@gmail.com>'
-
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = f"MSK Institute <{EMAIL_HOST_USER}>"

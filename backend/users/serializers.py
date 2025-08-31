@@ -145,16 +145,24 @@ class UserRegistrationSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    role = serializers.CharField(source='get_role_display', read_only=True)
-    gender = serializers.CharField(source='get_gender_display', read_only=True)
-    status = serializers.CharField(source='get_status_display', read_only=True)
+    full_name = serializers.SerializerMethodField()
+    date_joined = serializers.DateTimeField(read_only=True)
+    last_login = serializers.DateTimeField(read_only=True)
+    role = serializers.ChoiceField(choices=CustomUser.Role.choices)
+    gender = serializers.ChoiceField(choices=CustomUser.Role.choices, required=False)
+    status = serializers.ChoiceField(choices=CustomUser.Status.choices)
 
     class Meta:
         model = CustomUser
         fields = [
-            'id', 'username', 'email', 'role', 'phone', 'address',
-            'picture', 'date_of_birth', 'gender', 'status', 'is_staff', 'is_superuser'
+            'id', 'username', 'email', 'full_name', 'first_name', 'last_name',
+            'role', 'phone', 'address', 'picture', 'date_of_birth', 'gender',
+            'status', 'is_staff', 'is_superuser', 'is_approved', 'date_joined',
+            'last_login'
         ]
+
+    def get_full_name(self, obj):
+        return f"{obj.first_name} {obj.last_name}".strip() or obj.username
 
 
 class UserProfileSerializer(serializers.ModelSerializer):

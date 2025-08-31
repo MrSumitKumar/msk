@@ -23,7 +23,7 @@ const ContactCards = () => {
     { 
       icon: MapPin, 
       title: "Visit Us", 
-      text: "Near Subhash Park, Station Road, Shikohabad",
+      text: "Shikohabad, Uttar Pradesh",
       href: "https://maps.google.com/?q=MSK+Institute+Shikohabad",
       color: "from-red-500 to-red-600"
     },

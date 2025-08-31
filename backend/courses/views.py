@@ -189,21 +189,6 @@ class MyCourseReviewView(generics.RetrieveAPIView):
         course = get_object_or_404(Course, slug=slug)
         return get_object_or_404(CourseReview, course=course, user=self.request.user)
 
-
-# --------------------------
-# Course EMI View
-# --------------------------
-
-class CourseEMIListView(generics.ListAPIView):
-    serializer_class = CourseEMISerializer
-    permission_classes = [permissions.AllowAny]
-
-    def get_queryset(self):
-        slug = self.kwargs['slug']
-        course = get_object_or_404(Course, slug=slug)
-        return course.emi_plans.all().order_by('total_emi')
-
-
 # --------------------------
 # Point-Based Views (Why Learn, Requirements, etc.)
 # --------------------------

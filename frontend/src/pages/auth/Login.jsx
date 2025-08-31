@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+// src/pages/auth/Login.jsx
+import { useState, useContext } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { ThemeContext } from '../../context/ThemeContext';
 import { toast } from 'react-toastify';
@@ -8,19 +8,13 @@ import LoginCard from '../../components/auth/LoginCard';
 import LoginForm from '../../components/auth/LoginForm';
 
 const Login = () => {
-  const [loginSuccess, setLoginSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const { theme } = useContext(ThemeContext);
-
-  const navigate = useNavigate();
-  const { login, user } = useAuth();
-
-  if (user) { navigate("/") }
-
+  const { login } = useAuth();
+  
   const handleLogin = async (username, password) => {
     setLoading(true);
     const success = await login(username, password);
-    setLoginSuccess(success);
     setLoading(false);
 
     if (success) {
@@ -30,33 +24,72 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (loginSuccess && user?.role) {
-      navigate(`/${user.role}-dashboard`);
-    }
-  }, [loginSuccess, user, navigate]);
 
   return (
     <>
       <Helmet>
+        {/* Title & Description */}
         <title>Login - MSK Institute</title>
         <meta
           name="description"
-          content="Access your MSK account to view dashboard, courses, and progress. Secure login for students, teachers, and admins."
+          content="Login securely to your MSK Institute account. Students, teachers, and admins can access courses, dashboards, progress tracking, and support."
         />
+        <meta
+          name="keywords"
+          content="MSK Institute login, student login, teacher login, admin portal, MSK dashboard access"
+        />
+        <meta name="author" content="MSK Institute" />
+
+        {/* Prevent indexing (recommended for login pages) */}
+        <meta name="robots" content="noindex, nofollow" />
+
+        {/* Canonical */}
         <link rel="canonical" href="https://msk.shikohabad.in/login" />
-        <meta property="og:title" content="Login – MSK Portal" />
+
+        {/* Open Graph */}
+        <meta property="og:title" content="Login – MSK Institute Portal" />
         <meta
           property="og:description"
-          content="Secure login to your MSK account. For students, teachers, and administrators."
+          content="Secure login for students, teachers, and administrators at MSK Institute."
         />
-        <meta property="og:url" content="https://msk.shikohabad.in/login" />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://msk.shikohabad.in/login" />
+        <meta property="og:image" content="https://msk.shikohabad.in/static/images/msk-login-banner.jpg" />
+        <meta property="og:locale" content="en_IN" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Login – MSK Institute Portal" />
+        <meta
+          name="twitter:description"
+          content="Access your MSK Institute account securely. For students, faculty, and administrators."
+        />
+        <meta name="twitter:image" content="https://msk.shikohabad.in/static/images/msk-login-banner.jpg" />
+
+        {/* Schema.org Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Login - MSK Institute",
+            "url": "https://msk.shikohabad.in/login",
+            "description": "Secure login page for MSK Institute students, teachers, and admins to access courses, dashboards, and progress.",
+            "potentialAction": {
+              "@type": "LoginAction",
+              "target": "https://msk.shikohabad.in/login"
+            },
+            "publisher": {
+              "@type": "EducationalOrganization",
+              "name": "MSK Institute",
+              "url": "https://msk.shikohabad.in"
+            }
+          })}
+        </script>
       </Helmet>
 
-      <div className={`min-h-screen flex items-center justify-center px-4 py-12 transition-colors duration-300 ${
-        theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'
-      }`}>
+
+      <div className={`min-h-screen flex items-center justify-center px-4 py-12 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'
+        }`}>
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
           <div className="absolute inset-0" style={{

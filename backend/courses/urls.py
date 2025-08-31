@@ -24,9 +24,6 @@ from .views import (
     PublicCourseReviewListView,
     MyCourseReviewView,
 
-    # EMI Plans
-    CourseEMIListView,
-
     # Points
     CourseWhyLearnView,
     CourseWhoCanJoinView,
@@ -75,7 +72,6 @@ urlpatterns = [
     # -------------------------------
     # 💳 EMI Plans
     # -------------------------------
-    path('<slug:slug>/emis/', CourseEMIListView.as_view(), name='course-emi-list'),
 
     # -------------------------------
     # 🧠 Course Point Info (Why Learn, etc.)

@@ -1,5 +1,6 @@
+// src/App.jsx
 import { Toaster } from 'react-hot-toast';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Footer from './components/layout/Footer';
 import { routes } from './routes';
 import { ToastContainer } from 'react-toastify';
@@ -10,23 +11,33 @@ import Header from './components/layout/Header';
 const App = () => {
   const { theme } = useContext(ThemeContext);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300">
       <Header />
 
       <div className="flex-1">
-          <Routes>
-            {routes.map(({ path, element }) => (
-              <Route key={path} path={path} element={element} />
-            ))}
-          </Routes>
+        <Routes>
+          {routes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
+        </Routes>
       </div>
 
       <Footer />
 
       {/* Notifications */}
       <ToastContainer
-        position="bottom-right"
+        position={isMobile ? "top-center" : "bottom-right"}
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -34,16 +45,7 @@ const App = () => {
         pauseOnHover
         draggable
         theme={theme}
-      />
-      <Toaster
-        position="bottom-right"
-        reverseOrder={false}
-        toastOptions={{
-          style: {
-            background: theme === 'dark' ? '#1f2937' : '#ffffff',
-            color: theme === 'dark' ? '#f9fafb' : '#111827',
-          },
-        }}
+        containerStyle={isMobile ? { marginTop: "70px" } : {}}
       />
     </div>
   );

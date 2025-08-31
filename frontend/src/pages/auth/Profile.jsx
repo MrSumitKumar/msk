@@ -1,9 +1,11 @@
+// src/pages/auth/Profile.jsx
+
 import React, { useEffect, useState, useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { User, Camera } from "lucide-react";
-import axios from "../api/axios";
-import { toast } from "react-toastify";
-import { ThemeContext } from "../context/ThemeContext";
+import { toast } from "react-hot-toast";
+import axios from "../../api/axios";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Profile = () => {
   const { theme } = useContext(ThemeContext);
@@ -22,15 +24,34 @@ const Profile = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await api.get("/auth/profile/update/", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setForm(res.data);
-      if (res.data.picture) setPreview(res.data.picture);
+      const res = await axios.get("auth/user/");
+
+      if (res.data) {
+        const userData = res.data;
+        setForm({
+          first_name: userData.first_name || "",
+          last_name: userData.last_name || "",
+          phone: userData.phone || "",
+          address: userData.address || "",
+          gender: userData.gender || "",
+          date_of_birth: userData.date_of_birth || "",
+          picture: null,
+        });
+
+        if (userData.picture) {
+          setPreview(userData.picture);
+        }
+      }
     } catch (err) {
-      toast.error("Failed to load profile.");
+      console.error("Profile fetch error:", err.response || err);
+      if (err.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        window.location.href = "/login";
+      } else {
+        toast.error(err.response?.data?.detail || "Failed to load profile.");
+      }
     }
   };
 
@@ -52,24 +73,40 @@ const Profile = () => {
     e.preventDefault();
     setLoading(true);
 
-    const data = new FormData();
-    for (let key in form) {
-      if (form[key] !== null) data.append(key, form[key]);
-    }
-
     try {
-      await api.put("/auth/profile/update/", data, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      toast.success("Profile updated successfully.");
+      const data = new FormData();
+      for (let key in form) {
+        if (
+          form[key] !== null &&
+          form[key] !== undefined &&
+          (form[key] !== "" || key === "picture")
+        ) {
+          data.append(key, form[key]);
+        }
+      }
+
+      const res = await axios.put("/auth/profile/update/", data);
+
+      if (res.data) {
+        toast.success("Profile updated successfully");
+        fetchProfile();
+      }
     } catch (err) {
-      if (err.response?.data) {
-        toast.error("Error: " + JSON.stringify(err.response.data));
+      console.error("Profile update error:", err.response || err);
+      if (err.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
+        localStorage.removeItem("access");
+        localStorage.removeItem("refresh");
+        window.location.href = "/login";
       } else {
-        toast.error("Error updating profile.");
+        const errorMessage =
+          err.response?.data?.detail ||
+          err.response?.data?.message ||
+          Object.values(err.response?.data || {})[0] ||
+          "Failed to update profile";
+        toast.error(
+          Array.isArray(errorMessage) ? errorMessage[0] : errorMessage
+        );
       }
     } finally {
       setLoading(false);
@@ -82,25 +119,33 @@ const Profile = () => {
         <title>My Profile - MSK</title>
       </Helmet>
 
-      <div className={`min-h-screen flex justify-center items-start px-4 sm:px-6 py-10 transition-colors duration-300 ${
-        theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'
-      }`}>
-        <div className={`p-6 md:p-8 rounded-2xl w-full max-w-3xl shadow-lg transition-colors duration-300 ${
-          theme === 'dark' ? 'bg-gray-900' : 'bg-white'
-        }`}>
-          <h2 className={`text-3xl font-bold text-center mb-8 ${
-            theme === 'dark' ? 'text-white' : 'text-gray-900'
-          }`}>
+      <div
+        className={`min-h-screen flex justify-center items-start px-4 sm:px-6 py-10 transition-colors duration-300 ${
+          theme === "dark" ? "bg-gray-950" : "bg-gray-50"
+        }`}
+      >
+        <div
+          className={`p-6 md:p-8 rounded-2xl w-full max-w-3xl shadow-lg transition-colors duration-300 ${
+            theme === "dark" ? "bg-gray-900" : "bg-white"
+          }`}
+        >
+          <h2
+            className={`text-3xl font-bold text-center mb-8 ${
+              theme === "dark" ? "text-white" : "text-gray-900"
+            }`}
+          >
             Update Profile
           </h2>
 
           {/* Profile Picture */}
           <div className="flex justify-center mb-8">
-            <div className={`relative w-28 h-28 rounded-full border-4 shadow-md transition-colors duration-300 ${
-              theme === 'dark' 
-                ? 'border-gray-700 bg-gray-800' 
-                : 'border-gray-300 bg-gray-100'
-            }`}>
+            <div
+              className={`relative w-28 h-28 rounded-full border-4 shadow-md transition-colors duration-300 ${
+                theme === "dark"
+                  ? "border-gray-700 bg-gray-800"
+                  : "border-gray-300 bg-gray-100"
+              }`}
+            >
               {preview ? (
                 <img
                   src={preview}
@@ -108,12 +153,16 @@ const Profile = () => {
                   className="w-full h-full object-cover rounded-full"
                 />
               ) : (
-                <div className={`w-full h-full flex items-center justify-center rounded-full ${
-                  theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'
-                }`}>
-                  <User className={`w-12 h-12 ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-500'
-                  }`} />
+                <div
+                  className={`w-full h-full flex items-center justify-center rounded-full ${
+                    theme === "dark" ? "bg-gray-700" : "bg-gray-200"
+                  }`}
+                >
+                  <User
+                    className={`w-12 h-12 ${
+                      theme === "dark" ? "text-gray-300" : "text-gray-500"
+                    }`}
+                  />
                 </div>
               )}
 
@@ -142,9 +191,9 @@ const Profile = () => {
                 onChange={handleChange}
                 required
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none transition-colors duration-300 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400' 
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                  theme === "dark"
+                    ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                    : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
                 }`}
               />
               <input
@@ -155,9 +204,9 @@ const Profile = () => {
                 onChange={handleChange}
                 required
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none transition-colors duration-300 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400' 
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                  theme === "dark"
+                    ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                    : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
                 }`}
               />
               <input
@@ -168,9 +217,9 @@ const Profile = () => {
                 onChange={handleChange}
                 required
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none transition-colors duration-300 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400' 
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                  theme === "dark"
+                    ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                    : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
                 }`}
               />
               <input
@@ -180,9 +229,9 @@ const Profile = () => {
                 value={form.address}
                 onChange={handleChange}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none transition-colors duration-300 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400' 
-                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                  theme === "dark"
+                    ? "bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+                    : "bg-white border-gray-300 text-gray-900 placeholder-gray-500"
                 }`}
               />
               <input
@@ -191,9 +240,9 @@ const Profile = () => {
                 value={form.date_of_birth || ""}
                 onChange={handleChange}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none transition-colors duration-300 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 border-gray-700 text-white' 
-                    : 'bg-white border-gray-300 text-gray-900'
+                  theme === "dark"
+                    ? "bg-gray-800 border-gray-700 text-white"
+                    : "bg-white border-gray-300 text-gray-900"
                 }`}
               />
               <select
@@ -201,14 +250,14 @@ const Profile = () => {
                 value={form.gender || ""}
                 onChange={handleChange}
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none transition-colors duration-300 ${
-                  theme === 'dark' 
-                    ? 'bg-gray-800 border-gray-700 text-white' 
-                    : 'bg-white border-gray-300 text-gray-900'
+                  theme === "dark"
+                    ? "bg-gray-800 border-gray-700 text-white"
+                    : "bg-white border-gray-300 text-gray-900"
                 }`}
               >
                 <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
               </select>
             </div>
 

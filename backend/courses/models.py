@@ -169,9 +169,6 @@ class Course(models.Model):
     discount = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
     discount_end_date = models.DateField(null=True, blank=True)
 
-    # Rating (aggregated average, 0.00 - 5.00)
-    rating = models.DecimalField(max_digits=3, decimal_places=2, default=Decimal('0.00'))
-
     # Features
     certificate = models.CharField(choices=CertificateChoices.choices, max_length=10, default=CertificateChoices.NO)
     mode = models.CharField(choices=ModeChoices.choices, max_length=10, default=ModeChoices.ONLINE)
@@ -189,63 +186,9 @@ class Course(models.Model):
     def get_absolute_url(self):
         return reverse("course_details", kwargs={'slug': self.slug})
 
-    def get_discounted_price(self, use_emi: bool = False, total_emi: Optional[int] = None) -> Decimal:
-        """
-        Return discounted price as Decimal:
-        - If use_emi=False => apply otp_discount (one-time payment discount).
-          Uses course's otp_discount if set; otherwise falls back to PlatformSettings.otp_discount or DEFAULT_OTP_DISCOUNT.
-        - If use_emi=True and total_emi provided and present in DEFAULT_EMI_DISCOUNTS => apply that EMI discount.
-        - Otherwise return base price.
-        """
-        price = Decimal(self.price or Decimal("0.00"))
-        if not use_emi:
-            # Determine OTP discount percent
-            if self.otp_discount is not None:
-                discount_pct = Decimal(self.otp_discount)
-            else:
-                settings_obj = PlatformSettings.objects.first()
-                discount_pct = Decimal(settings_obj.otp_discount) if settings_obj else DEFAULT_OTP_DISCOUNT
-
-            discounted = price - (price * discount_pct / Decimal("100.0"))
-            return discounted.quantize(Decimal("0.01"))
-        # EMI case
-        if total_emi and total_emi >= 2:
-            discount_percent = DEFAULT_EMI_DISCOUNTS.get(total_emi, Decimal("0.0"))
-            discounted = price - (price * Decimal(discount_percent) / Decimal("100.0"))
-            return discounted.quantize(Decimal("0.01"))
-        return price.quantize(Decimal("0.01"))
-
     def save(self, *args, **kwargs):
         # keep save simple; slug is generated in pre_save signal
         super().save(*args, **kwargs)
-
-
-@receiver(post_save, sender=Course)
-def create_or_update_course_emi(sender, instance: Course, created, **kwargs):
-    """
-    Ensure CourseEMI entries exist for months defined in DEFAULT_EMI_DISCOUNTS
-    and that are <= course.duration.
-    """
-    try:
-        # Only generate EMIs when price > 0 and duration allows EMIs
-        if instance.price > Decimal("0.00") and instance.duration >= 2:
-            desired_months = [m for m in DEFAULT_EMI_DISCOUNTS.keys() if m <= instance.duration]
-            # Create/update desired EMI plans
-            for months in desired_months:
-                discounted_price = instance.get_discounted_price(use_emi=True, total_emi=months)
-                emi_amount = (discounted_price / Decimal(months)).quantize(Decimal("0.01"))
-                CourseEMI.objects.update_or_create(
-                    course=instance,
-                    total_emi=months,
-                    defaults={"emi_amount": emi_amount},
-                )
-            # Remove EMI plans that are no longer desired (if any)
-            instance.emi_plans.exclude(total_emi__in=desired_months).delete()
-        else:
-            # If price is zero or duration < 2, remove any existing emi plans
-            instance.emi_plans.all().delete()
-    except Exception:
-        logger.exception("Error creating/updating EMI plans for Course id=%s", instance.pk)
 
 
 @receiver(pre_save, sender=Course)
@@ -273,18 +216,6 @@ def delete_course_image(sender, instance, **kwargs):
 # ----------------------------------
 # Supplementary Course Models
 # ----------------------------------
-
-class CourseEMI(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="emi_plans")
-    total_emi = models.PositiveIntegerField(default=0)
-    emi_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-
-    class Meta:
-        unique_together = ['course', 'total_emi']
-        ordering = ['total_emi']
-
-    def __str__(self):
-        return f"{self.course.title} - {self.total_emi} months EMI - ₹{self.emi_amount}"
 
 
 class CoursePointBase(models.Model):
@@ -364,20 +295,6 @@ class CourseReview(models.Model):
     @property
     def is_edited(self):
         return self.created_at != self.updated_at
-
-
-@receiver(post_save, sender=CourseReview)
-def update_course_rating(sender, instance, **kwargs):
-    """
-    Recalculate and update Course.rating when reviews change.
-    """
-    try:
-        avg_rating = CourseReview.objects.filter(course=instance.course).aggregate(avg=Avg("rating"))["avg"] or 0
-        instance.course.rating = round(Decimal(avg_rating), 2)
-        instance.course.save(update_fields=["rating"])
-    except Exception:
-        logger.exception("Failed updating course rating for Course id=%s", getattr(instance, 'course_id', None))
-
 
 # ----------------------------------
 # Enrollment & Payment Models
@@ -505,3 +422,5 @@ class EnrollmentFeeHistory(models.Model):
 
     def __str__(self):
         return f"{self.enrollment.user} | {self.amount} | {self.payment_gateway}"
+    
+    
