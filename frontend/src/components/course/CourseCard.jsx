@@ -9,6 +9,11 @@ const CourseCard = ({ course }) => {
   const isDefaultImage = course.featured_image_url?.includes("/media/course/poster/default.jpg");
 
   const imageUrl = isDefaultImage ? `https://placehold.co/600x400/0f172a/ffffff?text=${encodeURIComponent(course.title)}` : course.featured_image_url;
+  
+  const discountedPrice =
+    course.discount === 100 || course.price === 0
+      ? 'Free'
+      : `₹ ${Math.round(course.price * (1 - course.discount / 100))}`;
 
 
 
@@ -54,7 +59,7 @@ const CourseCard = ({ course }) => {
         <div className="flex justify-between items-center mt-3 text-sm">
           <span className={`font-semibold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'
             }`}>
-            ₹{(course.price || 0).toLocaleString("en-IN")}
+            {(discountedPrice || 0).toLocaleString("en-IN")}
           </span>
           {course.discount > 0 && (
             <div className="flex flex-col items-end">

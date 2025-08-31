@@ -105,7 +105,6 @@ class PlatformSettings(models.Model):
 
 
 
-
 # ----------------------------------
 # Core Metadata Models
 # ----------------------------------

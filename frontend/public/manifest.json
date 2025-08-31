@@ -220,5 +220,5 @@
         "client_mode": "navigate-existing"
     },
     "prefer_related_applications": false,
-    "version": "1.1.0"
+    "version": "1.1.1"
 }

@@ -116,6 +116,23 @@ class AdminCourseSerializer(serializers.ModelSerializer):
         return instance
 
 
+class PublicCourseDetailSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+    average_rating = serializers.FloatField(read_only=True)
+    total_reviews = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Course
+        fields = [
+            "id", "slug", "title", "description", "image",
+            "price", "discount_price", "duration", "certificate", 
+            "language", "level", "category", "teacher",
+            "average_rating", "total_reviews",
+            "created_at", "updated_at",
+        ]
+
+
+
 class CourseReviewSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
 
@@ -128,7 +145,7 @@ class CourseReviewSerializer(serializers.ModelSerializer):
 class ChapterTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChapterTopic
-        fields = ['id', 'title', 'video_url', 'notes_url']
+        fields = ['id', 'chapter', 'title', 'video_url', 'notes_url']
 
 
 class CourseChapterSerializer(serializers.ModelSerializer):
@@ -137,6 +154,14 @@ class CourseChapterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseChapter
         fields = ['id', 'course', 'title', 'topics']
+
+
+class CourseDetailWithChaptersSerializer(serializers.ModelSerializer):
+    chapters = CourseChapterSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Course
+        fields = "__all__"
 
 
 class CourseWhyLearnSerializer(serializers.ModelSerializer):

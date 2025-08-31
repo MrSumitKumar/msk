@@ -4,22 +4,32 @@ import axios from "../../api/axios";
 import { toast } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import {
-  Play, CalendarDays, BookOpenCheck, Users, Languages
-} from 'lucide-react';
+  Play, CalendarDays, BookOpenCheck, Users, Languages, Star,
+  PlayCircle, FileText, ChevronDown, ChevronRight, Award
+} from "lucide-react";
 
-const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
+const CourseDetail = () => {
   const { slug } = useParams();
   const [course, setCourse] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
+  const [checkEnroll, setCheckEnroll] = useState(null);
+  const [openChapter, setOpenChapter] = useState(null);
 
+  // Review form state
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+
+
+  // Fetch course details
   const fetchCourse = async () => {
     try {
-      const courseRes = await axios.get(`/courses/${slug}/`);
-      const reviewRes = await axios.get(`/courses/${slug}/reviews/`);
-      setCourse(courseRes.data);
-      setReviews(reviewRes.data);
+      const { data } = await axios.get(`/courses/${slug}/with-chapters/`);
+      setCourse(data);
+      setOpenChapter(data.chapters?.[0]?.id || null); // first chapter open
     } catch (err) {
       toast.error('Course not found');
     } finally {
@@ -27,8 +37,44 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
     }
   };
 
+  // Fetch course reviews
+  const fetchReviews = async () => {
+    try {
+      const { data } = await axios.get(`/courses/${slug}/public-reviews/`);
+      setReviews(data);
+    } catch (err) {
+      console.error("Error fetching reviews:", err);
+    }
+  };
+
+  // Submit review (for logged-in users)
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+    if (!rating || !comment.trim()) {
+      toast.error("Please add rating and comment");
+      return;
+    }
+    try {
+      setSubmitting(true);
+      await axios.post(`/courses/${slug}/reviews/`, { rating, comment });
+      toast.success("Review submitted!");
+      setRating(0);
+      setComment("");
+      fetchReviews(); // refresh reviews
+    } catch (err) {
+      toast.error("Error submitting review. Are you logged in?");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const toggleChapter = (chapterId) => {
+    setOpenChapter(openChapter === chapterId ? null : chapterId);
+  };
+
   useEffect(() => {
     fetchCourse();
+    fetchReviews();
   }, [slug]);
 
   if (loading) return <div className="text-center mt-10 text-white">Loading...</div>;
@@ -39,57 +85,103 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
       ? 'Free'
       : `₹ ${Math.round(course.price * (1 - course.discount / 100))}`;
 
+  const avgRating =
+    reviews.length > 0
+      ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
+      : null;
+
   return (
     <>
+      import {Helmet} from "react-helmet";
+
       <Helmet>
-        <title>{course.title} - MSK Institute</title>
+        {/* 🔹 Basic Meta */}
+        <title>{course.title} | MSK Institute</title>
         <meta
           name="description"
-          content={course.description?.slice(0, 160) || `Learn ${course.title} at MSK Institute. High-quality, hands-on coding and computer courses in Shikohabad.`}
+          content={
+            course.short_description ||
+            "Learn coding and computer skills with MSK Institute – practical, affordable, and career-focused courses."
+          }
         />
-        <meta name="keywords" content={`${course.title}, online course, ${course.get_languages}, coding classes, MSK Institute, Shikohabad`} />
+        <meta
+          name="keywords"
+          content={`MSK Institute, ${course.title}, ${course.category?.name || ""}, online learning, coding, programming, education`}
+        />
         <meta name="author" content="MSK Institute" />
-        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={`https://mskinstitute.in/courses/${course.slug}`} />
 
-        {/* Open Graph */}
-        <meta property="og:title" content={`${course.title} - MSK Institute`} />
-        <meta property="og:description" content={course.description?.slice(0, 160)} />
+        {/* 🔹 Open Graph / Facebook / LinkedIn */}
+        <meta property="og:title" content={`${course.title} | MSK Institute`} />
+        <meta
+          property="og:description"
+          content={
+            course.short_description ||
+            "Join MSK Institute's hands-on courses and boost your career in tech."
+          }
+        />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://msk.shikohabad.in/courses/${course.slug}`} />
-        <meta property="og:image" content={course.featured_image?.url} />
-        <meta property="og:locale" content="en_IN" />
+        <meta property="og:url" content={`https://mskinstitute.in/courses/${course.slug}`} />
+        <meta
+          property="og:image"
+          content={course.image || "https://mskinstitute.in/static/default-course.jpg"}
+        />
+        <meta property="og:site_name" content="MSK Institute" />
 
-        {/* Twitter Card */}
+        {/* 🔹 Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${course.title} - MSK Institute`} />
-        <meta name="twitter:description" content={course.description?.slice(0, 160)} />
-        <meta name="twitter:image" content={course.featured_image?.url} />
+        <meta name="twitter:title" content={`${course.title} | MSK Institute`} />
+        <meta
+          name="twitter:description"
+          content={
+            course.short_description ||
+            "Learn practical skills with MSK Institute’s affordable online courses."
+          }
+        />
+        <meta
+          name="twitter:image"
+          content={course.image || "https://mskinstitute.in/static/default-course.jpg"}
+        />
 
-        {/* Canonical */}
-        <link rel="canonical" href={`https://msk.shikohabad.in/courses/${course.slug}`} />
-
-        {/* Schema.org Structured Data */}
+        {/* 🔹 Schema.org JSON-LD for Rich Snippets */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Course",
             "name": course.title,
-            "description": course.description,
+            "description":
+              course.short_description ||
+              "Learn coding and computer skills with MSK Institute.",
             "provider": {
               "@type": "Organization",
               "name": "MSK Institute",
-              "sameAs": "https://msk.shikohabad.in"
+              "sameAs": "https://mskinstitute.in",
             },
-            "educationalCredentialAwarded": "Certificate",
-            "timeRequired": `${course.duration}M`,
-            "inLanguage": course.get_languages,
+            "educationalCredentialAwarded": course.certificate
+              ? "Certificate of Completion"
+              : "No Certificate",
             "offers": {
               "@type": "Offer",
-              "price": course.price,
+              "url": `https://mskinstitute.in/courses/${course.slug}`,
               "priceCurrency": "INR",
-              "url": `https://msk.shikohabad.in/courses/${course.slug}`,
-              "availability": "https://schema.org/InStock"
-            }
+              "price": course.discount_price || course.price || "0",
+              "availability": "https://schema.org/InStock",
+              "validFrom": new Date().toISOString(),
+            },
+            "hasCourseInstance": {
+              "@type": "CourseInstance",
+              "courseMode": "Online",
+              "duration": course.duration ? `P${course.duration}D` : "P30D", // ISO 8601 duration
+              "instructor": {
+                "@type": "Person",
+                "name": course.instructor?.name || "MSK Instructor",
+              },
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": course.average_rating || "4.5",
+              "reviewCount": course.total_reviews || "25",
+            },
           })}
         </script>
       </Helmet>
@@ -118,6 +210,7 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
               </div>
             </a>
 
+            {/* Price */}
             <div className="mt-4 flex items-center gap-4">
               <span className="text-green-400 text-2xl font-bold">{discountedPrice}</span>
               {course.discount !== 100 && course.price !== 0 && (
@@ -130,23 +223,19 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
               )}
             </div>
 
-            <div className="mt-2 flex items-center text-sm text-gray-300 gap-2">
-              <CalendarDays className="w-4 h-4" />
-              <span>10 days left at this price</span>
-            </div>
-
+            {/* Enroll */}
             <div className="mt-6">
-              {checkEnroll === null ? (
+              {checkEnroll ? (
+                <button className="w-full bg-gray-700 text-white py-3 rounded-lg cursor-not-allowed">
+                  Already Enrolled
+                </button>
+              ) : (
                 <a
                   href={`/course/checkout/${course.slug}`}
                   className="block w-full bg-indigo-600 text-white text-center font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"
                 >
                   Enroll Now
                 </a>
-              ) : (
-                <button className="w-full bg-gray-700 text-white py-3 rounded-lg cursor-not-allowed">
-                  Already Enrolled
-                </button>
               )}
             </div>
           </div>
@@ -159,30 +248,32 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
             <ul className="space-y-4 text-sm">
               <li className="flex justify-between border-b border-gray-700 py-2">
                 <span className="flex items-center gap-2"><CalendarDays className="w-4 h-4" /> Duration</span>
-                <span> {course.duration} {course.duration === 1 ? "Month" : "Months"} </span>
+                <span>{course.duration} {course.duration === 1 ? "Month" : "Months"}</span>
               </li>
-
               <li className="flex justify-between border-b border-gray-700 py-2">
-                <span className="flex items-center gap-2">
-                  <BookOpenCheck className="w-4 h-4" />
-                  {course.is_combo_course ? "Included Courses" : "Chapters"}
-                </span>
-                <span>
-                  {course.is_combo_course
-                    ? `${singleCoursesCount} Courses`
-                    : `${chaptersCount} Chapters`}
-                </span>
+                <span className="flex items-center gap-2"><BookOpenCheck className="w-4 h-4" /> Chapters</span>
+                <span>{course.chapters?.length || 0}</span>
               </li>
-
               <li className="flex justify-between border-b border-gray-700 py-2">
                 <span className="flex items-center gap-2"><Users className="w-4 h-4" /> Enrolled</span>
                 <span>{course.enrollments?.count ?? 0}</span>
               </li>
-
               <li className="flex justify-between border-b border-gray-700 py-2">
                 <span className="flex items-center gap-2"><Languages className="w-4 h-4" /> Language</span>
-                <span>{course.languages}</span>
+                <span>{course.language}</span>
               </li>
+              {course.certificate && (
+                <li className="flex justify-between border-b border-gray-700 py-2">
+                  <span className="flex items-center gap-2"><Award className="w-4 h-4" /> Certificate</span>
+                  <span>Yes</span>
+                </li>
+              )}
+              {avgRating && (
+                <li className="flex justify-between border-b border-gray-700 py-2">
+                  <span className="flex items-center gap-2"><Star className="w-4 h-4 text-yellow-400" /> Rating</span>
+                  <span>{avgRating} / 5 ({reviews.length} reviews)</span>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -204,34 +295,133 @@ const CourseDetail = ({ checkEnroll, singleCoursesCount, chaptersCount }) => {
             ))}
           </div>
 
-          {/* Tab Content */}
           <div className="p-6">
             {activeTab === 'overview' && (
               <div>
                 <h2 className="text-lg font-semibold mb-3">Course Description</h2>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {course.description}
-                </p>
+                <p className="text-gray-300 text-sm leading-relaxed">{course.description}</p>
               </div>
             )}
 
             {activeTab === 'curriculum' && (
               <div>
-                <h2 className="text-lg font-semibold mb-3">Curriculum</h2>
-                <p className="text-gray-400">[TODO: Show curriculum details here]</p>
+                <h2 className="text-xl font-bold mb-5 text-gray-100">📖 Curriculum</h2>
+
+                {course.chapters?.length > 0 ? (
+                  <div className="space-y-3">
+                    {course.chapters.map((chapter) => (
+                      <div
+                        key={chapter.id}
+                        className="bg-gray-800 rounded-xl shadow-md overflow-hidden"
+                      >
+                        {/* Chapter Header */}
+                        <button
+                          onClick={() => toggleChapter(chapter.id)}
+                          className="w-full flex items-center justify-between px-5 py-3 text-left text-gray-200 font-semibold hover:bg-gray-700 transition"
+                        >
+                          <span>{chapter.title}</span>
+                          {openChapter === chapter.id ? (
+                            <ChevronDown className="w-5 h-5 text-gray-400" />
+                          ) : (
+                            <ChevronRight className="w-5 h-5 text-gray-400" />
+                          )}
+                        </button>
+
+                        {/* Topics */}
+                        {openChapter === chapter.id && (
+                          <div className="px-6 py-3 space-y-3 border-t border-gray-700">
+                            {chapter.topics?.length > 0 ? (
+                              chapter.topics.map((topic) => (
+                                <div
+                                  key={topic.id}
+                                  className="flex items-center justify-between bg-gray-700 p-3 rounded-lg hover:bg-gray-600 transition"
+                                >
+                                  <span className="text-gray-200 text-sm font-medium">
+                                    {topic.title}
+                                  </span>
+                                  <div className="flex items-center gap-3">
+                                    {topic.video_url && (
+                                      <a
+                                        href={topic.video_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-green-400 hover:text-green-300"
+                                        title="Watch Video"
+                                      >
+                                        <PlayCircle className="w-5 h-5" />
+                                      </a>
+                                    )}
+                                    {topic.notes_url && (
+                                      <a
+                                        href={topic.notes_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-400 hover:text-blue-300"
+                                        title="View Notes"
+                                      >
+                                        <FileText className="w-5 h-5" />
+                                      </a>
+                                    )}
+                                  </div>
+                                </div>
+                              ))
+                            ) : (
+                              <p className="text-gray-400 text-sm">No topics available</p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-400">No chapters available</p>
+                )}
               </div>
             )}
 
             {activeTab === 'reviews' && (
               <div>
                 <h2 className="text-lg font-semibold mb-3">Student Feedback</h2>
+
+                {/* Review Form (for logged-in users) */}
+                <form onSubmit={handleSubmitReview} className="mb-6 space-y-3 bg-gray-700 p-4 rounded-lg">
+                  <label className="block text-sm font-medium">Your Rating</label>
+                  <select
+                    value={rating}
+                    onChange={(e) => setRating(Number(e.target.value))}
+                    className="w-full p-2 rounded bg-gray-800 text-white"
+                  >
+                    <option value="0">Select rating</option>
+                    {[1, 2, 3, 4, 5].map((r) => (
+                      <option key={r} value={r}>{r}</option>
+                    ))}
+                  </select>
+
+                  <textarea
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Write your review..."
+                    rows={3}
+                    className="w-full p-2 rounded bg-gray-800 text-white"
+                  />
+
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded font-semibold"
+                  >
+                    {submitting ? "Submitting..." : "Submit Review"}
+                  </button>
+                </form>
+
+                {/* Review List */}
                 {reviews.length === 0 ? (
                   <p className="text-gray-400">No reviews yet.</p>
                 ) : (
                   <ul className="space-y-4">
                     {reviews.map((review, idx) => (
                       <li key={idx} className="bg-gray-700 p-4 rounded-md text-sm text-white">
-                        <p className="font-bold">{review.reviewer_name}</p>
+                        <p className="font-bold">{review.user?.full_name || "Anonymous"}</p>
                         <p className="text-yellow-400">Rating: {review.rating} / 5</p>
                         <p className="mt-2 text-gray-200">{review.comment}</p>
                       </li>

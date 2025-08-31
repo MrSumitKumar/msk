@@ -1,6 +1,6 @@
 // public/sw.js
 
-const CACHE_VERSION = 'v-1.1.0'; // Har nayi release par badlo
+const CACHE_VERSION = 'v-1.1.1'; // Har nayi release par badlo
 // Increment version with every deployment
 
 const CACHE_NAME = `msk-institute-${CACHE_VERSION}`;

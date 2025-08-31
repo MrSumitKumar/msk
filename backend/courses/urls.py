@@ -1,42 +1,6 @@
 from django.urls import path
-from .views import (
-    # Courses
-    CourseListAPIView,
-    PublicCourseDetailAPIView,
-    CourseRetrieveByIDAPIView,
-    CourseCreateAPIView,
-    CourseDetailBySlugAdminAPIView,
-    CourseUpdateAPIView,
-    CourseDeleteAPIView,
+from .views import *
 
-    # Meta data
-    CategoryListAPIView,
-    CourseLevelListAPIView,
-    CourseLanguageListAPIView,
-
-    # Excel import/export
-    CourseBulkUploadView,
-    CourseExportView,
-    CourseTemplateDownloadView,
-
-    # Reviews
-    CourseReviewListCreateView,
-    PublicCourseReviewListView,
-    MyCourseReviewView,
-
-    # Points
-    CourseWhyLearnView,
-    CourseWhoCanJoinView,
-    CourseCareerOpportunitiesView,
-    CourseRequirementsView,
-    CourseWhatYouLearnView,
-
-    # Chapters & Topics
-    CourseChapterListCreateView,
-    CourseChapterRetrieveUpdateDeleteView,
-    ChapterTopicListCreateView,
-    ChapterTopicRetrieveUpdateDeleteView,
-)
 
 urlpatterns = [
 
@@ -44,7 +8,6 @@ urlpatterns = [
     # ⚙️ Admin/Teacher course CRUD
     # -------------------------------
     path('create/', CourseCreateAPIView.as_view(), name='course-create'),
-    path('<slug:slug>/detail/', CourseDetailBySlugAdminAPIView.as_view(), name='course-detail-admin'),
     path('<slug:slug>/update/', CourseUpdateAPIView.as_view(), name='course-update'),
     path('<slug:slug>/delete/', CourseDeleteAPIView.as_view(), name='course-delete'),
 
@@ -65,13 +28,9 @@ urlpatterns = [
     # -------------------------------
     # ⭐ Reviews
     # -------------------------------
-    path('<slug:slug>/reviews/', CourseReviewListCreateView.as_view(), name='course-reviews'),
+    path('<slug:slug>/reviews/', CourseReviewListCreateView.as_view(), name='course-reviews'),  # list + create
+    path('<slug:slug>/reviews/me/', CourseReviewRetrieveUpdateDeleteView.as_view(), name='course-my-review'),  # update + delete user’s own review
     path('<slug:slug>/public-reviews/', PublicCourseReviewListView.as_view(), name='public-course-reviews'),
-    path('<slug:slug>/my-review/', MyCourseReviewView.as_view(), name='my-course-review'),
-
-    # -------------------------------
-    # 💳 EMI Plans
-    # -------------------------------
 
     # -------------------------------
     # 🧠 Course Point Info (Why Learn, etc.)
@@ -83,21 +42,21 @@ urlpatterns = [
     path('<int:course_id>/what-you-learn/', CourseWhatYouLearnView.as_view(), name='course-what-you-learn'),
 
     # -------------------------------
-    # 📚 Chapters
+    # 📚 Chapters (Admin/Teacher)
     # -------------------------------
     path('<int:course_id>/chapters/', CourseChapterListCreateView.as_view(), name='chapter-list-create'),
-    path('chapters/<int:pk>/', CourseChapterRetrieveUpdateDeleteView.as_view(), name='chapter-detail'),
+    path('chapters/<int:pk>/', CourseChapterRetrieveUpdateDeleteView.as_view(), name='chapter-detail-admin'),
 
     # -------------------------------
-    # 📖 Topics
+    # 📖 Topics (Admin/Teacher)
     # -------------------------------
     path('<int:chapter_id>/topics/', ChapterTopicListCreateView.as_view(), name='topic-list-create'),
-    path('topics/<int:pk>/', ChapterTopicRetrieveUpdateDeleteView.as_view(), name='topic-detail'),
+    path('topics/<int:pk>/', ChapterTopicRetrieveUpdateDeleteView.as_view(), name='topic-detail-admin'),
 
     # -------------------------------
-    # 🔍 Public course browsing (leave <slug:slug> LAST)
+    # 🔍 Public course browsing
     # -------------------------------
     path('', CourseListAPIView.as_view(), name='course-list'),
-    path('id/<int:id>/', CourseRetrieveByIDAPIView.as_view(), name='course-detail-by-id'),
     path('<slug:slug>/', PublicCourseDetailAPIView.as_view(), name='course-detail'),
+    path('<slug:slug>/with-chapters/', PublicCourseWithChaptersAPIView.as_view(), name='course-detail-with-chapters'),
 ]

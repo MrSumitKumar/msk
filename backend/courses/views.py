@@ -18,6 +18,8 @@ from .filters import CourseFilter
 import pandas as pd
 from io import BytesIO
 from decimal import Decimal
+from rest_framework.permissions import AllowAny
+from django.db.models import Prefetch
 
 
 # --------------------------
@@ -32,6 +34,23 @@ class IsTeacherOrAdmin(permissions.BasePermission):
         return request.user.role == 'admin' or obj.created_by == request.user
 
 
+class AllowAnyReadOnlyOrTeacherAdmin(permissions.BasePermission):
+    """
+    - बिना login वाला user भी READ कर सकता है (GET/HEAD/OPTIONS)।
+    - WRITE (POST, PUT, PATCH, DELETE) केवल Teacher/Admin कर सकते हैं।
+    """
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True   # anyone can read
+        return request.user.is_authenticated and request.user.role in ['admin', 'teacher']
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return request.user.role == 'admin' or obj.created_by == request.user
+    
+
 # --------------------------
 # Filters & Pagination
 # --------------------------
@@ -41,7 +60,7 @@ class CourseFilterMixin:
     search_fields = ['title', 'description', 'created_by__username', 'language__name', 'categories__name', 'level__name']
     filterset_fields = ['categories', 'level', 'language', 'mode', 'course_type', 'certificate']
     filterset_class = CourseFilter
-    ordering_fields = ['price', 'rating', 'created_at']
+    ordering_fields = ['price', 'created_at']
 
 
 class CoursePagination(PageNumberPagination):
@@ -61,17 +80,27 @@ class CourseListAPIView(CourseFilterMixin, generics.ListAPIView):
 
 
 class PublicCourseDetailAPIView(generics.RetrieveAPIView):
-    queryset = Course.objects.filter(status='PUBLISH')
-    serializer_class = CourseSerializer
+    serializer_class = PublicCourseDetailSerializer
+    lookup_field = "slug"
+    queryset = Course.objects.all()
+
+    def get_object(self):
+        course = super().get_object()
+        # annotate reviews
+        course.average_rating = CourseReview.objects.filter(course=course).aggregate(Avg('rating'))['rating__avg'] or 0
+        course.total_reviews = CourseReview.objects.filter(course=course).count()
+        return course
+
+
+class PublicCourseWithChaptersAPIView(generics.RetrieveAPIView):
+    serializer_class = CourseDetailWithChaptersSerializer
     permission_classes = [permissions.AllowAny]
     lookup_field = 'slug'
 
-
-class CourseRetrieveByIDAPIView(generics.RetrieveAPIView):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    lookup_field = 'id'
+    def get_queryset(self):
+        return Course.objects.filter(status='PUBLISH').prefetch_related(
+            Prefetch('chapters', queryset=CourseChapter.objects.prefetch_related('topics'))
+        )
 
 
 # --------------------------
@@ -81,13 +110,6 @@ class CourseRetrieveByIDAPIView(generics.RetrieveAPIView):
 class CourseCreateAPIView(generics.CreateAPIView):
     serializer_class = CourseCreateSerializer
     permission_classes = [IsTeacherOrAdmin]
-
-
-class CourseDetailBySlugAdminAPIView(generics.RetrieveAPIView):
-    queryset = Course.objects.all()
-    serializer_class = CourseSerializer
-    permission_classes = [IsTeacherOrAdmin]
-    lookup_field = 'slug'
 
 
 class CourseUpdateAPIView(generics.UpdateAPIView):
@@ -127,67 +149,53 @@ class CourseLanguageListAPIView(generics.ListAPIView):
 # Course Review APIs
 # --------------------------
 
-class CourseReviewListCreateView(generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+class CourseReviewListCreateView(generics.ListCreateAPIView):
+    """
+    GET  -> List reviews for a course
+    POST -> Create a new review (one per user per course)
+    """
     serializer_class = CourseReviewSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get_queryset(self, course):
-        return CourseReview.objects.filter(course=course)
+    def get_queryset(self):
+        course = get_object_or_404(Course, slug=self.kwargs['slug'])
+        return CourseReview.objects.filter(course=course).select_related('user').order_by('-created_at')
 
-    def get_course(self):
-        return get_object_or_404(Course, slug=self.kwargs['slug'])
+    def perform_create(self, serializer):
+        course = get_object_or_404(Course, slug=self.kwargs['slug'])
+        if CourseReview.objects.filter(course=course, user=self.request.user).exists():
+            raise ValidationError({"detail": "You have already reviewed this course."})
+        serializer.save(user=self.request.user, course=course)
 
-    def get(self, request, slug):
-        course = self.get_course()
-        reviews = self.get_queryset(course)
-        serializer = self.serializer_class(reviews, many=True)
-        return Response(serializer.data)
 
-    def post(self, request, slug):
-        course = self.get_course()
-        if CourseReview.objects.filter(course=course, user=request.user).exists():
-            return Response({"detail": "You have already reviewed this course."}, status=400)
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user, course=course)
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+class CourseReviewRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    PUT/PATCH -> Update user's own review
+    DELETE    -> Delete user's own review
+    """
+    serializer_class = CourseReviewSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def put(self, request, slug):
-        course = self.get_course()
-        review = get_object_or_404(CourseReview, course=course, user=request.user)
-        serializer = self.serializer_class(review, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=400)
-
-    def delete(self, request, slug):
-        course = self.get_course()
-        review = get_object_or_404(CourseReview, course=course, user=request.user)
-        review.delete()
-        return Response(status=204)
+    def get_queryset(self):
+        course = get_object_or_404(Course, slug=self.kwargs['slug'])
+        return CourseReview.objects.filter(course=course, user=self.request.user)
 
 
 class PublicCourseReviewListView(generics.ListAPIView):
+    """
+    Public view: Anyone can see course reviews (read-only).
+    """
     serializer_class = CourseReviewSerializer
-    permission_classes = [permissions.AllowAny]
-    pagination_class = PageNumberPagination
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
-        slug = self.kwargs['slug']
+        slug = self.kwargs.get('slug')
         course = get_object_or_404(Course, slug=slug)
-        return CourseReview.objects.filter(course=course).select_related('user').order_by('-created_at')
+        return CourseReview.objects.filter(course=course).order_by('-created_at')
 
 
-class MyCourseReviewView(generics.RetrieveAPIView):
-    permission_classes = [permissions.IsAuthenticated]
-    serializer_class = CourseReviewSerializer
 
-    def get_object(self):
-        slug = self.kwargs['slug']
-        course = get_object_or_404(Course, slug=slug)
-        return get_object_or_404(CourseReview, course=course, user=self.request.user)
+
 
 # --------------------------
 # Point-Based Views (Why Learn, Requirements, etc.)
@@ -231,7 +239,7 @@ class CourseWhatYouLearnView(CoursePointBaseViewMixin, generics.ListCreateAPIVie
 
 
 # --------------------------
-# Chapters & Topics
+# Chapters & Topics For Teacher/Admin
 # --------------------------
 
 class CourseChapterListCreateView(generics.ListCreateAPIView):
@@ -270,6 +278,9 @@ class ChapterTopicRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView
     queryset = ChapterTopic.objects.all()
     serializer_class = ChapterTopicSerializer
     permission_classes = [IsTeacherOrAdmin]
+
+
+
 
 
 # --------------------------
