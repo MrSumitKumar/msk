@@ -132,7 +132,6 @@ class PublicCourseDetailSerializer(serializers.ModelSerializer):
         ]
 
 
-
 class CourseReviewSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
 
@@ -146,6 +145,7 @@ class ChapterTopicSerializer(serializers.ModelSerializer):
     class Meta:
         model = ChapterTopic
         fields = ['id', 'chapter', 'title', 'video_url', 'notes_url']
+        
 
 
 class CourseChapterSerializer(serializers.ModelSerializer):
@@ -155,6 +155,11 @@ class CourseChapterSerializer(serializers.ModelSerializer):
         model = CourseChapter
         fields = ['id', 'course', 'title', 'topics']
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['topics'] = sorted(representation['topics'], key=lambda x: x['id'])
+        return representation
+
 
 class CourseDetailWithChaptersSerializer(serializers.ModelSerializer):
     chapters = CourseChapterSerializer(many=True, read_only=True)
@@ -162,6 +167,11 @@ class CourseDetailWithChaptersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = "__all__"
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['chapters'] = sorted(representation['chapters'], key=lambda x: x['id'])
+        return representation
 
 
 class CourseWhyLearnSerializer(serializers.ModelSerializer):

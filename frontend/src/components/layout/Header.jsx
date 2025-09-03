@@ -20,6 +20,7 @@ import {
   Sun,
   Moon,
   NotebookTabs,
+  Layers,
 } from "lucide-react";
 
 const Header = () => {
@@ -90,11 +91,10 @@ const Header = () => {
         {/* Logo */}
         <Link
           to="/"
-          className={`text-xl font-bold tracking-wide transition-colors duration-300 ${
-            theme === "dark"
+          className={`text-xl font-bold tracking-wide transition-colors duration-300 ${theme === "dark"
               ? "text-white hover:text-blue-400"
               : "text-gray-900 hover:text-blue-600"
-          }`}
+            }`}
         >
           MSK
         </Link>
@@ -173,19 +173,17 @@ const Header = () => {
                   <img
                     src={user.image}
                     alt="User Avatar"
-                    className={`w-8 h-8 rounded-full object-cover border-2 ${
-                      theme === "dark"
+                    className={`w-8 h-8 rounded-full object-cover border-2 ${theme === "dark"
                         ? "border-gray-600"
                         : "border-gray-300"
-                    }`}
+                      }`}
                   />
                 ) : (
                   <User
-                    className={`w-8 h-8 rounded-full p-1 ${
-                      theme === "dark"
+                    className={`w-8 h-8 rounded-full p-1 ${theme === "dark"
                         ? "bg-gray-700 text-white"
                         : "bg-gray-200 text-gray-600"
-                    }`}
+                      }`}
                   />
                 )}
               </button>
@@ -288,11 +286,11 @@ const Header = () => {
             <span className="text-xs">Notes</span>
           </Link>
           <Link
-            to="/contact"
+            to="/projects"
             className="flex flex-col items-center hover:text-blue-600 dark:hover:text-blue-400"
           >
-            <Mail className="h-5 w-5" />
-            <span className="text-xs">Contact</span>
+            <Layers className="h-5 w-5" />
+            <span className="text-xs">Projects</span>
           </Link>
 
           {/* Mobile Profile Dropdown */}

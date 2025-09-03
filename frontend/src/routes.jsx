@@ -16,11 +16,15 @@ import UserManagement from './components/admin/UserManagement.jsx';
 import Reports from './components/admin/Reports.jsx';
 import CourseManagement from './components/admin/CourseManagement.jsx';
 import Notes from './pages/Notes.jsx';
+import Projects from './pages/projects/Projects.jsx';
+import ProjectDetail from './pages/projects/ProjectDetail.jsx';
 
 export const routes = [
   { path: "/", element: <Home /> },
   { path: "/about", element: <About /> },
   { path: "/notes", element: <Notes /> },
+  { path: "/projects", element: <Projects /> },
+  { path: "/projects/:id", element: <ProjectDetail /> },
   { path: "/contact", element: <Contact /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },

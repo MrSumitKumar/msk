@@ -64,7 +64,7 @@ class CourseFilterMixin:
 
 
 class CoursePagination(PageNumberPagination):
-    page_size = 10
+    page_size = 12
     page_size_query_param = 'page_size'
     max_page_size = 100
 
@@ -99,7 +99,12 @@ class PublicCourseWithChaptersAPIView(generics.RetrieveAPIView):
 
     def get_queryset(self):
         return Course.objects.filter(status='PUBLISH').prefetch_related(
-            Prefetch('chapters', queryset=CourseChapter.objects.prefetch_related('topics'))
+            Prefetch(
+                'chapters',
+                queryset=CourseChapter.objects.prefetch_related(
+                    Prefetch('topics', queryset=ChapterTopic.objects.order_by('id'))
+                ).order_by('id')
+            )
         )
 
 
@@ -194,9 +199,6 @@ class PublicCourseReviewListView(generics.ListAPIView):
         return CourseReview.objects.filter(course=course).order_by('-created_at')
 
 
-
-
-
 # --------------------------
 # Point-Based Views (Why Learn, Requirements, etc.)
 # --------------------------
@@ -236,6 +238,8 @@ class CourseRequirementsView(CoursePointBaseViewMixin, generics.ListCreateAPIVie
 class CourseWhatYouLearnView(CoursePointBaseViewMixin, generics.ListCreateAPIView):
     serializer_class = CourseWhatYouLearnSerializer
     model = CourseWhatYouLearn
+
+
 
 
 # --------------------------

@@ -8,6 +8,7 @@ import {
   PlayCircle, FileText, ChevronDown, ChevronRight, Award
 } from "lucide-react";
 
+
 const CourseDetail = () => {
   const { slug } = useParams();
   const [course, setCourse] = useState(null);
@@ -92,7 +93,6 @@ const CourseDetail = () => {
 
   return (
     <>
-      import {Helmet} from "react-helmet";
 
       <Helmet>
         {/* 🔹 Basic Meta */}
