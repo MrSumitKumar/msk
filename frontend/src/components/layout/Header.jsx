@@ -135,6 +135,12 @@ const Header = () => {
             <NotebookTabs className="h-4 w-4" /> Notes
           </Link>
           <Link
+            to="/projects"
+            className={`flex items-center gap-1 transition-colors duration-300 ${hoverTextClass}`}
+          >
+            <Layers className="h-4 w-4" /> Projects
+          </Link>
+          <Link
             to="/about"
             className={`flex items-center gap-1 transition-colors duration-300 ${hoverTextClass}`}
           >

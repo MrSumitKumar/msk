@@ -63,7 +63,7 @@ const Projects = () => {
 
     return (
         <div
-            className={`min-h-screen p-6 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-black"
+            className={`min-h-screen py-5 px-30 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-black"
                 }`}
         >
             {/* Filters */}
