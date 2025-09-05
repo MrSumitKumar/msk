@@ -174,36 +174,6 @@ class CourseDetailWithChaptersSerializer(serializers.ModelSerializer):
         return representation
 
 
-class CourseWhyLearnSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CourseWhyLearn
-        fields = ['id', 'course', 'points']
-
-
-class CourseWhoCanJoinSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CourseWhoCanJoin
-        fields = ['id', 'course', 'points']
-
-
-class CourseCareerOpportunitiesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CourseCareerOpportunities
-        fields = ['id', 'course', 'points']
-
-
-class CourseRequirementsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CourseRequirements
-        fields = ['id', 'course', 'points']
-
-
-class CourseWhatYouLearnSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CourseWhatYouLearn
-        fields = ['id', 'course', 'points']
-
-
 class EnrollmentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     course = SimpleCourseSerializer(read_only=True)

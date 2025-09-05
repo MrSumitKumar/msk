@@ -73,7 +73,8 @@ class UserRegistrationView(generics.CreateAPIView):
                 text_body=f"Hi {user.first_name or user.username},\n\nWelcome to MSK Institute!",
                 html_template="emails/welcome.html",
                 context={
-                    "username": user.first_name or user.username,
+                    "first_name": user.first_name,
+                    "username": user.username,
                     "now": timezone.now(),
                 }
             )
@@ -89,8 +90,6 @@ class UserRegistrationView(generics.CreateAPIView):
         response_data = self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(response_data, status=status.HTTP_201_CREATED, headers=headers)
-
-
 
 
 class LoginAPIView(APIView):

@@ -151,7 +151,16 @@ const RegisterForm = ({ onSubmit, loading, referralUsername, referralPosition, s
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+
+    // (Optional) pre-normalize a couple of fields before sending up
+    const payloadUp = {
+      ...formData,
+      position: (formData.position || '').toUpperCase(),
+      // This will be re-validated in parent and enforced on backend.
+      auto_placement: Boolean(formData.sponsorUsername) && !formData.position,
+    };
+
+    onSubmit(payloadUp);
   };
 
   const inputClasses = `w-full px-4 py-3 rounded-lg transition-all duration-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
@@ -535,3 +544,4 @@ const RegisterForm = ({ onSubmit, loading, referralUsername, referralPosition, s
 };
 
 export default RegisterForm;
+

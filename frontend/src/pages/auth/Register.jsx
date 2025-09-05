@@ -29,7 +29,7 @@ const Register = () => {
     }
   }, [isAuthenticated, navigate]);
 
-  // If referral username exists in URL, validate sponsor
+  // Validate sponsor if referral username exists in URL
   useEffect(() => {
     if (referralUsername) {
       checkSponsor(referralUsername);
@@ -37,20 +37,22 @@ const Register = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [referralUsername]);
 
-  // Sponsor validation
   const checkSponsor = async (username) => {
     if (!username) return;
     try {
       const response = await axios.post('/auth/check-sponsor/', { username });
       if (response.data.exists) {
         setSponsorDetails(response.data.details);
+      } else {
+        setSponsorDetails(null);
       }
     } catch (error) {
       console.error('Error checking sponsor:', error);
+      setSponsorDetails(null);
     }
   };
 
-  // Form validation
+  // Client-side validation
   const validateForm = async (formData) => {
     const newErrors = {};
 
@@ -86,16 +88,11 @@ const Register = () => {
     if (!formData.password) {
       newErrors.password = 'Password is required';
     } else {
-      if (formData.password.length < 8)
-        newErrors.password = 'Password must be at least 8 characters long';
-      if (!/\d/.test(formData.password))
-        newErrors.password = 'Password must contain at least one digit';
-      if (!/[a-z]/.test(formData.password))
-        newErrors.password = 'Password must contain at least one lowercase letter';
-      if (!/[A-Z]/.test(formData.password))
-        newErrors.password = 'Password must contain at least one uppercase letter';
-      if (!/[!@#$%^&*(),.?":{}|<>]/.test(formData.password))
-        newErrors.password = 'Password must contain at least one special character';
+      if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters long';
+      if (!/\d/.test(formData.password)) newErrors.password = 'Password must contain at least one digit';
+      if (!/[a-z]/.test(formData.password)) newErrors.password = 'Password must contain at least one lowercase letter';
+      if (!/[A-Z]/.test(formData.password)) newErrors.password = 'Password must contain at least one uppercase letter';
+      if (!/[!@#$%^&*(),.?":{}|<>]/.test(formData.password)) newErrors.password = 'Password must contain at least one special character';
     }
 
     if (formData.password !== formData.confirmPassword) {
@@ -114,19 +111,26 @@ const Register = () => {
       }
     }
 
-    return Object.keys(newErrors).length === 0;
+    if (Object.keys(newErrors).length > 0) {
+      return { ok: false, errors: newErrors };
+    }
+    return { ok: true };
   };
 
   // Submit
   const handleSubmit = async (formData) => {
-    if (!(await validateForm(formData))) {
+    const { ok, errors } = await validateForm(formData);
+    if (!ok) {
       toast.error('Please fix the errors in the form');
       return;
     }
 
     setLoading(true);
     try {
-      // Build payload
+      // Build payload for API
+      const sponsorUsernameFinal = referralUsername || formData.sponsorUsername || '';
+      const positionFinal = (referralPosition || formData.position || null)?.toUpperCase() || null;
+
       const payload = {
         first_name: formData.firstName,
         last_name: formData.lastName,
@@ -134,9 +138,12 @@ const Register = () => {
         phone: formData.phone,
         password: formData.password,
         role: formData.role,
-        sponsor_username: referralUsername || formData.sponsorUsername || '',
-        position: (referralPosition || formData.position || null)?.toUpperCase() || null,
-        auto_placement: (!!(referralUsername || formData.sponsorUsername)) && !referralPosition && !formData.position,
+        sponsor_username: sponsorUsernameFinal,
+        position: positionFinal,
+        // Auto-placement is ONLY valid when sponsor exists and position is NOT set
+        auto_placement: Boolean(sponsorUsernameFinal) && !positionFinal,
+        date_of_birth: formData.dateOfBirth,
+        gender: formData.gender, 
       };
 
       const response = await axios.post('/auth/register/', payload);
@@ -149,7 +156,9 @@ const Register = () => {
       }
     } catch (error) {
       const errorMessage =
-        error.response?.data?.message || 'Registration failed. Please try again.';
+        error.response?.data?.message ||
+        error.response?.data?.detail ||
+        'Registration failed. Please try again.';
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -171,7 +180,7 @@ const Register = () => {
         />
         <meta name="author" content="MSK Institute" />
 
-        {/* Prevent indexing (recommended for registration pages) */}
+        {/* Prevent indexing */}
         <meta name="robots" content="noindex, nofollow" />
 
         {/* Canonical */}
@@ -218,14 +227,15 @@ const Register = () => {
         </script>
       </Helmet>
 
-
-      <div className={`min-h-screen flex flex-col items-center justify-center px-4 py-12 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'
-        }`}>
+      <div className={`min-h-screen flex flex-col items-center justify-center px-4 py-12 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-950' : 'bg-gray-50'}`}>
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 20% 20%, ${theme === 'dark' ? '#3B82F6' : '#60A5FA'} 0%, transparent 50%), radial-gradient(circle at 80% 80%, ${theme === 'dark' ? '#8B5CF6' : '#A78BFA'} 0%, transparent 50%)`
-          }}></div>
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 20% 20%, ${theme === 'dark' ? '#3B82F6' : '#60A5FA'} 0%, transparent 50%), radial-gradient(circle at 80% 80%, ${theme === 'dark' ? '#8B5CF6' : '#A78BFA'} 0%, transparent 50%)`
+            }}
+          />
         </div>
 
         <div className="relative z-10">

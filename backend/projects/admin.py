@@ -18,7 +18,7 @@ class LanguageAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "level", "estimated_time")
+    list_display = ("id", "title", "level")
     list_filter = ("level", "categories", "languages")
     search_fields = ("title", "description")
     ordering = ("title",)

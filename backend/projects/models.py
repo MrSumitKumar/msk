@@ -27,7 +27,6 @@ class Project(models.Model):
     categories = models.ManyToManyField(Category, related_name="projects")
     languages = models.ManyToManyField(Language, related_name="projects")
     description = models.TextField(blank=True, null=True)
-    estimated_time = models.CharField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

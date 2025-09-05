@@ -1,13 +1,7 @@
 # courses/admin.py
 
 from django.contrib import admin
-from .models import (
-    PlatformSettings, Course, CourseWhyLearn, CourseWhoCanJoin, 
-    CourseCareerOpportunities, CourseRequirements, CourseWhatYouLearn, 
-    CourseChapter, Enrollment, EnrollmentFeeHistory, ChapterTopic, 
-    Category, Label, CourseLanguage
-)
-
+from .models import *
 
 @admin.register(PlatformSettings)
 class PlatformSettingsAdmin(admin.ModelAdmin):
@@ -36,6 +30,12 @@ class BaseCourseInline(admin.TabularInline):
     extra = 1
 
 
+@admin.register(Category)
+class CourseCategoriesAdmin(admin.ModelAdmin):
+    search_fields = ['name']
+    ordering = ['name']
+
+
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['title', 'created_by', 'course_type', 'mode', 'status']
@@ -46,34 +46,35 @@ class CourseAdmin(admin.ModelAdmin):
         'created_by__first_name',
         'created_by__last_name'
     )
+    list_editable = ['status']
     filter_horizontal = ( 'categories', 'language', 'single_courses')
-
+    autocomplete_fields = ["categories"]
     inlines = [
-        type('CourseWhyLearnInline', (BaseCourseInline,), {
-            'model': CourseWhyLearn,
-            'verbose_name': "Why Learn"
-        }),
-        type('CourseWhoCanJoinInline', (BaseCourseInline,), {
-            'model': CourseWhoCanJoin,
-            'verbose_name': "Who Can Join"
-        }),
-        type('CourseCareerOpportunitiesInline', (BaseCourseInline,), {
-            'model': CourseCareerOpportunities,
-            'verbose_name': "Career Opportunities"
-        }),
-        type('CourseRequirementsInline', (BaseCourseInline,), {
-            'model': CourseRequirements,
-            'verbose_name': "Requirements"
-        }),
-        type('CourseWhatYouLearnInline', (BaseCourseInline,), {
-            'model': CourseWhatYouLearn,
-            'verbose_name': "What You Learn"
-        }),
         type('CourseChapterInline', (BaseCourseInline,), {
             'model': CourseChapter,
             'verbose_name': "Chapter"
         }),
     ]
+
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk:  # only on creation
+            obj.created_by = request.user
+        super().save_model(request, obj, form, change)
+
+    def has_change_permission(self, request, obj=None):
+        """Teachers can only edit their own courses"""
+        if request.user.role == 'TEACHER':
+            if obj is not None and obj.created_by != request.user:
+                return False
+        return super().has_change_permission(request, obj)
+
+    def has_delete_permission(self, request, obj=None):
+        """Prevent teachers from deleting courses they don’t own"""
+        if request.user.role == 'TEACHER':
+            return False
+        return super().has_delete_permission(request, obj)
+
 
 
 @admin.register(Enrollment)
@@ -89,6 +90,18 @@ class EnrollmentAdmin(admin.ModelAdmin):
         'user__last_name', 'course__title'
     ]
     ordering = ['-enrolled_at']
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.role == 'TEACHER':
+            return qs.filter(course__created_by=request.user)
+        return qs
+
+    def has_delete_permission(self, request, obj=None):
+        """Teachers cannot delete students from system, only manage enrollment"""
+        if request.user.role == 'TEACHER':
+            return False
+        return super().has_delete_permission(request, obj)
 
 
 @admin.register(EnrollmentFeeHistory)
@@ -120,6 +133,5 @@ class EnrollmentFeeHistoryAdmin(admin.ModelAdmin):
 
 # Register remaining simple models
 admin.site.register(ChapterTopic)
-admin.site.register(Category)
 admin.site.register(Label)
 admin.site.register(CourseLanguage)

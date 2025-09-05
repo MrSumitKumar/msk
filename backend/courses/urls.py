@@ -23,7 +23,7 @@ urlpatterns = [
     # -------------------------------
     path('admin/bulk-upload/', CourseBulkUploadView.as_view(), name='course-bulk-upload'),
     path('admin/export/', CourseExportView.as_view(), name='course-export'),
-    path('admin/download-template/', CourseTemplateDownloadView.as_view(), name='course-template-download'),
+    path('admin/course-template-download/', CourseTemplateDownloadView.as_view(), name='course-template-download'),
 
     # -------------------------------
     # ⭐ Reviews
@@ -31,15 +31,6 @@ urlpatterns = [
     path('<slug:slug>/reviews/', CourseReviewListCreateView.as_view(), name='course-reviews'),  # list + create
     path('<slug:slug>/reviews/me/', CourseReviewRetrieveUpdateDeleteView.as_view(), name='course-my-review'),  # update + delete user’s own review
     path('<slug:slug>/public-reviews/', PublicCourseReviewListView.as_view(), name='public-course-reviews'),
-
-    # -------------------------------
-    # 🧠 Course Point Info (Why Learn, etc.)
-    # -------------------------------
-    path('<int:course_id>/why-learn/', CourseWhyLearnView.as_view(), name='course-why-learn'),
-    path('<int:course_id>/who-can-join/', CourseWhoCanJoinView.as_view(), name='course-who-can-join'),
-    path('<int:course_id>/career-opportunities/', CourseCareerOpportunitiesView.as_view(), name='course-career-opportunities'),
-    path('<int:course_id>/requirements/', CourseRequirementsView.as_view(), name='course-requirements'),
-    path('<int:course_id>/what-you-learn/', CourseWhatYouLearnView.as_view(), name='course-what-you-learn'),
 
     # -------------------------------
     # 📚 Chapters (Admin/Teacher)

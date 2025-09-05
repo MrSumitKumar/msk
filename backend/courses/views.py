@@ -200,49 +200,6 @@ class PublicCourseReviewListView(generics.ListAPIView):
 
 
 # --------------------------
-# Point-Based Views (Why Learn, Requirements, etc.)
-# --------------------------
-
-class CoursePointBaseViewMixin:
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-    def get_queryset(self):
-        course_id = self.kwargs['course_id']
-        return self.model.objects.filter(course__id=course_id)
-
-    def perform_create(self, serializer):
-        course_id = self.kwargs['course_id']
-        serializer.save(course_id=course_id)
-
-
-class CourseWhyLearnView(CoursePointBaseViewMixin, generics.ListCreateAPIView):
-    serializer_class = CourseWhyLearnSerializer
-    model = CourseWhyLearn
-
-
-class CourseWhoCanJoinView(CoursePointBaseViewMixin, generics.ListCreateAPIView):
-    serializer_class = CourseWhoCanJoinSerializer
-    model = CourseWhoCanJoin
-
-
-class CourseCareerOpportunitiesView(CoursePointBaseViewMixin, generics.ListCreateAPIView):
-    serializer_class = CourseCareerOpportunitiesSerializer
-    model = CourseCareerOpportunities
-
-
-class CourseRequirementsView(CoursePointBaseViewMixin, generics.ListCreateAPIView):
-    serializer_class = CourseRequirementsSerializer
-    model = CourseRequirements
-
-
-class CourseWhatYouLearnView(CoursePointBaseViewMixin, generics.ListCreateAPIView):
-    serializer_class = CourseWhatYouLearnSerializer
-    model = CourseWhatYouLearn
-
-
-
-
-# --------------------------
 # Chapters & Topics For Teacher/Admin
 # --------------------------
 
@@ -356,3 +313,4 @@ class CourseTemplateDownloadView(APIView):
         )
         response['Content-Disposition'] = 'attachment; filename="course_upload_template.xlsx"'
         return response
+

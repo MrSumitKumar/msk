@@ -4,7 +4,8 @@ from .models import CustomUser
 
 class UserAdmin(BaseUserAdmin):
     model = CustomUser
-    list_display = ('username', 'first_name', 'email', 'phone', 'gender', 'role')
+    list_display = ('username', 'first_name', 'email', 'phone', 'role')
+    list_editable = ('role',)
     list_filter = ('role', 'gender', 'status')
     search_fields = ('username', 'email', 'first_name', 'phone')
     fieldsets = BaseUserAdmin.fieldsets + (

@@ -17,6 +17,7 @@ class UserRegistrationSerializer(serializers.Serializer):
         required=False,
         allow_null=True
     )
+    # NOTE: auto_placement will be honored ONLY if sponsor is provided.
     auto_placement = serializers.BooleanField(required=False, default=False)
     first_name = serializers.CharField(max_length=150)
     last_name = serializers.CharField(max_length=150, required=False, allow_blank=True)
@@ -24,6 +25,14 @@ class UserRegistrationSerializer(serializers.Serializer):
     phone = serializers.CharField(max_length=15, required=False, allow_blank=True)
     password = serializers.CharField(write_only=True)
     role = serializers.ChoiceField(choices=User.Role.choices, default=User.Role.STUDENT)
+    gender = serializers.ChoiceField(
+            choices=[("MALE", "Male"), ("FEMALE", "Female")],
+            required=False,
+            allow_null=True,
+            allow_blank=True
+        )
+    date_of_birth = serializers.DateField(required=False, allow_null=True)
+
 
     def validate(self, data):
         if data.get('position'):
@@ -32,9 +41,9 @@ class UserRegistrationSerializer(serializers.Serializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        sponsor_username = validated_data.get('sponsor_username')
+        sponsor_username = (validated_data.get('sponsor_username') or '').strip()
         position = validated_data.get('position')
-        auto_placement = validated_data.get('auto_placement', False)
+        req_auto_placement = bool(validated_data.get('auto_placement', False))
 
         # Step 1: Generate unique username
         username = generate_username(validated_data.get('first_name'))
@@ -47,20 +56,24 @@ class UserRegistrationSerializer(serializers.Serializer):
             role=validated_data.get('role', User.Role.STUDENT),
             phone=validated_data.get('phone', ''),
             first_name=validated_data['first_name'],
-            last_name=validated_data.get('last_name', '')
+            last_name=validated_data.get('last_name', ''),
+            gender=validated_data.get('gender', None),
+            date_of_birth=validated_data.get('date_of_birth', None)     
         )
 
-        # Step 3: Create MLM Member
+        # Step 3: Create MLM Member shell (no placement yet)
         new_member = Member.objects.create(user=user)
 
         # -------------------------------------------------
-        # RULE 1: No sponsor + No position
+        # RULE A: If NO sponsor is provided → DO NOT place.
+        #         Only create member profile.
+        #         (Exception: first-ever member becomes root)
         # -------------------------------------------------
-        if not sponsor_username and not position:
-            root = Member.objects.filter(head_member__isnull=True).exclude(pk=new_member.pk).first()
+        if not sponsor_username:
+            existing_root = Member.objects.filter(head_member__isnull=True).exclude(pk=new_member.pk).first()
 
-            if not root:
-                # 👉 First ever member becomes ROOT (no sponsor/head/position)
+            if not existing_root:
+                # First-ever member: keep as root (no head/sponsor/position)
                 return {
                     'success': True,
                     'user': {
@@ -78,41 +91,49 @@ class UserRegistrationSerializer(serializers.Serializer):
                     }
                 }
 
-            # If root exists → make root sponsor, and place automatically
-            sponsor_member = root
-            auto_placement = True
+            # Root exists → just profile creation; no placement/sponsor/position
+            return {
+                'success': True,
+                'user': {
+                    'role': user.role,
+                    'email': user.email,
+                    'username': user.username,
+                    'first_name': user.first_name,
+                    'last_name': user.last_name
+                },
+                'mlm': {
+                    'sponsor_username': None,
+                    'head_member': None,
+                    'position': None,
+                    'auto_placed': False
+                }
+            }
 
         # -------------------------------------------------
-        # RULE 2 & 3: Sponsor is provided
+        # RULE B: Sponsor is provided → placement allowed.
+        #         If position is absent, allow auto-placement.
         # -------------------------------------------------
-        elif sponsor_username:
-            try:
-                sponsor_user = User.objects.get(username=sponsor_username)
-                sponsor_member = sponsor_user.mlm_profile
-            except User.DoesNotExist:
-                raise serializers.ValidationError({"sponsor_username": "Invalid sponsor username."})
-            except AttributeError:
-                raise serializers.ValidationError({"sponsor_username": "Sponsor's MLM profile not found."})
+        try:
+            sponsor_user = User.objects.get(username=sponsor_username)
+            sponsor_member = sponsor_user.mlm_profile
+        except User.DoesNotExist:
+            raise serializers.ValidationError({"sponsor_username": "Invalid sponsor username."})
+        except AttributeError:
+            raise serializers.ValidationError({"sponsor_username": "Sponsor's MLM profile not found."})
 
-            # ✅ If position not given → sponsor decides placement side
-            if not position:
-                auto_placement = False  # placement via sponsor’s counts
-                position = None
-
-        # -------------------------------------------------
-        # RULE 1 (fallback): No sponsor but position is given
-        # -------------------------------------------------
+        # If explicit position given → disable auto placement
+        # If no position → enable auto placement (under sponsor)
+        if position:
+            auto_placement = False
         else:
-            sponsor_member = Member.objects.filter(head_member__isnull=True).exclude(pk=new_member.pk).first()
             auto_placement = True
 
-        # -------------------------------------------------
-        # Step 4: Placement using MLM logic
-        # -------------------------------------------------
+        # (Even if client requested auto_placement incorrectly,
+        # we enforce the above rule set based on presence of sponsor/position.)
         try:
             head_member, final_position = sponsor_member.assign_new_member(
                 new_member=new_member,
-                position=position,
+                position=position,           # may be None
                 auto_placement=auto_placement
             )
         except ValidationError as e:
@@ -121,7 +142,7 @@ class UserRegistrationSerializer(serializers.Serializer):
             raise serializers.ValidationError({"placement": str(e)})
 
         # -------------------------------------------------
-        # Step 5: Return Success Response
+        # Step 4: Success Response
         # -------------------------------------------------
         return {
             'success': True,
@@ -136,12 +157,13 @@ class UserRegistrationSerializer(serializers.Serializer):
                 'sponsor_username': sponsor_member.user.username if sponsor_member else None,
                 'head_member': head_member.user.username if head_member else None,
                 'position': final_position,
-                'auto_placed': auto_placement or not position
+                'auto_placed': auto_placement
             }
         }
 
     def to_representation(self, instance):
         return instance
+
 
 
 class UserSerializer(serializers.ModelSerializer):

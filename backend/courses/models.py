@@ -154,10 +154,11 @@ class Course(models.Model):
 
     status = models.CharField(choices=StatusChoices.choices, max_length=10, default=StatusChoices.DRAFT)
     featured_image = models.ImageField(upload_to="course/poster/", default="course/poster/default.jpg")
-    # featured_video is a YouTube URL (optional)
+
     featured_video = models.URLField(max_length=255, null=True, blank=True, validators=[validate_youtube_url])
     title = models.CharField(max_length=500, unique=True)
     description = models.TextField(null=True, blank=True)
+    readme_link = models.URLField(blank=True, null=True)
     categories = models.ManyToManyField(Category, related_name="courses", blank=True)
     level = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True, blank=True)
     language = models.ManyToManyField(CourseLanguage, blank=True, related_name="courses")
@@ -212,43 +213,6 @@ def delete_course_image(sender, instance, **kwargs):
             logger.exception("Failed to delete course image for Course id=%s", getattr(instance, 'pk', None))
 
 
-# ----------------------------------
-# Supplementary Course Models
-# ----------------------------------
-
-
-class CoursePointBase(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    points = models.CharField(max_length=300)
-
-    class Meta:
-        abstract = True
-
-
-class CourseWhyLearn(CoursePointBase):
-    def __str__(self):
-        return self.points
-
-
-class CourseWhoCanJoin(CoursePointBase):
-    def __str__(self):
-        return self.points
-
-
-class CourseCareerOpportunities(CoursePointBase):
-    def __str__(self):
-        return self.points
-
-
-class CourseRequirements(CoursePointBase):
-    def __str__(self):
-        return self.points
-
-
-class CourseWhatYouLearn(CoursePointBase):
-    def __str__(self):
-        return self.points
-
 
 class CourseChapter(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="chapters")
@@ -295,41 +259,32 @@ class CourseReview(models.Model):
     def is_edited(self):
         return self.created_at != self.updated_at
 
+
 # ----------------------------------
 # Enrollment & Payment Models
 # ----------------------------------
 
-class PaymentMethod(models.TextChoices):
-    MONTHLY = 'monthly', 'Monthly'
-    ONE_TIME = 'one_time', 'One-Time Payment'
-
-
-class EnrollmentStatus(models.TextChoices):
-    PENDING = 'Pending', 'Pending'
-    APPROVED = 'Approved', 'Approved'
-    REJECTED = 'Rejected', 'Rejected'
-
-
 class Enrollment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name="enrollments")
-    # Allow null initially; save() will populate unique enrollment_no
-    enrollment_no = models.BigIntegerField(unique=True, null=True, blank=True, default=None)
+    class PaymentMethod(models.TextChoices):
+        MONTHLY = 'monthly', 'Monthly'
+        ONE_TIME = 'one_time', 'One-Time Payment'
+    class StatusChoices(models.TextChoices):
+        PENDING = 'Pending', 'Pending'
+        APPROVED = 'Approved', 'Approved'
+        REJECTED = 'Rejected', 'Rejected'
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="enrollments")
+    course = models.ForeignKey('Course', on_delete=models.CASCADE, related_name="enrollments")
+
+    enrollment_no = models.BigIntegerField(unique=True, null=True, blank=True, default=None)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     total_due_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     total_paid_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     payment_complete = models.BooleanField(default=False)
-
-    # EMI-related fields (optional)
-    total_emi = models.PositiveIntegerField(null=True, blank=True)
-    emi = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-
     payment_method = models.CharField(max_length=20, choices=PaymentMethod.choices, default=PaymentMethod.MONTHLY)
-
     is_active = models.BooleanField(default=True)
     certificate = models.BooleanField(default=False)
-    status = models.CharField(max_length=20, choices=EnrollmentStatus.choices, default=EnrollmentStatus.PENDING)
+    status = models.CharField(max_length=20, choices=StatusChoices.choices, default=StatusChoices.PENDING)
 
     enrolled_at = models.DateField(null=True, blank=True)
     end_at = models.DateField(null=True, blank=True)
@@ -342,10 +297,8 @@ class Enrollment(models.Model):
         # Generate unique enrollment number if not present
         if not self.enrollment_no:
             enrollment_number = None
-            # generate_random_numbers should return integer-like (12 digits) — imported from backend.utils
             from backend.utils import generate_random_numbers
             enrollment_number = generate_random_numbers(12)
-            # ensure uniqueness
             while Enrollment.objects.filter(enrollment_no=enrollment_number).exists():
                 enrollment_number = generate_random_numbers(12)
             self.enrollment_no = enrollment_number
@@ -356,67 +309,26 @@ class Enrollment(models.Model):
         return "Completed" if self.payment_complete else "Pending"
 
 
-@shared_task
-def auto_reject_pending_enrollments():
-    """Reject enrollments that have been pending for more than 3 days."""
-    try:
-        three_days_ago = now() - timedelta(days=3)
-        pending_enrollments = Enrollment.objects.filter(status=EnrollmentStatus.PENDING, enrolled_at__lte=three_days_ago)
-        for enrollment in pending_enrollments:
-            enrollment.status = EnrollmentStatus.REJECTED
-            enrollment.save(update_fields=['status'])
-    except Exception:
-        logger.exception("Error auto-rejecting pending enrollments")
-
-
-class FeePaymentMethod(models.TextChoices):
-    ONLINE = 'online', 'Online'
-    OFFLINE = 'offline', 'Offline'
-
-
-class FeePaymentGateway(models.TextChoices):
-    PAYTM = 'paytm', 'Paytm'
-    PHONEPE = 'phonepe', 'PhonePe'
-    GOOGLEPAY = 'googlepay', 'Google Pay'
-    UPI = 'upi', 'UPI'
-    CASH = 'cash', 'Cash'
-    BANK = 'bank', 'Bank Transfer'
-    OTHER = 'other', 'Other'
-
-
 class EnrollmentFeeHistory(models.Model):
-    enrollment = models.ForeignKey(
-        'Enrollment',
-        on_delete=models.CASCADE,
-        related_name="fee_histories"
-    )
-    payment_method = models.CharField(
-        max_length=10,
-        choices=FeePaymentMethod.choices,
-        default=FeePaymentMethod.ONLINE
-    )
-    payment_gateway = models.CharField(
-        max_length=20,
-        choices=FeePaymentGateway.choices,
-        default=FeePaymentGateway.UPI
-    )
-    amount = models.DecimalField(
-        max_digits=10,
-        decimal_places=2,
-        default=Decimal('0.00')
-    )
-    transaction_id = models.CharField(
-        max_length=100,
-        null=True,
-        blank=True,
-        help_text="Payment transaction reference number"
-    )
-    gateway_note = models.CharField(
-        max_length=255,
-        null=True,
-        blank=True,
-        help_text="Additional details like UPI handle, bank name, etc."
-    )
+    class FeePaymentMethod(models.TextChoices):
+        ONLINE = 'online', 'Online'
+        OFFLINE = 'offline', 'Offline'
+
+    class FeePaymentGateway(models.TextChoices):
+        PAYTM = 'paytm', 'Paytm'
+        PHONEPE = 'phonepe', 'PhonePe'
+        GOOGLEPAY = 'googlepay', 'Google Pay'
+        UPI = 'upi', 'UPI'
+        CASH = 'cash', 'Cash'
+        BANK = 'bank', 'Bank Transfer'
+        OTHER = 'other', 'Other'
+
+    enrollment = models.ForeignKey('Enrollment', on_delete=models.CASCADE, related_name="fee_histories" )
+    payment_method = models.CharField(max_length=10, choices=FeePaymentMethod.choices, default=FeePaymentMethod.ONLINE )
+    payment_gateway = models.CharField(max_length=20, choices=FeePaymentGateway.choices, default=FeePaymentGateway.UPI )
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00') )
+    transaction_id = models.CharField(max_length=100, null=True, blank=True, help_text="Payment transaction reference number" )
+    gateway_note = models.CharField(max_length=255, null=True, blank=True, help_text="Additional details like UPI handle, bank name, etc." )
     paid_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

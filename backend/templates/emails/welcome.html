@@ -1,8 +1,11 @@
 <!-- templates/emails/welcome.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Welcome to MSK Institute</title>
   <style>
     body {
@@ -11,64 +14,167 @@
       margin: 0;
       padding: 0;
     }
+
     .email-container {
       max-width: 600px;
       margin: 30px auto;
       background-color: #ffffff;
-      padding: 30px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
     }
+
+    /* Header */
     .header {
       text-align: center;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #e0e0e0;
+      padding: 25px 20px;
+      background: linear-gradient(90deg, #2E86C1, #1B4F72);
     }
+
     .header h1 {
+      color: #ffffff !important;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    /* Content */
+    .content {
+      padding: 25px 30px;
+      color: #333333;
+    }
+
+    .content h3 {
+      margin-top: 0;
       color: #2E86C1;
     }
-    .content {
-      padding: 20px 0;
+
+    .highlight {
+      background-color: #f0f8ff;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: #1a1a1a;
     }
-    .footer {
-      text-align: center;
-      font-size: 13px;
-      color: #888888;
-      border-top: 1px solid #e0e0e0;
-      padding-top: 20px;
-    }
+
+    /* Buttons */
     .cta-button {
       display: inline-block;
       padding: 12px 25px;
-      background-color: #2E86C1;
-      color: #ffffff;
       text-decoration: none;
       border-radius: 5px;
-      margin-top: 15px;
+      margin: 10px 5px 0 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .cta-button.primary {
+      background-color: #2E86C1;
+      color: #ffffff !important;
+    }
+
+    .cta-button.secondary {
+      background-color: #6c757d;
+      color: #ffffff !important;
+    }
+
+    .cta-button.contact {
+      background-color: #28a745;
+      color: #ffffff !important;
+    }
+
+    .cta-button.whatsapp {
+      background-color: #25D366;
+      color: #ffffff !important;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #ffffff !important;
+      background-color: #2E86C1;
+      padding: 20px;
+    }
+
+    .footer p {
+      margin: 10px 0;
+    }
+
+    /* Dark Mode */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212 !important;
+      }
+
+      .email-container {
+        background-color: #1a1a1a !important;
+        color: #e6e6e6 !important;
+      }
+
+      .content {
+        color: #e6e6e6 !important;
+      }
+
+      .content h3 {
+        color: #4da3ff !important;
+      }
+
+      .highlight {
+        background-color: #223344 !important;
+        color: #ffffff !important;
+      }
+
+      .footer {
+        background-color: #0d2a4d !important;
+        color: #e6e6e6 !important;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="email-container">
+    <!-- Header -->
     <div class="header">
       <h1>🎓 Welcome to MSK Institute!</h1>
     </div>
 
+    <!-- Content -->
     <div class="content">
-      <p>Hi <strong>{{ username }}</strong>,</p>
+      <h3>Hi <strong>{{ first_name }}</strong>,</h3>
 
       <p>We're excited to have you onboard with us at <strong>MSK Institute</strong>! 🚀</p>
 
-      <p>You now have access to a wide variety of courses, personalized learning tools, and expert mentorship. We can’t wait to see you grow and succeed!</p>
+      <p>You now have access to a wide variety of courses, personalized learning tools, and expert mentorship. We can’t
+        wait to see you grow and succeed!</p>
+
+      <p><strong>Login Details:</strong></p>
+      <ul>
+        <li>Username: <strong>{{ username }}</strong></li>
+        <li>Login with: Username, Phone No, or Email</li>
+      </ul>
+
+      <div class="highlight">
+        <p><strong>Tip:</strong> Start your journey by exploring our beginner-friendly courses to build a strong
+          foundation.</p>
+      </div>
 
       <p>
-        <a href="https://msk.shikohabad.in/login/" class="cta-button">Start Learning Now</a>
+        <a href="https://msk.shikohabad.in/login/" class="cta-button primary">Log In</a>
+        <a href="https://msk.shikohabad.in/courses/" class="cta-button secondary">Explore Courses</a>
       </p>
     </div>
 
+    <!-- Footer -->
     <div class="footer">
-      &copy; {{ now|date:"Y" }} MSK Institute • All rights reserved.
+      <p>&copy; {{ now|date:"Y" }} MSK Institute • All rights reserved.</p>
+      <p>
+        <a href="tel:+918393042166" class="cta-button contact">📞 Call Us</a>
+        <a href="https://wa.me/918393042166" class="cta-button whatsapp">💬 WhatsApp</a>
+      </p>
     </div>
   </div>
 </body>
+
 </html>

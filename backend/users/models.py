@@ -35,3 +35,11 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return f"{self.get_full_name()} ({self.username})"
+
+    def save(self, *args, **kwargs):
+        if self.role in [self.Role.ADMIN, self.Role.TEACHER]:
+            self.is_staff = True
+        else:
+            self.is_staff = False
+        super().save(*args, **kwargs)
+
