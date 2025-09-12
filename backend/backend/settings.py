@@ -3,116 +3,149 @@
 import os
 from pathlib import Path
 from datetime import timedelta
-from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# -------------------------
+# Secret & Debug
+# -------------------------
+SECRET_KEY = "xrpc1c172j)rs0p5!4^o+sk21v(a6xq!t62nvc)7f+$!8dk_d-"
+DEBUG = False
 
 # -------------------------
-# Load environment
+# Allowed Hosts
 # -------------------------
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "api.shikohabad.in", "www.api.shikohabad.in"]
 
-# Local or Production override
-if os.getenv("DJANGO_ENV") == "production":
-    load_dotenv(BASE_DIR / ".env.production", override=True)
+# -------------------------
+# Detect Environment (Local vs Production)
+# -------------------------
+CURRENT_DOMAIN = os.getenv("CURRENT_DOMAIN", "")
+IS_PRODUCTION = CURRENT_DOMAIN in ["api.shikohabad.in", "www.api.shikohabad.in"]
+
+# -------------------------
+# CORS
+# -------------------------
+if IS_PRODUCTION:
+    CORS_ALLOWED_ORIGINS = [
+        "https://msk.shikohabad.in",
+        "https://www.msk.shikohabad.in",
+    ]
+    FRONTEND_URL = "https://msk.shikohabad.in"
 else:
-    load_dotenv(BASE_DIR / ".env.local", override=True)
+    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+    FRONTEND_URL = "http://localhost:5173"
+    
+# Additional CORS settings for development
+if not IS_PRODUCTION:
+    CORS_ALLOW_CREDENTIALS = True
+    CORS_ALLOW_METHODS = [
+        'DELETE',
+        'GET',
+        'OPTIONS',
+        'PATCH',
+        'POST',
+        'PUT',
+    ]
+    CORS_ALLOW_HEADERS = [
+        'accept',
+        'accept-encoding',
+        'authorization',
+        'content-type',
+        'dnt',
+        'origin',
+        'user-agent',
+        'x-csrftoken',
+        'x-requested-with',
+    ]
 
-# Django settings
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "insecure-default-key")
-DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 
-
-
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://msk.shikohabad.in",
-    "https://www.msk.shikohabad.in",
-]
-
-
+# -------------------------
+# Installed Apps
+# -------------------------
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
-    'django_filters',
-    'corsheaders',
-    'users',
-    'courses',
-    'mlm',
-    'notifications',
-    'django_extensions',
-    'django.contrib.sitemaps',
-    'projects'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+
+    # Third-party
+    "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",
+    "django_filters",
+    "corsheaders",
+    "django_extensions",
+    "django.contrib.sitemaps",
+    "django_crontab",
+    "nested_admin",
+
+    # Custom apps
+    "users",
+    "courses",
+    "mlm",
+    "notifications",
+    "projects",
 ]
 
+# -------------------------
+# Middleware
+# -------------------------
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
-ROOT_URLCONF = 'backend.urls'
+ROOT_URLCONF = "backend.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
-
-
+WSGI_APPLICATION = "backend.wsgi.application"
 
 # -------------------------
 # Database
 # -------------------------
-
-if os.getenv("DJANGO_ENV") == "production":
+if IS_PRODUCTION:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME'),
-            'USER': os.getenv('DB_USER'),
-            'PASSWORD': os.getenv('DB_PASSWORD'),
-            'HOST': os.getenv('DB_HOST'),
-            'PORT': os.getenv('DB_PORT'),
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "msk_shikohabad_in",
+            "USER": "msk_user",
+            "PASSWORD": "SSkk#?95postgrey",
+            "HOST": "localhost",
+            "PORT": "5432",
         }
     }
 else:
-    # Local default SQLite
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / "db.sqlite3",
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
-
-
-
 
 # -------------------------
 # Authentication
@@ -124,60 +157,68 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
-
-
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Asia/Kolkata'
+LANGUAGE_CODE = "en-us"
+TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
 USE_TZ = True
 
+# -------------------------
+# Static & Media
+# -------------------------
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+AUTH_USER_MODEL = "users.CustomUser"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-AUTH_USER_MODEL = 'users.CustomUser'
-
-
+# -------------------------
+# Django Rest Framework
+# -------------------------
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "users.authentication.EnforceSingleSessionAuthentication",
     ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 12,
-    'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',
-        'rest_framework.filters.SearchFilter',
-        'rest_framework.filters.OrderingFilter',
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 12,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
     ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
     ],
-    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler'
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "EXCEPTION_HANDLER": "rest_framework.views.exception_handler",
 }
 
-
+# -------------------------
+# JWT Authentication
+# -------------------------
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
-
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_BLACKLIST_ENABLED': True,
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
 
 AUTHENTICATION_BACKENDS = [
-    'users.backends.MultiFieldLoginBackend',
-    'django.contrib.auth.backends.ModelBackend', 
+    "users.backends.MultiFieldLoginBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
+# -------------------------
+# Cron Jobs
+# -------------------------
+CRONJOBS = [
+    ("0 0 * * 0", "django.core.management.call_command", ["flushexpiredtokens"]),
+]
 
 # -------------------------
 # Email
@@ -186,6 +227,6 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = "iamtrynow@gmail.com"
+EMAIL_HOST_PASSWORD = "uwpl okbl kock oeec"
 DEFAULT_FROM_EMAIL = f"MSK Institute <{EMAIL_HOST_USER}>"

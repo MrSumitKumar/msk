@@ -8,4 +8,20 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  server: {
+    host: true, // Listen on all local IPs
+    port: 5173,
+    strictPort: true,
+    hmr: {
+      host: 'localhost',
+      port: 5173,
+      protocol: 'ws'
+    },
+    proxy: {
+      '/auth': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
+      }
+    }
+  },
 })

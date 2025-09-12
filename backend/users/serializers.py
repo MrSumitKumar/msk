@@ -165,7 +165,6 @@ class UserRegistrationSerializer(serializers.Serializer):
         return instance
 
 
-
 class UserSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     date_joined = serializers.DateTimeField(read_only=True)

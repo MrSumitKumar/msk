@@ -1,0 +1,13 @@
+{% extends "admin/edit_inline/tabular.html" %}
+{% load i18n admin_urls static %}
+
+{% block after_field_sets %}
+    {{ block.super }}
+    {% if inline_admin_formset.formset.queryset.aggregate_sum %}
+        <tr class="total-row">
+            <td colspan="{{ inline_admin_formset.opts.num_columns }}">
+                <strong>Total Paid (₹): {{ inline_admin_formset.formset.queryset.aggregate_sum }}</strong>
+            </td>
+        </tr>
+    {% endif %}
+{% endblock %}

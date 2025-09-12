@@ -16,13 +16,12 @@ def api_root(request):
 
 urlpatterns = [
     path('', api_root),
+    path('admin/', include('nested_admin.urls')),
     path('admin/', admin.site.urls),
     path('auth/', include('users.urls')),
-    path('courses/', include('courses.urls')), 
+    path('courses/admin/', include('courses.admin_urls')),
+    path('courses/', include('courses.public_urls')),
     path('projects/', include('projects.urls')), 
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-

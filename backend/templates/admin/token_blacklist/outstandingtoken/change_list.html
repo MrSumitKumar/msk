@@ -1,0 +1,11 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block object-tools %}
+    <div>
+        <a href="{% url 'admin:clean_expired_tokens' %}" class="button">
+            🧹 Clean Expired Tokens
+        </a>
+    </div>
+    {{ block.super }}
+{% endblock %}

@@ -18,38 +18,64 @@ import CourseManagement from './components/admin/CourseManagement.jsx';
 import Notes from './pages/Notes.jsx';
 import Projects from './pages/projects/Projects.jsx';
 import ProjectDetail from './pages/projects/ProjectDetail.jsx';
+import NotFound from './pages/NotFound.jsx';
+import ForgotPassword from './pages/auth/ForgotPassword.jsx';
+import ResetPassword from './pages/auth/ResetPassword.jsx';
 
-export const routes = [
+// -----------------------------
+// Public Routes
+// -----------------------------
+export const publicRoutes = [
   { path: "/", element: <Home /> },
   { path: "/about", element: <About /> },
+  { path: "/contact", element: <Contact /> },
   { path: "/notes", element: <Notes /> },
   { path: "/projects", element: <Projects /> },
   { path: "/projects/:id", element: <ProjectDetail /> },
-  { path: "/contact", element: <Contact /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
-  
-  { path: "/profile", element: <PrivateRoute allowedRoles={["admin", "student", "teacher"]}><Profile /> </PrivateRoute> },
-  
-  // Admin Routes
-  { path: "/admin-dashboard", element: <PrivateRoute allowedRoles={["admin"]}><AdminDashboard /> </PrivateRoute> },
-  { path: "/admin/users", element: <PrivateRoute allowedRoles={["admin"]}><UserManagement /> </PrivateRoute> },
-  { path: "/users/manage", element: <PrivateRoute allowedRoles={["admin"]}><UserManagement /> </PrivateRoute> },
-  { path: "/admin/courses", element: <PrivateRoute allowedRoles={["admin", "teacher"]}><CourseManagement /> </PrivateRoute> },
-  { path: "/admin/courses/create", element: <PrivateRoute allowedRoles={["admin", "teacher"]}><CourseForm /></PrivateRoute> },
-  { path: "/admin/courses/:id", element: <PrivateRoute allowedRoles={["admin", "teacher"]}><CourseForm /></PrivateRoute> },
-  { path: "/admin/reports", element: <PrivateRoute allowedRoles={["admin"]}><Reports /> </PrivateRoute> },
-  
-  // Teacher Routes
-  { path: "/teacher-dashboard", element: <PrivateRoute allowedRoles={["teacher"]}><TeacherDashboard /> </PrivateRoute> },
-  
-  // Student Routes
-  { path: "/student-dashboard", element: <PrivateRoute allowedRoles={["student"]}><StudentDashboard /> </PrivateRoute> },
-
   { path: "/courses", element: <CourseList /> },
+  { path: "/courses/:slug", element: <CourseDetail /> },
+  { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/reset-password/:uidb64/:token", element: <ResetPassword />}
+];
+
+// -----------------------------
+// Private / Authenticated Routes
+// -----------------------------
+export const privateRoutes = [
+  { path: "/profile", element: <PrivateRoute allowedRoles={["admin", "teacher", "student"]}><Profile /></PrivateRoute> },
+
+  // Admin Routes
+  { path: "/admin-dashboard", element: <PrivateRoute allowedRoles={["admin"]}><AdminDashboard /></PrivateRoute> },
+  { path: "/admin/users", element: <PrivateRoute allowedRoles={["admin"]}><UserManagement /></PrivateRoute> },
+  { path: "/admin/courses", element: <PrivateRoute allowedRoles={["admin", "teacher"]}><CourseManagement /></PrivateRoute> },
+
+  // Standardize course management URLs
+  { path: "/admin/courses/create", element: <PrivateRoute allowedRoles={["admin","teacher"]}><CourseForm /></PrivateRoute> },
+  { path: "/admin/courses/:slug/edit", element: <PrivateRoute allowedRoles={["admin","teacher"]}><CourseForm /></PrivateRoute> },
+  
+  { path: "/admin/reports", element: <PrivateRoute allowedRoles={["admin"]}><Reports /></PrivateRoute> },
+
+  // Teacher Routes
+  { path: "/teacher-dashboard", element: <PrivateRoute allowedRoles={["teacher"]}><TeacherDashboard /></PrivateRoute> },
+
+  // Student Routes
+  { path: "/student-dashboard", element: <PrivateRoute allowedRoles={["student"]}><StudentDashboard /></PrivateRoute> },
+
+  // Courses management for Teacher/Admin (alternate routes)
   { path: "/courses/add", element: <PrivateRoute allowedRoles={["admin", "teacher"]}><CourseForm /></PrivateRoute> },
   { path: "/courses/:slug/edit", element: <PrivateRoute allowedRoles={["admin", "teacher"]}><CourseForm /></PrivateRoute> },
-  { path: "/courses/:slug", element: <CourseDetail /> },
-
 ];
- 
+
+// -----------------------------
+// Fallback 404 Route
+// -----------------------------
+export const fallbackRoute = [
+  { path: "*", element: <NotFound /> }
+];
+
+// -----------------------------
+// Combined Routes
+// -----------------------------
+export const routes = [...publicRoutes, ...privateRoutes, ...fallbackRoute];

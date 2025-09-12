@@ -1,4 +1,5 @@
 # courses/models.py
+
 from django.urls import reverse
 from django.utils.text import slugify
 from django.db.models.signals import pre_save, post_save, post_delete
@@ -15,11 +16,9 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 from django.db.models import Avg
-from django.core.validators import MinValueValidator, MaxValueValidator
 from typing import Optional
 import re
 import json
-
 
 
 User = get_user_model()
@@ -40,7 +39,6 @@ DEFAULT_EMI_DISCOUNTS = {
 
 # Default OTP discount if PlatformSettings is not present
 DEFAULT_OTP_DISCOUNT = Decimal("10.00")
-
 
 def validate_youtube_url(value):
     youtube_regex = (
@@ -104,27 +102,65 @@ class PlatformSettings(models.Model):
         verbose_name_plural = "Platform Settings"
 
 
-
 # ----------------------------------
 # Core Metadata Models
 # ----------------------------------
 
-class Category(models.Model):
+class Level(models.Model):
+    """
+    Like: Beginner, Intermediate, Beginner to Intermediate
+    """
     name = models.CharField(max_length=200, unique=True)
 
-    def __str__(self):
-        return self.name
-
-
-class Label(models.Model):
-    name = models.CharField(max_length=100)
+    class Meta:
+        verbose_name = "Level"
+        verbose_name_plural = "Levels"
+        ordering = ['name']
 
     def __str__(self):
         return self.name
 
 
-class CourseLanguage(models.Model):
-    name = models.CharField(max_length=100)
+class Category(models.Model):
+    """
+    Like: Web Designing, Software Development
+    """
+    name = models.CharField(max_length=200, unique=True)
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
+class Language(models.Model):
+    """
+    Like: Hindi, English
+    """
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        verbose_name = "Language"
+        verbose_name_plural = "Languages"
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
+
+
+class ProgrammingLanguage(models.Model):
+    """
+    Like: Python, Java
+    """
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        verbose_name = "Programming Language"
+        verbose_name_plural = "Programming Languages"
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -138,10 +174,6 @@ class Course(models.Model):
     class StatusChoices(models.TextChoices):
         PUBLISH = 'PUBLISH', 'Publish'
         DRAFT = 'DRAFT', 'Draft'
-
-    class CertificateChoices(models.TextChoices):
-        YES = 'YES', 'Yes'
-        NO = 'NO', 'No'
 
     class ModeChoices(models.TextChoices):
         ONLINE = 'ONLINE', 'Online'
@@ -159,18 +191,16 @@ class Course(models.Model):
     title = models.CharField(max_length=500, unique=True)
     description = models.TextField(null=True, blank=True)
     readme_link = models.URLField(blank=True, null=True)
-    categories = models.ManyToManyField(Category, related_name="courses", blank=True)
-    level = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True, blank=True)
-    language = models.ManyToManyField(CourseLanguage, blank=True, related_name="courses")
-    duration = models.PositiveIntegerField(default=6, validators=[MinValueValidator(1)])
+    categories = models.ManyToManyField(Category,  blank=True, related_name="courses")
+    level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, blank=True, related_name='courses')
+    language = models.ManyToManyField(Language, blank=True, related_name="courses")
+    duration = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
 
-    # Pricing
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
-    discount = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'))
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'), validators=[MinValueValidator(Decimal('0.00'))] )
+    discount = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'), validators=[MinValueValidator(Decimal('0.00')), MaxValueValidator(Decimal('100.00'))] )
     discount_end_date = models.DateField(null=True, blank=True)
 
-    # Features
-    certificate = models.CharField(choices=CertificateChoices.choices, max_length=10, default=CertificateChoices.NO)
+    certificate = models.BooleanField(default=False)
     mode = models.CharField(choices=ModeChoices.choices, max_length=10, default=ModeChoices.ONLINE)
     course_type = models.CharField(choices=CourseTypeChoices.choices, max_length=10, default=CourseTypeChoices.SINGLE)
     single_courses = models.ManyToManyField('self', blank=True, related_name="combo_courses", symmetrical=False)
@@ -180,6 +210,11 @@ class Course(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     slug = models.SlugField(unique=True, blank=True)
 
+    class Meta:
+        verbose_name = "Course"
+        verbose_name_plural = "Courses"
+        ordering = ['-created_at']
+
     def __str__(self):
         return self.title
 
@@ -187,9 +222,7 @@ class Course(models.Model):
         return reverse("course_details", kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
-        # keep save simple; slug is generated in pre_save signal
         super().save(*args, **kwargs)
-
 
 @receiver(pre_save, sender=Course)
 def generate_course_slug(sender, instance, **kwargs):
@@ -199,7 +232,6 @@ def generate_course_slug(sender, instance, **kwargs):
         while Course.objects.filter(slug=slug).exclude(pk=instance.pk).exists():
             slug = f"{base_slug}-{get_random_string(4)}"
         instance.slug = slug
-
 
 @receiver(post_delete, sender=Course)
 def delete_course_image(sender, instance, **kwargs):
@@ -211,7 +243,6 @@ def delete_course_image(sender, instance, **kwargs):
                 os.remove(file_path)
         except Exception:
             logger.exception("Failed to delete course image for Course id=%s", getattr(instance, 'pk', None))
-
 
 
 class CourseChapter(models.Model):
@@ -230,6 +261,12 @@ class ChapterTopic(models.Model):
 
     def __str__(self):
         return f"{self.chapter.course.title} - {self.chapter.title} - {self.title}"
+
+
+
+# ----------------------------------
+# Enrollment & Payment Models
+# ----------------------------------
 
 
 class CourseReview(models.Model):
@@ -268,6 +305,7 @@ class Enrollment(models.Model):
     class PaymentMethod(models.TextChoices):
         MONTHLY = 'monthly', 'Monthly'
         ONE_TIME = 'one_time', 'One-Time Payment'
+
     class StatusChoices(models.TextChoices):
         PENDING = 'Pending', 'Pending'
         APPROVED = 'Approved', 'Approved'
@@ -294,9 +332,7 @@ class Enrollment(models.Model):
 
     @transaction.atomic
     def save(self, *args, **kwargs):
-        # Generate unique enrollment number if not present
         if not self.enrollment_no:
-            enrollment_number = None
             from backend.utils import generate_random_numbers
             enrollment_number = generate_random_numbers(12)
             while Enrollment.objects.filter(enrollment_no=enrollment_number).exists():
@@ -323,15 +359,67 @@ class EnrollmentFeeHistory(models.Model):
         BANK = 'bank', 'Bank Transfer'
         OTHER = 'other', 'Other'
 
-    enrollment = models.ForeignKey('Enrollment', on_delete=models.CASCADE, related_name="fee_histories" )
-    payment_method = models.CharField(max_length=10, choices=FeePaymentMethod.choices, default=FeePaymentMethod.ONLINE )
-    payment_gateway = models.CharField(max_length=20, choices=FeePaymentGateway.choices, default=FeePaymentGateway.UPI )
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00') )
-    transaction_id = models.CharField(max_length=100, null=True, blank=True, help_text="Payment transaction reference number" )
-    gateway_note = models.CharField(max_length=255, null=True, blank=True, help_text="Additional details like UPI handle, bank name, etc." )
+    enrollment = models.ForeignKey('Enrollment', on_delete=models.CASCADE, related_name="fee_histories")
+    transaction_id = models.CharField(max_length=100, null=True, blank=True, help_text="Payment transaction reference number")
+    payment_method = models.CharField(max_length=10, choices=FeePaymentMethod.choices, default=FeePaymentMethod.ONLINE)
+    payment_gateway = models.CharField(max_length=20, choices=FeePaymentGateway.choices, default=FeePaymentGateway.UPI)
+    gateway_note = models.CharField(max_length=255, null=True, blank=True, help_text="Additional details like UPI handle, bank name, etc.")
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     paid_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.enrollment.user} | {self.amount} | {self.payment_gateway}"
-    
-    
+        return f"{self.enrollment} | {self.amount} | {self.payment_gateway}"
+
+
+class EnrollmentFeeSubmitRequest(models.Model):
+    class RequestStatus(models.TextChoices):
+        PENDING = 'pending', 'Pending'
+        APPROVED = 'approved', 'Approved'
+        REJECTED = 'rejected', 'Rejected'
+
+    enrollment = models.ForeignKey('Enrollment', on_delete=models.CASCADE, related_name="fee_submit_requests")
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_gateway = models.CharField(max_length=20, choices=EnrollmentFeeHistory.FeePaymentGateway.choices)
+    payment_method = models.CharField(max_length=10, choices=EnrollmentFeeHistory.FeePaymentMethod.choices)
+    transaction_id = models.CharField(max_length=100, null=True, blank=True)
+    gateway_note = models.CharField(max_length=255, null=True, blank=True)
+    proof_image = models.ImageField(upload_to='payment_proofs/', null=True, blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10, choices=RequestStatus.choices, default=RequestStatus.PENDING)
+    admin_note = models.TextField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.enrollment.user} | ₹{self.amount} | {self.status}"
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        old_status = None
+
+        if not is_new:
+            old_status = EnrollmentFeeSubmitRequest.objects.filter(pk=self.pk).values_list("status", flat=True).first()
+
+        super().save(*args, **kwargs)
+
+        # Only act if status just changed to APPROVED
+        if old_status != self.status and self.status == self.RequestStatus.APPROVED:
+            # 1. Create Fee History
+            EnrollmentFeeHistory.objects.create(
+                enrollment=self.enrollment,
+                payment_method=self.payment_method,
+                payment_gateway=self.payment_gateway,
+                amount=self.amount,
+                transaction_id=self.transaction_id,
+                gateway_note=self.gateway_note,
+            )
+
+            # 2. Update Enrollment amounts
+            enrollment = self.enrollment
+            enrollment.total_paid_amount += self.amount
+            enrollment.total_due_amount = max(enrollment.amount - enrollment.total_paid_amount, 0)
+
+            # If fully paid, mark as complete
+            if enrollment.total_paid_amount >= enrollment.amount:
+                enrollment.payment_complete = True
+
+            enrollment.save()

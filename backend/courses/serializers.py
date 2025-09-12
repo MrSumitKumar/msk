@@ -1,6 +1,6 @@
 # courses/serializers.py
 from rest_framework import serializers
-from .models import *
+from .models import Course, Category, Level, Language, CourseChapter, ChapterTopic, CourseReview, Enrollment, EnrollmentFeeHistory
 from django.contrib.auth import get_user_model
 from decimal import Decimal
 
@@ -15,14 +15,15 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CourseLevelSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Label
+        model = Level
         fields = ['id', 'name']
 
 
 class CourseLanguageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CourseLanguage
+        model = Language
         fields = ['id', 'name']
+
 
 
 class SimpleCourseSerializer(serializers.ModelSerializer):
@@ -42,7 +43,7 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = [
-            'id', 'course_type', 'featured_image', 'featured_image_url', 'featured_video', 'title', 'description', 'categories', 'level', 'language', 'duration', 'price', 'discount', 'discount_end_date', 'certificate', 'mode', 'single_courses', 'enrollments', 'slug', 'status', 'created_by', 'created_at', 'updated_at']
+            'id', 'course_type', 'featured_image', 'featured_image_url', 'featured_video', 'title', 'description', 'categories', 'level', 'language', 'duration', 'price', 'discount', 'discount_end_date', 'certificate', 'mode', 'single_courses', 'slug', 'status', 'created_by', 'created_at', 'updated_at']
         read_only_fields = ['slug', 'created_by', 'created_at', 'updated_at']
 
     def get_featured_image_url(self, obj):
@@ -90,7 +91,6 @@ class AdminCourseSerializer(serializers.ModelSerializer):
         write_only=True,
         required=False,
     )
-    discounted_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
@@ -114,22 +114,34 @@ class AdminCourseSerializer(serializers.ModelSerializer):
             instance.single_courses.set(single_courses)
         instance.save()
         return instance
+    
+    def get_discounted_price(self, obj):
+        if obj.discount:
+            return float(obj.price) * (1 - float(obj.discount) / 100)
+        return float(obj.price)
+
 
 
 class PublicCourseDetailSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
+    categories = CategorySerializer(many=True, read_only=True)
     average_rating = serializers.FloatField(read_only=True)
     total_reviews = serializers.IntegerField(read_only=True)
+    discount_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
         fields = [
-            "id", "slug", "title", "description", "image",
-            "price", "discount_price", "duration", "certificate", 
-            "language", "level", "category", "teacher",
+            "id", "slug", "title", "description", "featured_image",
+            "price", "discount", "discount_price", "duration", "certificate", 
+            "language", "level", "categories", "created_by",
             "average_rating", "total_reviews",
             "created_at", "updated_at",
         ]
+
+    def get_discount_price(self, obj):
+        if obj.discount:
+            return float(obj.price) * (1 - float(obj.discount) / 100)
+        return float(obj.price)
 
 
 class CourseReviewSerializer(serializers.ModelSerializer):
@@ -174,6 +186,10 @@ class CourseDetailWithChaptersSerializer(serializers.ModelSerializer):
         return representation
 
 
+
+
+
+
 class EnrollmentSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     course = SimpleCourseSerializer(read_only=True)
@@ -188,7 +204,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'user', 'course', 'course_id', 'enrollment_no',
             'amount', 'total_due_amount', 'total_paid_amount',
-            'payment_complete', 'total_emi', 'emi', 'payment_method',
+            'payment_complete', 'payment_method',
             'status', 'is_active', 'certificate',
             'enrolled_at', 'end_at'
         ]
@@ -199,3 +215,4 @@ class EnrollmentFeeHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = EnrollmentFeeHistory
         fields = ['id', 'enrollment', 'payment_method', 'payment_gateway', 'amount', 'paid_at']
+

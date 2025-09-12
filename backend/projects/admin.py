@@ -1,19 +1,6 @@
 from django.contrib import admin
-from .models import Category, Language, Project
+from .models import Project
 
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("id", "name")
-    search_fields = ("name",)
-    ordering = ("name",)
-
-
-@admin.register(Language)
-class LanguageAdmin(admin.ModelAdmin):
-    list_display = ("id", "name")
-    search_fields = ("name",)
-    ordering = ("name",)
 
 
 @admin.register(Project)

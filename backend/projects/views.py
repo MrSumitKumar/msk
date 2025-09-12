@@ -1,19 +1,16 @@
 from rest_framework import viewsets, permissions, filters
-from django_filters.rest_framework import DjangoFilterBackend
-from .models import Category, Language, Project
+from .models import Category, ProgrammingLanguage, Project
 from .serializers import CategorySerializer, LanguageSerializer, ProjectSerializer
+import django_filters
+
 
 
 class ReadOnlyOrAdmin(permissions.BasePermission):
-    """
-    Custom permission: Read-only for everyone, write access only for admin users.
-    """
-
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
         return request.user and request.user.is_staff
-
+    
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -26,7 +23,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class LanguageViewSet(viewsets.ModelViewSet):
-    queryset = Language.objects.all()
+    queryset = ProgrammingLanguage.objects.all()
     serializer_class = LanguageSerializer
     permission_classes = [ReadOnlyOrAdmin]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -35,18 +32,23 @@ class LanguageViewSet(viewsets.ModelViewSet):
     ordering = ["name"]
 
 
+class ProjectFilter(django_filters.FilterSet):
+    categories = django_filters.BaseInFilter(field_name="categories__id", lookup_expr="in")
+    languages = django_filters.BaseInFilter(field_name="languages__id", lookup_expr="in")
+
+    class Meta:
+        model = Project
+        fields = ["level", "categories", "languages"]
+
+
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [ReadOnlyOrAdmin]
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_class = ProjectFilter
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, django_filters.rest_framework.DjangoFilterBackend]
 
-    # Filtering support
-    filterset_fields = ["level", "categories", "languages"]
-
-    # Search support
     search_fields = ["title", "description"]
-
-    # Ordering support
-    ordering_fields = ["title", "estimated_time"]
+    ordering_fields = ["title", "created_at"]
     ordering = ["title"]
+

@@ -1,8 +1,10 @@
 // src/context/AuthContext.jsx
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import axios from '../api/axios';
+import { setLogoutFn, setAccessTokenFnHelper } from './AuthHelpers';
 
 const AuthContext = createContext(null);
 
@@ -11,9 +13,12 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // -----------------------------
+  // On Mount → check token presence
+  // -----------------------------
   useEffect(() => {
-    const token = localStorage.getItem('access');
-    if (token) {
+    const access = localStorage.getItem('access');
+    if (access) {
       checkAuthStatus();
     } else {
       setLoading(false);
@@ -21,11 +26,49 @@ export const AuthProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // -----------------------------
+  // Register helpers for axios.js
+  // -----------------------------
+  useEffect(() => {
+    setLogoutFn(logout);
+    setAccessTokenFnHelper((newAccess) =>
+      localStorage.setItem('access', newAccess)
+    );
+  }, []);
+
+  // -----------------------------
+  // Refresh Token
+  // -----------------------------
+  const refreshAccessToken = async () => {
+    const refresh = localStorage.getItem('refresh');
+    if (!refresh) return false;
+
+    try {
+      const { data } = await axios.post('/auth/token/refresh/', { refresh });
+      if (data?.access) {
+        localStorage.setItem('access', data.access);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      logout(false); // silent logout
+      return false;
+    }
+  };
+
+  // -----------------------------
+  // Auth Check
+  // -----------------------------
   const checkAuthStatus = async () => {
     try {
-      const response = await axios.get('/auth/me/');
-      setUser(response.data);
+      const { data } = await axios.get('/auth/me/');
+      setUser(data);
     } catch (error) {
+      if (error.response?.status === 401) {
+        const success = await refreshAccessToken();
+        if (success) return checkAuthStatus(); // retry
+      }
       console.error('Auth check failed:', error);
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
@@ -36,37 +79,50 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (username, password) => {
+  // -----------------------------
+  // Login
+  // -----------------------------
+  const login = async (identifier, password) => {
     try {
-      const response = await axios.post('/auth/login/', { username, password });
-      const { access, refresh, user: userData } = response.data;
+      const { data } = await axios.post('/auth/login/', {
+        identifier,
+        password,
+      });
+
+      const { access, refresh, user: userData } = data;
 
       localStorage.setItem('access', access);
       localStorage.setItem('refresh', refresh);
       setUser(userData);
-      
-      // Redirect by role (guard against undefined role)
-      const role = userData?.role ? String(userData.role).toLowerCase() : null;
-      if (role === 'admin') {
-        navigate('/admin-dashboard');
-      } else if (role === 'teacher') {
-        navigate('/teacher-dashboard');
-      } else if (role === 'student') {
-        navigate('/student-dashboard');
-      } else {
-        // fallback: profile or home
-        navigate('/');
+
+      // Role-based redirect
+      const role = userData?.role?.toLowerCase?.() || null;
+      switch (role) {
+        case 'admin':
+          navigate('/admin-dashboard');
+          break;
+        case 'teacher':
+          navigate('/teacher-dashboard');
+          break;
+        case 'student':
+          navigate('/student-dashboard');
+          break;
+        default:
+          navigate('/');
       }
+
       return true;
-      
     } catch (error) {
-      const message = error.response?.data?.detail || 'Login failed. Please check your credentials.';
+      const message = error.response?.data?.detail || error.response?.data?.errors?.[0]?.message || 'Login failed';
       toast.error(message);
       return false;
     }
   };
 
-  const logout = async () => {
+  // -----------------------------
+  // Logout
+  // -----------------------------
+  const logout = async (showToast = true) => {
     const refresh = localStorage.getItem('refresh');
     if (refresh) {
       try {
@@ -78,23 +134,22 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
     setUser(null);
-    toast.success('Logged out successfully');
     navigate('/login');
+    if (showToast) toast.success('Logged out successfully');
   };
 
+  // -----------------------------
+  // Derived State
+  // -----------------------------
   const isAuthenticated = !!user;
 
-  const value = {
-    user,
-    loading,
-    isAuthenticated,
-    login,
-    logout,
-    setUser,
-  };
-
+  // -----------------------------
+  // Provider
+  // -----------------------------
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider
+      value={{ user, loading, isAuthenticated, login, logout, setUser }}
+    >
       {loading ? (
         <div className="flex items-center justify-center min-h-screen">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
@@ -106,6 +161,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
+// Hook for context usage
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

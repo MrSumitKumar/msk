@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+// src/pages/Course/CourseDetail.jsx
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from "../../api/axios";
+import axios from '../../api/axios';
 import { toast } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import {
   Play, CalendarDays, BookOpenCheck, Users, Languages, Star,
   PlayCircle, FileText, ChevronDown, ChevronRight, Award
-} from "lucide-react";
+} from 'lucide-react';
 
 
 const CourseDetail = () => {
   const { slug } = useParams();
   const [course, setCourse] = useState(null);
-  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [checkEnroll, setCheckEnroll] = useState(null);
@@ -20,63 +20,36 @@ const CourseDetail = () => {
 
   // Review form state
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-
-
+  // -----------------------------
   // Fetch course details
-  const fetchCourse = async () => {
+  // -----------------------------
+  const fetchCourse = useCallback(async (signal) => {
     try {
-      const { data } = await axios.get(`/courses/${slug}/with-chapters/`);
+      const { data } = await axios.get(`/courses/courses/${slug}/with_chapters/`, { signal });
       setCourse(data);
-      setOpenChapter(data.chapters?.[0]?.id || null); // first chapter open
+      setOpenChapter(data.chapters?.[0]?.id || null);
     } catch (err) {
       toast.error('Course not found');
     } finally {
       setLoading(false);
     }
-  };
-
-  // Fetch course reviews
-  const fetchReviews = async () => {
-    try {
-      const { data } = await axios.get(`/courses/${slug}/public-reviews/`);
-      setReviews(data);
-    } catch (err) {
-      console.error("Error fetching reviews:", err);
-    }
-  };
-
-  // Submit review (for logged-in users)
-  const handleSubmitReview = async (e) => {
-    e.preventDefault();
-    if (!rating || !comment.trim()) {
-      toast.error("Please add rating and comment");
-      return;
-    }
-    try {
-      setSubmitting(true);
-      await axios.post(`/courses/${slug}/reviews/`, { rating, comment });
-      toast.success("Review submitted!");
-      setRating(0);
-      setComment("");
-      fetchReviews(); // refresh reviews
-    } catch (err) {
-      toast.error("Error submitting review. Are you logged in?");
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  }, [slug]);
 
   const toggleChapter = (chapterId) => {
     setOpenChapter(openChapter === chapterId ? null : chapterId);
   };
 
+  // -----------------------------
+  // Effects with AbortController
+  // -----------------------------
   useEffect(() => {
-    fetchCourse();
-    fetchReviews();
-  }, [slug]);
+    const controller = new AbortController();
+    fetchCourse(controller.signal);
+    return () => controller.abort();
+  }, [fetchCourse]);
 
   if (loading) return <div className="text-center mt-10 text-white">Loading...</div>;
   if (!course) return <div className="text-center mt-10 text-red-500">Course not found</div>;
@@ -86,10 +59,6 @@ const CourseDetail = () => {
       ? 'Free'
       : `₹ ${Math.round(course.price * (1 - course.discount / 100))}`;
 
-  const avgRating =
-    reviews.length > 0
-      ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
-      : null;
 
   return (
     <>
@@ -180,7 +149,7 @@ const CourseDetail = () => {
             "aggregateRating": {
               "@type": "AggregateRating",
               "ratingValue": course.average_rating || "4.5",
-              "reviewCount": course.total_reviews || "25",
+              // "reviewCount": course.total_reviews || "25",
             },
           })}
         </script>
@@ -223,7 +192,7 @@ const CourseDetail = () => {
               )}
             </div>
 
-            {/* Enroll */}
+            {/* Enroll
             <div className="mt-6">
               {checkEnroll ? (
                 <button className="w-full bg-gray-700 text-white py-3 rounded-lg cursor-not-allowed">
@@ -237,7 +206,7 @@ const CourseDetail = () => {
                   Enroll Now
                 </a>
               )}
-            </div>
+            </div> */}
           </div>
 
           {/* Right: Info */}
@@ -268,12 +237,6 @@ const CourseDetail = () => {
                   <span>Yes</span>
                 </li>
               )}
-              {avgRating && (
-                <li className="flex justify-between border-b border-gray-700 py-2">
-                  <span className="flex items-center gap-2"><Star className="w-4 h-4 text-yellow-400" /> Rating</span>
-                  <span>{avgRating} / 5 ({reviews.length} reviews)</span>
-                </li>
-              )}
             </ul>
           </div>
         </div>
@@ -281,7 +244,7 @@ const CourseDetail = () => {
         {/* Tabs */}
         <div className="max-w-6xl mx-auto mt-12 bg-gray-800 rounded-xl overflow-hidden">
           <div className="flex border-b border-gray-700">
-            {['overview', 'curriculum', 'reviews'].map(tab => (
+            {['overview', 'curriculum'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -379,57 +342,6 @@ const CourseDetail = () => {
               </div>
             )}
 
-            {activeTab === 'reviews' && (
-              <div>
-                <h2 className="text-lg font-semibold mb-3">Student Feedback</h2>
-
-                {/* Review Form (for logged-in users) */}
-                <form onSubmit={handleSubmitReview} className="mb-6 space-y-3 bg-gray-700 p-4 rounded-lg">
-                  <label className="block text-sm font-medium">Your Rating</label>
-                  <select
-                    value={rating}
-                    onChange={(e) => setRating(Number(e.target.value))}
-                    className="w-full p-2 rounded bg-gray-800 text-white"
-                  >
-                    <option value="0">Select rating</option>
-                    {[1, 2, 3, 4, 5].map((r) => (
-                      <option key={r} value={r}>{r}</option>
-                    ))}
-                  </select>
-
-                  <textarea
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder="Write your review..."
-                    rows={3}
-                    className="w-full p-2 rounded bg-gray-800 text-white"
-                  />
-
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 py-2 rounded font-semibold"
-                  >
-                    {submitting ? "Submitting..." : "Submit Review"}
-                  </button>
-                </form>
-
-                {/* Review List */}
-                {reviews.length === 0 ? (
-                  <p className="text-gray-400">No reviews yet.</p>
-                ) : (
-                  <ul className="space-y-4">
-                    {reviews.map((review, idx) => (
-                      <li key={idx} className="bg-gray-700 p-4 rounded-md text-sm text-white">
-                        <p className="font-bold">{review.user?.full_name || "Anonymous"}</p>
-                        <p className="text-yellow-400">Rating: {review.rating} / 5</p>
-                        <p className="mt-2 text-gray-200">{review.comment}</p>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
           </div>
         </div>
       </div>
