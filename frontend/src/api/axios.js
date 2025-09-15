@@ -4,13 +4,13 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { logout, setAccessToken } from '../context/AuthHelpers';
 
-// Detect localhost for dev vs prod API
-const isLocalhost =
-  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-
 const instance = axios.create({
-  baseURL: isLocalhost ? 'http://127.0.0.1:8000' : 'https://api.shikohabad.in',
-  headers: { 'Content-Type': 'application/json' },
+  // baseURL: 'http://127.0.0.1:8000'
+  baseURL: 'https://api.shikohabad.in',
+  headers: { 
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
   timeout: 10000, // 10 seconds timeout
 });
 

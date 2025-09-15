@@ -1,0 +1,662 @@
+[
+    {
+        "status": "PUBLISH",
+        "featured_image": "course/poster/default.jpg",
+        "featured_video": null,
+        "title": "Python for Beginners - 1 Month",
+        "sort_description": "Start your programming journey with Python. Learn step by step from basics like variables, loops, functions, and file handling to build a strong foundation.",
+        "github_readme_link": null,
+        "categories": [
+            "Programming",
+            "Python"
+        ],
+        "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 1999.00,
+        "discount": null,
+        "discount_end_date": null,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "single_courses": [],
+        "slug": "python-for-beginners-1-month",
+        "chapters": [
+            {
+                "title": "Chapter 1: Getting Started with Python",
+                "topics": [
+                    {
+                        "title": "Introduction to Python and Its Applications",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Installing Python and IDEs",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Your First Python Program",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: Python Basics",
+                "topics": [
+                    {
+                        "title": "Variables and Data Types",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Operators and Expressions",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Input and Output",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: Strings in Python",
+                "topics": [
+                    {
+                        "title": "String Basics",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "String Methods and Functions",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "String Slicing and Formatting",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: Control Flow",
+                "topics": [
+                    {
+                        "title": "Conditional Statements (if, elif, else)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Loops (for, while)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Loop Control (break, continue, pass)",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: Functions",
+                "topics": [
+                    {
+                        "title": "Defining and Calling Functions",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Function Parameters and Return Values",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Built-in Functions",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: Data Structures Basics",
+                "topics": [
+                    {
+                        "title": "Lists and Their Methods",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Tuples",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Sets and Dictionaries",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Working with Files",
+                "topics": [
+                    {
+                        "title": "Reading Files",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Writing to Files",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "File Handling Best Practices",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Error Handling",
+                "topics": [
+                    {
+                        "title": "Introduction to Exceptions",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Try, Except, Finally Blocks",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Raising Exceptions",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Mini Project",
+                "topics": [
+                    {
+                        "title": "Project: Simple Calculator",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Project: Student Grade Tracker",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "featured_image": "course/poster/default.jpg",
+        "featured_video": null,
+        "title": "HTML for Beginners - 1 Month",
+        "sort_description": "Learn HTML step-by-step: structure pages, semantic tags, forms, media, and accessibility. Build real pages and small projects to practice.",
+        "github_readme_link": null,
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "HTML"
+        ],
+        "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 999.00,
+        "discount": null,
+        "discount_end_date": null,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "single_courses": [],
+        "slug": "html-for-beginners-1-month",
+        "chapters": [
+            {
+                "title": "Chapter 1: Introduction to the Web and HTML",
+                "topics": [
+                    {
+                        "title": "How the Web Works (Client, Server, Browser)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "What is HTML? History and Role in Web Development",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Setting Up Environment: Editors, Live Server",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: Basic HTML Structure & Elements",
+                "topics": [
+                    {
+                        "title": "DOCTYPE, html, head, body",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Headings, Paragraphs, and Text Content",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Comments and Best Practices",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: Links, Images and Multimedia",
+                "topics": [
+                    {
+                        "title": "Anchor Tags, Relative vs Absolute URLs",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Images: img tag, alt attribute, srcset basics",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Embedding Audio and Video",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: Lists, Tables and Semantic Grouping",
+                "topics": [
+                    {
+                        "title": "Ordered, Unordered and Description Lists",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Table Structure: table, thead, tbody, tr, td, th",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Semantic Elements: section, article, nav, aside, footer",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: Forms and User Input",
+                "topics": [
+                    {
+                        "title": "Form Elements: input, textarea, select, button",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Form Attributes and Validation (basic HTML5)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Form Submission: GET vs POST (conceptual)",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: Attributes, Metadata and Head Elements",
+                "topics": [
+                    {
+                        "title": "Meta tags: charset, viewport, description (conceptual)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Linking CSS and JavaScript Files",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Favicons and Basic Performance Considerations",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Accessibility and Semantic Markup",
+                "topics": [
+                    {
+                        "title": "Importance of Accessibility (a11y) and semantic HTML",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "ARIA basics and using alt, role and aria-* attributes",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Keyboard navigation and screen-reader friendly markup",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Responsive Basics & Mobile-first Concepts (HTML focused)",
+                "topics": [
+                    {
+                        "title": "Viewport meta and why mobile-first matters (conceptual)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Responsive images (srcset) and picture element",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Progressive enhancement and graceful degradation",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Practical Projects and Best Practices",
+                "topics": [
+                    {
+                        "title": "Project 1: Personal Profile Page (static HTML)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Project 2: Simple Multi-page Website (Home, About, Contact)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Code Organization, Comments, and Submission Guidelines",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "featured_image": "course/poster/default.jpg",
+        "featured_video": null,
+        "title": "CSS & Responsive Design - 2 Month",
+        "sort_description": "Master CSS from basics to responsive design. Learn Flexbox, Grid, animations, and create professional, responsive websites with real-world projects.",
+        "github_readme_link": null,
+        "categories": [
+            "Web Development",
+            "Frontend"
+        ],
+        "level": "Beginner to Intermediate",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 2,
+        "price": 3499.00,
+        "discount": null,
+        "discount_end_date": null,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "single_courses": [],
+        "slug": "css-and-responsive-design-2-month",
+        "chapters": [
+            {
+                "title": "Chapter 1: Introduction to CSS",
+                "topics": [
+                    {
+                        "title": "What is CSS?",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Types of CSS (Inline, Internal, External)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "CSS Syntax and Selectors",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: CSS Fundamentals",
+                "topics": [
+                    {
+                        "title": "Colors, Backgrounds, and Borders",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "CSS Units (px, em, rem, %, vh, vw)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Box Model (Margin, Border, Padding, Content)",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: Text and Fonts",
+                "topics": [
+                    {
+                        "title": "Text Formatting",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Google Fonts & Custom Fonts",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Line Height, Letter Spacing, Word Spacing",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: CSS Positioning",
+                "topics": [
+                    {
+                        "title": "Static, Relative, Absolute, Fixed",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Z-Index and Stacking Context",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Practical Positioning Examples",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: CSS Flexbox",
+                "topics": [
+                    {
+                        "title": "Flex Container and Flex Items",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Flexbox Alignment and Distribution",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Building Layouts with Flexbox",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: CSS Grid",
+                "topics": [
+                    {
+                        "title": "Grid Container and Grid Items",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Grid Lines, Areas, and Tracks",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Responsive Layouts with Grid",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Responsive Design Basics",
+                "topics": [
+                    {
+                        "title": "Media Queries",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Fluid Layouts",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Viewport Meta Tag",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Advanced CSS Techniques",
+                "topics": [
+                    {
+                        "title": "Transitions and Animations",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "CSS Variables (Custom Properties)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Pseudo-classes and Pseudo-elements",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Responsive Navigation",
+                "topics": [
+                    {
+                        "title": "Building a Responsive Navbar",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Hamburger Menu with CSS",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Sticky Headers and Footers",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 10: Mini Projects",
+                "topics": [
+                    {
+                        "title": "Responsive Landing Page",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Flexbox Photo Gallery",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Grid-based Portfolio Page",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 11: Final Projects",
+                "topics": [
+                    {
+                        "title": "E-commerce Homepage (Responsive)",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Blog Layout with Grid & Flexbox",
+                        "video_url": null,
+                        "notes_url": null
+                    },
+                    {
+                        "title": "Multi-page Responsive Website",
+                        "video_url": null,
+                        "notes_url": null
+                    }
+                ]
+            }
+        ]
+    }
+]

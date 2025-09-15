@@ -12,7 +12,6 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.db.models import Q
-from django.conf import settings
 import logging
 
 from .models import CustomUser, UserSession
@@ -228,7 +227,7 @@ class ForgotPasswordView(generics.GenericAPIView):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
 
-        reset_link = f"{settings.FRONTEND_URL}/reset-password/{uid}/{token}/"
+        reset_link = f"https://msk.shikohabad.in/reset-password/{uid}/{token}/"
         
         try:
             email_sent = send_email(

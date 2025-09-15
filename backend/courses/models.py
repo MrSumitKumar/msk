@@ -185,19 +185,19 @@ class Course(models.Model):
         COMBO = 'COMBO', 'Combo Course'
 
     status = models.CharField(choices=StatusChoices.choices, max_length=10, default=StatusChoices.DRAFT)
-    featured_image = models.ImageField(upload_to="course/poster/", default="course/poster/default.jpg")
+    featured_image = models.ImageField(upload_to="course/poster/", default="course/poster/default.jpg", blank=True)
 
     featured_video = models.URLField(max_length=255, null=True, blank=True, validators=[validate_youtube_url])
     title = models.CharField(max_length=500, unique=True)
-    description = models.TextField(null=True, blank=True)
-    readme_link = models.URLField(blank=True, null=True)
+    sort_description = models.TextField(null=True, blank=True)
+    github_readme_link = models.URLField(blank=True, null=True)
     categories = models.ManyToManyField(Category,  blank=True, related_name="courses")
     level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, blank=True, related_name='courses')
     language = models.ManyToManyField(Language, blank=True, related_name="courses")
     duration = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
 
     price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'), validators=[MinValueValidator(Decimal('0.00'))] )
-    discount = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal('0.00'), validators=[MinValueValidator(Decimal('0.00')), MaxValueValidator(Decimal('100.00'))] )
+    discount = models.DecimalField(max_digits=5,decimal_places=2,default=Decimal('0.00'),null=False,blank=False,validators=[MinValueValidator(Decimal('0.00')),MaxValueValidator(Decimal('100.00'))])
     discount_end_date = models.DateField(null=True, blank=True)
 
     certificate = models.BooleanField(default=False)

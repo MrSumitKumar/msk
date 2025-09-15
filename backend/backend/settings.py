@@ -6,65 +6,71 @@ from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# -------------------------
-# Secret & Debug
-# -------------------------
+
 SECRET_KEY = "xrpc1c172j)rs0p5!4^o+sk21v(a6xq!t62nvc)7f+$!8dk_d-"
-DEBUG = False
+DEBUG = True
 
-# -------------------------
-# Allowed Hosts
-# -------------------------
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "api.shikohabad.in", "www.api.shikohabad.in"]
+# ALLOWED_HOSTS = ["api.shikohabad.in", "www.api.shikohabad.in"]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://msk.shikohabad.in",
+#     "https://www.msk.shikohabad.in",
+# ]
 
-# -------------------------
-# Detect Environment (Local vs Production)
-# -------------------------
-CURRENT_DOMAIN = os.getenv("CURRENT_DOMAIN", "")
-IS_PRODUCTION = CURRENT_DOMAIN in ["api.shikohabad.in", "www.api.shikohabad.in"]
-
-# -------------------------
-# CORS
-# -------------------------
-if IS_PRODUCTION:
-    CORS_ALLOWED_ORIGINS = [
-        "https://msk.shikohabad.in",
-        "https://www.msk.shikohabad.in",
-    ]
-    FRONTEND_URL = "https://msk.shikohabad.in"
-else:
-    CORS_ALLOW_ALL_ORIGINS = True
-    CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
-    FRONTEND_URL = "http://localhost:5173"
-    
-# Additional CORS settings for development
-if not IS_PRODUCTION:
-    CORS_ALLOW_CREDENTIALS = True
-    CORS_ALLOW_METHODS = [
-        'DELETE',
-        'GET',
-        'OPTIONS',
-        'PATCH',
-        'POST',
-        'PUT',
-    ]
-    CORS_ALLOW_HEADERS = [
-        'accept',
-        'accept-encoding',
-        'authorization',
-        'content-type',
-        'dnt',
-        'origin',
-        'user-agent',
-        'x-csrftoken',
-        'x-requested-with',
-    ]
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "msk_shikohabad_in",
+#         "USER": "msk_user",
+#         "PASSWORD": "SSkk#?95postgrey",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
 
 
 
-# -------------------------
-# Installed Apps
-# -------------------------
+ALLOWED_HOSTS = ["*"]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+FRONTEND_URL = "http://localhost:5173"
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'cache-control',
+    'pragma'
+]
+
+# Additional CORS settings
+CORS_EXPOSE_HEADERS = ['content-type', 'content-length']
+CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+
+
+
+
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -91,9 +97,7 @@ INSTALLED_APPS = [
     "projects",
 ]
 
-# -------------------------
-# Middleware
-# -------------------------
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -125,31 +129,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
-# -------------------------
-# Database
-# -------------------------
-if IS_PRODUCTION:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": "msk_shikohabad_in",
-            "USER": "msk_user",
-            "PASSWORD": "SSkk#?95postgrey",
-            "HOST": "localhost",
-            "PORT": "5432",
-        }
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-
-# -------------------------
-# Authentication
-# -------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -162,9 +141,7 @@ TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
 USE_TZ = True
 
-# -------------------------
-# Static & Media
-# -------------------------
+
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 
@@ -174,9 +151,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "users.CustomUser"
 
-# -------------------------
-# Django Rest Framework
-# -------------------------
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "users.authentication.EnforceSingleSessionAuthentication",
@@ -198,9 +173,6 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rest_framework.views.exception_handler",
 }
 
-# -------------------------
-# JWT Authentication
-# -------------------------
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
@@ -213,16 +185,12 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-# -------------------------
-# Cron Jobs
-# -------------------------
+
 CRONJOBS = [
     ("0 0 * * 0", "django.core.management.call_command", ["flushexpiredtokens"]),
 ]
 
-# -------------------------
-# Email
-# -------------------------
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587

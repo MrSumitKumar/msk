@@ -4,6 +4,10 @@ import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
 import { ThemeContext } from '../../context/ThemeContext';
 import SearchBar from '../../components/course/SearchBar';
+import useCourseMeta from '../../hooks/useCourseMeta';
+import useUrlParams from '../../hooks/useUrlParams';
+import ErrorBoundary from '../../components/common/ErrorBoundary';
+import CourseGridFallback from '../../components/course/CourseGridFallback';
 import FilterPanel from '../../components/course/FilterPanel';
 import CourseGrid from '../../components/course/CourseGrid';
 import Pagination from '../../components/course/Pagination';
@@ -11,17 +15,34 @@ import Pagination from '../../components/course/Pagination';
 const CourseList = () => {
   const { theme } = useContext(ThemeContext);
 
+  // Hooks
+  const {
+    categories,
+    levels,
+    languages,
+    loading: metaLoading,
+    error: metaError,
+  } = useCourseMeta();
+
+  // URL params
+  const { getInitialValues, updateUrl, resetParams } = useUrlParams({
+    categories: '',
+    level: '',
+    language: '',
+    search: '',
+    page: '1'
+  });
+
+  // Initialize state from URL
+  const initialValues = getInitialValues();
+
   // State
   const [courses, setCourses] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [levels, setLevels] = useState([]);
-  const [languages, setLanguages] = useState([]);
-
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedLevel, setSelectedLevel] = useState('');
-  const [selectedLanguage, setSelectedLanguage] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
-
+  const [selectedCategory, setSelectedCategory] = useState(initialValues.categories);
+  const [selectedLevel, setSelectedLevel] = useState(initialValues.level);
+  const [selectedLanguage, setSelectedLanguage] = useState(initialValues.language);
+  const [searchTerm, setSearchTerm] = useState(initialValues.search);
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -38,10 +59,13 @@ const CourseList = () => {
   // Build query string for filters/search
   const buildQueryParams = useCallback(() => {
     const params = new URLSearchParams();
+    
+    // Basic filters
     if (selectedCategory) params.append('categories', selectedCategory);
     if (selectedLevel) params.append('level', selectedLevel);
     if (selectedLanguage) params.append('language', selectedLanguage);
     if (searchTerm.trim()) params.append('search', searchTerm.trim());
+
     return params.toString();
   }, [selectedCategory, selectedLevel, selectedLanguage, searchTerm]);
 
@@ -50,19 +74,36 @@ const CourseList = () => {
   // Fetch courses
   const fetchCourses = async (page = 1) => {
     setLoading(true);
+    console.log('🔍 Fetching courses...');
 
     // Cancel previous request
     if (cancelTokenRef.current) cancelTokenRef.current.abort();
     const controller = new AbortController();
     cancelTokenRef.current = controller;
 
+    console.log('Current State:', {
+      selectedCategory,
+      selectedLevel,
+      selectedLanguage,
+      searchTerm,
+      loading,
+      error
+    });
+
     try {
       const query = buildQueryParams();
-      const res = await axios.get(`/courses/courses/?page=${page}&${query}`, {
+      const url = `/courses/courses/?page=${page}&${query}`;
+      console.log('📡 API Request URL:', url);
+      const res = await axios.get(url, {
         signal: controller.signal,
       });
+      console.log('📦 API Response:', res.data);
+      console.log('Results Array:', res.data.results);
 
-      setCourses(res.data.results || []);
+      const coursesToSet = res.data.results || [];
+      console.log('Setting courses:', coursesToSet);
+      
+      setCourses(coursesToSet);
       setPagination({
         next: res.data.next,
         previous: res.data.previous,
@@ -85,38 +126,30 @@ const CourseList = () => {
     }
   };
 
-  // Fetch filters (categories, levels, languages)
-  const fetchFilters = async () => {
-    try {
-      const [catRes, levelRes, langRes] = await Promise.all([
-        axios.get('/courses/categories/'),
-        axios.get('/courses/levels/'),
-        axios.get('/courses/languages/'),
-      ]);
-
-      setCategories(Array.isArray(catRes.data) ? catRes.data : catRes.data.results || []);
-      setLevels(Array.isArray(levelRes.data) ? levelRes.data : levelRes.data.results || []);
-      setLanguages(Array.isArray(langRes.data) ? langRes.data : langRes.data.results || []);
-    } catch (err) {
-      console.error('❌ Filter fetch error:', err.response || err);
-      setCategories([]);
-      setLevels([]);
-      setLanguages([]);
-      setError("Failed to load filters");
-    }
-  };
-
   // Initial fetch
   useEffect(() => {
-    fetchFilters();
     fetchCourses(1);
   }, []);
 
-  // Fetch courses when filters/search change (debounced)
+  // Update URL when filters/search change (debounced)
   useEffect(() => {
-    const handler = setTimeout(() => fetchCourses(1), 400);
-    return () => clearTimeout(handler); // Only cancel the timeout, not Axios requests
-  }, [selectedCategory, selectedLevel, selectedLanguage, searchTerm, buildQueryParams]);
+    const handler = setTimeout(() => {
+      updateUrl({
+        categories: selectedCategory,
+        level: selectedLevel,
+        language: selectedLanguage,
+        search: searchTerm,
+        page: pagination.current.toString()
+      });
+    }, 400);
+    return () => clearTimeout(handler);
+  }, [selectedCategory, selectedLevel, selectedLanguage, searchTerm, pagination.current, updateUrl]);
+
+  // Fetch courses when URL params change
+  useEffect(() => {
+    const params = getInitialValues();
+    fetchCourses(parseInt(params.page) || 1);
+  }, [selectedCategory, selectedLevel, selectedLanguage, searchTerm]);
 
   // Prevent scroll when filter panel is open
   useEffect(() => {
@@ -124,10 +157,13 @@ const CourseList = () => {
   }, [filterOpen]);
 
   const clearFilters = () => {
+    // Reset basic filters
     setSelectedCategory('');
     setSelectedLevel('');
     setSelectedLanguage('');
+    
     setFilterOpen(false);
+    resetParams();
   };
 
   console.log(courses)
@@ -171,16 +207,33 @@ const CourseList = () => {
           onCategoryChange={setSelectedCategory}
           onLevelChange={setSelectedLevel}
           onLanguageChange={setSelectedLanguage}
+          onApplyFilters={(filters) => {
+            // Update all filter states with basic filters only
+            setSelectedCategory(filters.categories || '');
+            setSelectedLevel(filters.level || '');
+            setSelectedLanguage(filters.language || '');
+
+            // Fetch courses with new filters
+            fetchCourses(1);
+            setFilterOpen(false);
+          }}
+          onResetFilters={() => {
+            clearFilters();
+            fetchCourses(1);
+          }}
         />
 
         {/* Courses Grid */}
         <main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-all duration-300 ${filterOpen ? 'lg:mr-80' : ''}`}>
           {error && <div className="text-red-500 text-center py-4">{error}</div>}
-          <CourseGrid 
-            courses={courses} 
-            loading={loading} 
-            error={!error && courses.length === 0 && !loading ? "No courses found." : null} 
-          />
+          <ErrorBoundary fallback={error => <CourseGridFallback error={error} />}>
+            <CourseGrid 
+              courses={courses} 
+              loading={loading} 
+              error={!error && (!courses || courses.length === 0) && !loading ? "No courses found." : null} 
+            />
+
+          </ErrorBoundary>
           <Pagination pagination={pagination} onPageChange={fetchCourses} />
         </main>
 

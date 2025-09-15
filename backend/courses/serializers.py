@@ -124,18 +124,40 @@ class AdminCourseSerializer(serializers.ModelSerializer):
 
 class PublicCourseDetailSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True, read_only=True)
+    level = CourseLevelSerializer(read_only=True)
+    language = CourseLanguageSerializer(many=True, read_only=True)
     average_rating = serializers.FloatField(read_only=True)
     total_reviews = serializers.IntegerField(read_only=True)
     discount_price = serializers.SerializerMethodField()
+    featured_image_url = serializers.SerializerMethodField()
+    chapters_count = serializers.SerializerMethodField()
+    single_courses = SimpleCourseSerializer(many=True, read_only=True)
+    enrolled_count = serializers.SerializerMethodField()
+
+    def get_featured_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.featured_image:
+            if request:
+                return request.build_absolute_uri(obj.featured_image.url)
+            return obj.featured_image.url
+        return None
+
+    def get_chapters_count(self, obj):
+        if obj.course_type == 'SINGLE':
+            return obj.chapters.count()
+        return None
+        
+    def get_enrolled_count(self, obj):
+        return obj.enrollments.filter(status='Approved').count()
 
     class Meta:
         model = Course
         fields = [
-            "id", "slug", "title", "description", "featured_image",
+            "id", "slug", "title", "sort_description", "featured_image", "featured_image_url",
             "price", "discount", "discount_price", "duration", "certificate", 
-            "language", "level", "categories", "created_by",
-            "average_rating", "total_reviews",
-            "created_at", "updated_at",
+            "language", "level", "categories", "created_by", "course_type",
+            "average_rating", "total_reviews", "mode", "chapters_count",
+            "single_courses", "enrolled_count", "created_at", "updated_at",
         ]
 
     def get_discount_price(self, obj):
