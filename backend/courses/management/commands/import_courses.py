@@ -105,12 +105,21 @@ class Command(BaseCommand):
                     title=chapter_data.get("title")
                 )
                 for topic_data in chapter_data.get("topics", []):
-                    ChapterTopic.objects.create(
-                        chapter=chapter,
-                        title=topic_data.get("title"),
-                        video_url=topic_data.get("video_url"),
-                        notes_url=topic_data.get("notes_url")
-                    )
+                    if isinstance(topic_data, dict):
+                        ChapterTopic.objects.create(
+                            chapter=chapter,
+                            title=topic_data.get("title"),
+                            video_url=topic_data.get("video_url"),
+                            notes_url=topic_data.get("notes_url")
+                        )
+                    else:
+                        # If topic_data is a string, use it as the title
+                        ChapterTopic.objects.create(
+                            chapter=chapter,
+                            title=topic_data,
+                            video_url=None,
+                            notes_url=None
+                        )
 
             self.stdout.write(self.style.SUCCESS(
                 f"{'Created' if created else 'Updated'} course: {course.title}"
