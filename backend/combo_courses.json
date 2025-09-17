@@ -1,0 +1,174 @@
+[
+    
+    {
+        "status": "PUBLISH",
+        "title": "MS Office - 4 Months",
+        "sort_description": "Complete MS Office course covering MS Word, MS PowerPoint, and MS Excel. Learn essential office productivity tools with hands-on projects.",
+        "categories": [
+            "Productivity Tools",
+            "MS Office"
+        ],
+        "level": "Beginner to Intermediate",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 4,
+        "price": 2999.00,
+        "certificate": true,
+        "mode": "OFFLINE",
+        "course_type": "COMBO"
+    },
+    
+    {
+        "status": "PUBLISH",
+        "title": "Web Designing Complete Pathway - 4 Months",
+        "sort_description": "Master web designing from basics to advanced: HTML, CSS, Responsive Design, and Bootstrap. Build modern, responsive, and professional websites with hands-on projects.",
+        "categories": [
+            "Web Development",
+            "Frontend"
+        ],
+        "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 4,
+        "price": 4999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "COMBO"
+    },
+    
+    {
+        "status": "PUBLISH",
+        "title": "MS Word Complete Pathway (Beginner to Advanced) - 2 Months",
+        "sort_description": "Learn MS Word from basics to advanced: interface, formatting, tables, images, page layout, mail merge, macros, templates, collaboration tools, and real-world projects.",
+        "categories": [
+            "Computer Basics",
+            "MS Office",
+            "Word Processing"
+        ],
+        "level": "Intermediate",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 2,
+        "price": 3498.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "COMBO"
+    },
+
+    {
+        "status": "PUBLISH",
+        "title": "Python Backend Development Mastery Combo - 8 Months",
+        "sort_description": "Become a professional Python Backend Developer with this 8-month program covering Django, ORM, REST APIs, Authentication, Deployment, and Advanced Backend Concepts.",
+        "categories": [
+            "Programming",
+            "Web Development",
+            "Backend Development",
+            "Python",
+            "Django"
+        ],
+        "level": "Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 8,
+        "price": 39999.00,
+        "certificate": true,
+        "mode": "BOTH",
+        "course_type": "COMBO"
+    },
+
+    {
+        "status": "PUBLISH",
+        "title": "Data Analysis Mastery Combo Course - 12 Months",
+        "sort_description": "Become a professional Data Analyst with this complete 12-month program covering Python, Excel, SQL, Power BI, and Tableau. Hands-on projects, real datasets, and industry-ready skills included.",
+        "categories": [
+            "Data Analytics",
+            "Business Intelligence",
+            "Python",
+            "SQL",
+            "Excel",
+            "Power BI",
+            "Tableau"
+        ],
+        "level": "Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 12,
+        "price": 32999.00,
+        "certificate": true,
+        "mode": "BOTH",
+        "course_type": "COMBO"
+    },
+
+    {
+        "status": "PUBLISH",
+        "title": "Power BI Mastery (Beginner to Advanced) - 3 Months",
+        "sort_description": "Become a Power BI expert with this complete package covering Beginners, Intermediate, and Advanced levels. Learn DAX, data modeling, dashboards, security, and enterprise BI solutions.",
+        "categories": [
+            "Data Analytics",
+            "Business Intelligence"
+        ],
+        "level": "Beginner to Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 9999.00,
+        "certificate": true,
+        "mode": "OFFLINE",
+        "course_type": "COMBO"
+    },
+    
+    {
+        "status": "PUBLISH",
+        "title": "MS Excel (Beginners to Advanced) - 6 Months",
+        "sort_description": "A complete Excel learning pathway from basics to advanced features including formulas, pivot tables, dashboards, and automation.",
+        "categories": [
+            "Productivity Tools",
+            "MS Office"
+        ],
+        "level": "Beginners to Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 6,
+        "price": 3999.00,
+        "certificate": true,
+        "mode": "OFFLINE",
+        "course_type": "COMBO"
+    },
+    
+    {
+        "status": "PUBLISH",
+        "title": "Frontend Development - 8 Months",
+        "sort_description": "Master Frontend Development from scratch to advanced level. Learn HTML, CSS, Responsive Design, JavaScript, Bootstrap, React, and GitHub for real-world projects.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "JavaScript",
+            "React.js"
+        ],
+        "level": "Beginner to Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 8,
+        "price": 9999.00,
+        "certificate": true,
+        "mode": "BOTH",
+        "course_type": "COMBO"
+    }
+
+]

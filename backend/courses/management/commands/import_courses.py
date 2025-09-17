@@ -60,34 +60,38 @@ class Command(BaseCommand):
                 lang_obj, _ = Language.objects.get_or_create(name=lang_name)
                 language_objs.append(lang_obj)
 
-            # Discount
-            discount = course_data.get("discount")
-            if discount is None:
-                discount = Decimal("0.00")
-            else:
-                discount = Decimal(str(discount))
-
             # Update or create Course
+            # Create or update the course
             course, created = Course.objects.update_or_create(
                 title=course_data.get("title"),
                 defaults={
                     "status": course_data.get("status", "DRAFT"),
-                    "featured_image": course_data.get("featured_image", ""),
-                    "featured_video": course_data.get("featured_video"),
                     "sort_description": course_data.get("sort_description", ""),
-                    "github_readme_link": course_data.get("github_readme_link"),
                     "level": level_obj,
                     "duration": course_data.get("duration", 1),
                     "price": Decimal(str(course_data.get("price", 0.00))),
-                    "discount": discount,
-                    "discount_end_date": course_data.get("discount_end_date"),
                     "certificate": course_data.get("certificate", False),
                     "mode": course_data.get("mode", "ONLINE"),
                     "course_type": course_data.get("course_type", "SINGLE"),
                     "created_by": user,
-                    "slug": course_data.get("slug"),
                 }
             )
+
+            # Handle single courses for combo courses
+            if course_data.get("course_type") == "COMBO":
+                # Clear existing single courses
+                course.single_courses.clear()
+                
+                # Add single courses by slug
+                single_course_slugs = course_data.get("single_courses", [])
+                for slug in single_course_slugs:
+                    try:
+                        single_course = Course.objects.get(slug=slug, course_type="SINGLE")
+                        course.single_courses.add(single_course)
+                    except Course.DoesNotExist:
+                        self.stdout.write(self.style.WARNING(
+                            f"Single course with slug '{slug}' not found for combo course: {course.title}"
+                        ))
 
             # Set categories
             course.categories.set(category_objs)
@@ -98,28 +102,25 @@ class Command(BaseCommand):
             # Clear existing chapters
             course.chapters.all().delete()
 
-            # Add chapters and topics
-            for chapter_data in course_data.get("chapters", []):
-                chapter = CourseChapter.objects.create(
-                    course=course,
-                    title=chapter_data.get("title")
-                )
-                for topic_data in chapter_data.get("topics", []):
-                    if isinstance(topic_data, dict):
-                        ChapterTopic.objects.create(
-                            chapter=chapter,
-                            title=topic_data.get("title"),
-                            video_url=topic_data.get("video_url"),
-                            notes_url=topic_data.get("notes_url")
-                        )
-                    else:
-                        # If topic_data is a string, use it as the title
-                        ChapterTopic.objects.create(
-                            chapter=chapter,
-                            title=topic_data,
-                            video_url=None,
-                            notes_url=None
-                        )
+            if course_data.get("course_type") == "SINGLE":
+                # Add chapters and topics
+                for chapter_data in course_data.get("chapters", []):
+                    chapter = CourseChapter.objects.create(
+                        course=course,
+                        title=chapter_data.get("title")
+                    )
+                    for topic_data in chapter_data.get("topics", []):
+                        if isinstance(topic_data, dict):
+                            ChapterTopic.objects.create(
+                                chapter=chapter,
+                                title=topic_data.get("title"),
+                            )
+                        else:
+                            # If topic_data is a string, use it as the title
+                            ChapterTopic.objects.create(
+                                chapter=chapter,
+                                title=topic_data,
+                            )
 
             self.stdout.write(self.style.SUCCESS(
                 f"{'Created' if created else 'Updated'} course: {course.title}"

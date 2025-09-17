@@ -4,31 +4,18 @@ import { Helmet } from "react-helmet-async";
 import axios from "../../api/axios";
 import { ThemeContext } from '../../context/ThemeContext';
 import SearchBar from '../../components/course/SearchBar';
-import useCourseMeta from '../../hooks/useCourseMeta';
 import useUrlParams from '../../hooks/useUrlParams';
 import ErrorBoundary from '../../components/common/ErrorBoundary';
 import CourseGridFallback from '../../components/course/CourseGridFallback';
-import FilterPanel from '../../components/course/FilterPanel';
 import CourseGrid from '../../components/course/CourseGrid';
+import CourseGridPlaceholder from '../../components/course/CourseGridPlaceholder';
 import Pagination from '../../components/course/Pagination';
 
 const CourseList = () => {
   const { theme } = useContext(ThemeContext);
 
-  // Hooks
-  const {
-    categories,
-    levels,
-    languages,
-    loading: metaLoading,
-    error: metaError,
-  } = useCourseMeta();
-
   // URL params
   const { getInitialValues, updateUrl, resetParams } = useUrlParams({
-    categories: '',
-    level: '',
-    language: '',
     search: '',
     page: '1'
   });
@@ -38,14 +25,10 @@ const CourseList = () => {
 
   // State
   const [courses, setCourses] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(initialValues.categories);
-  const [selectedLevel, setSelectedLevel] = useState(initialValues.level);
-  const [selectedLanguage, setSelectedLanguage] = useState(initialValues.language);
   const [searchTerm, setSearchTerm] = useState(initialValues.search);
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filterOpen, setFilterOpen] = useState(false);
 
   const [pagination, setPagination] = useState({
     next: null,
@@ -61,68 +44,54 @@ const CourseList = () => {
     const params = new URLSearchParams();
     
     // Basic filters
-    if (selectedCategory) params.append('categories', selectedCategory);
-    if (selectedLevel) params.append('level', selectedLevel);
-    if (selectedLanguage) params.append('language', selectedLanguage);
     if (searchTerm.trim()) params.append('search', searchTerm.trim());
 
     return params.toString();
-  }, [selectedCategory, selectedLevel, selectedLanguage, searchTerm]);
-
-  const hasActiveFilters = !!(selectedCategory || selectedLevel || selectedLanguage);
+  }, [searchTerm]);
 
   // Fetch courses
   const fetchCourses = async (page = 1) => {
-    setLoading(true);
-    console.log('🔍 Fetching courses...');
-
     // Cancel previous request
     if (cancelTokenRef.current) cancelTokenRef.current.abort();
     const controller = new AbortController();
     cancelTokenRef.current = controller;
 
-    console.log('Current State:', {
-      selectedCategory,
-      selectedLevel,
-      selectedLanguage,
-      searchTerm,
-      loading,
-      error
-    });
-
     try {
+      setLoading(true);
+      setError(null);
+      
       const query = buildQueryParams();
-      const url = `/courses/courses/?page=${page}&${query}`;
-      console.log('📡 API Request URL:', url);
+      const url = `/courses/courses/?page=${page}${query ? `&${query}` : ''}`;
+      
       const res = await axios.get(url, {
         signal: controller.signal,
       });
-      console.log('📦 API Response:', res.data);
-      console.log('Results Array:', res.data.results);
 
-      const coursesToSet = res.data.results || [];
-      console.log('Setting courses:', coursesToSet);
-      
-      setCourses(coursesToSet);
-      setPagination({
-        next: res.data.next,
-        previous: res.data.previous,
-        current: page,
-      });
-      setError(null);
+      if (!controller.signal.aborted) {
+        setCourses(res.data.results || []);
+        setPagination({
+          next: res.data.next,
+          previous: res.data.previous,
+          current: page,
+        });
+      }
     } catch (err) {
-      // Ignore canceled requests
-      if (err.name === 'CanceledError') return;
-
-      setCourses([]);
-      const errorMessage =
-        err.response?.data?.detail ||
-        err.response?.data?.message ||
-        "Failed to load courses. Please try again later.";
-      setError(errorMessage);
-      console.error("❌ Course fetch error:", err);
+      // Only update state if request wasn't cancelled
+      if (!controller.signal.aborted) {
+        if (err.name !== 'CanceledError') {
+          setCourses([]);
+          const errorMessage =
+            err.response?.data?.detail ||
+            err.response?.data?.message ||
+            "Failed to load courses. Please try again later.";
+          setError(errorMessage);
+        }
+      }
     } finally {
-      setLoading(false);
+      // Only update loading state if request wasn't cancelled
+      if (!controller.signal.aborted) {
+        setLoading(false);
+      }
     }
   };
 
@@ -135,36 +104,23 @@ const CourseList = () => {
   useEffect(() => {
     const handler = setTimeout(() => {
       updateUrl({
-        categories: selectedCategory,
-        level: selectedLevel,
-        language: selectedLanguage,
         search: searchTerm,
         page: pagination.current.toString()
       });
     }, 400);
     return () => clearTimeout(handler);
-  }, [selectedCategory, selectedLevel, selectedLanguage, searchTerm, pagination.current, updateUrl]);
+  }, [searchTerm, pagination.current, updateUrl]);
 
-  // Fetch courses when URL params change
+  // Fetch courses when search param changes
   useEffect(() => {
     const params = getInitialValues();
-    fetchCourses(parseInt(params.page) || 1);
-  }, [selectedCategory, selectedLevel, selectedLanguage, searchTerm]);
-
-  // Prevent scroll when filter panel is open
-  useEffect(() => {
-    document.body.style.overflow = filterOpen ? "hidden" : "";
-  }, [filterOpen]);
-
-  const clearFilters = () => {
-    // Reset basic filters
-    setSelectedCategory('');
-    setSelectedLevel('');
-    setSelectedLanguage('');
-    
-    setFilterOpen(false);
-    resetParams();
-  };
+    const page = parseInt(params.page) || 1;
+    console.log('🔄 Re-fetching courses:', {
+      page,
+      search: searchTerm || 'none'
+    });
+    fetchCourses(page);
+  }, [searchTerm]);
 
   console.log(courses)
 
@@ -187,64 +143,26 @@ const CourseList = () => {
             <SearchBar
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
-              hasActiveFilters={hasActiveFilters}
-              onFilterToggle={() => setFilterOpen(true)}
-              onClearFilters={clearFilters}
+              hasActiveFilters={false}
             />
           </div>
         </header>
 
-        {/* Filter Panel */}
-        <FilterPanel
-          isOpen={filterOpen}
-          onClose={() => setFilterOpen(false)}
-          categories={categories}
-          levels={levels}
-          languages={languages}
-          selectedCategory={selectedCategory}
-          selectedLevel={selectedLevel}
-          selectedLanguage={selectedLanguage}
-          onCategoryChange={setSelectedCategory}
-          onLevelChange={setSelectedLevel}
-          onLanguageChange={setSelectedLanguage}
-          onApplyFilters={(filters) => {
-            // Update all filter states with basic filters only
-            setSelectedCategory(filters.categories || '');
-            setSelectedLevel(filters.level || '');
-            setSelectedLanguage(filters.language || '');
-
-            // Fetch courses with new filters
-            fetchCourses(1);
-            setFilterOpen(false);
-          }}
-          onResetFilters={() => {
-            clearFilters();
-            fetchCourses(1);
-          }}
-        />
-
         {/* Courses Grid */}
-        <main className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-all duration-300 ${filterOpen ? 'lg:mr-80' : ''}`}>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {error && <div className="text-red-500 text-center py-4">{error}</div>}
           <ErrorBoundary fallback={error => <CourseGridFallback error={error} />}>
-            <CourseGrid 
-              courses={courses} 
-              loading={loading} 
-              error={!error && (!courses || courses.length === 0) && !loading ? "No courses found." : null} 
-            />
-
+            {loading ? (
+              <CourseGridPlaceholder />
+            ) : (
+              <CourseGrid 
+                courses={courses}
+                error={!loading && (!courses || courses.length === 0) ? "No courses found." : null}
+              />
+            )}
           </ErrorBoundary>
-          <Pagination pagination={pagination} onPageChange={fetchCourses} />
+          {!loading && <Pagination pagination={pagination} onPageChange={fetchCourses} />}
         </main>
-
-        {/* Mobile Overlay */}
-        {filterOpen && (
-          <div
-            className={`fixed inset-0 z-40 lg:hidden transition-opacity duration-300 ${theme === 'dark' ? 'bg-black bg-opacity-60' : 'bg-black bg-opacity-40'}`}
-            onClick={() => setFilterOpen(false)}
-            role="presentation"
-          />
-        )}
       </div>
     </>
   );

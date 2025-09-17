@@ -27,9 +27,34 @@ class CourseLanguageSerializer(serializers.ModelSerializer):
 
 
 class SimpleCourseSerializer(serializers.ModelSerializer):
+    featured_image_url = serializers.SerializerMethodField()
+    chapters_count = serializers.SerializerMethodField()
+    enrolled_count = serializers.SerializerMethodField()
+    language = CourseLanguageSerializer(many=True, read_only=True)
+
+    def get_featured_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.featured_image:
+            if request:
+                return request.build_absolute_uri(obj.featured_image.url)
+            return obj.featured_image.url
+        return None
+
+    def get_chapters_count(self, obj):
+        if obj.course_type == 'SINGLE':
+            return obj.chapters.count()
+        return None
+        
+    def get_enrolled_count(self, obj):
+        return obj.enrollments.filter(status='Approved').count()
+
     class Meta:
         model = Course
-        fields = ['id', 'title', 'slug', 'price']
+        fields = [
+            'id', 'title', 'slug', 'price', 'discount', 'duration', 
+            'featured_image_url', 'chapters_count', 'enrolled_count',
+            'course_type', 'language'
+        ]
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -197,10 +222,29 @@ class CourseChapterSerializer(serializers.ModelSerializer):
 
 class CourseDetailWithChaptersSerializer(serializers.ModelSerializer):
     chapters = CourseChapterSerializer(many=True, read_only=True)
+    single_courses = SimpleCourseSerializer(many=True, read_only=True)
+    featured_image_url = serializers.SerializerMethodField()
+    enrolled_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
-        fields = "__all__"
+        fields = [
+            'id', 'title', 'slug', 'sort_description', 'featured_image',
+            'featured_image_url', 'featured_video', 'price', 'discount',
+            'duration', 'certificate', 'course_type', 'mode', 'status',
+            'chapters', 'single_courses', 'enrolled_count'
+        ]
+
+    def get_featured_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.featured_image:
+            if request:
+                return request.build_absolute_uri(obj.featured_image.url)
+            return obj.featured_image.url
+        return None
+
+    def get_enrolled_count(self, obj):
+        return obj.enrollments.filter(status='Approved').count()
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)

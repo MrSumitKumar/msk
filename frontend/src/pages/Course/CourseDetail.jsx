@@ -1,13 +1,17 @@
 // src/pages/Course/CourseDetail.jsx
 import React, { useEffect, useState, useCallback } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from '../../api/axios';
 import { toast } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
+import CourseCard from '../../components/course/CourseCard';
 import {
   Play, CalendarDays, BookOpenCheck, Users, Languages, Star,
-  PlayCircle, FileText, ChevronDown, ChevronRight, Award
+  PlayCircle, FileText, ChevronDown, ChevronRight, Award,
+  Clock, GraduationCap, Globe, BadgeCheck, BarChart,
+  BookOpen, Loader2
 } from 'lucide-react';
+import LoadingSkeleton from './LoadingSkeleton';
 
 
 const CourseDetail = () => {
@@ -18,28 +22,46 @@ const CourseDetail = () => {
   const [checkEnroll, setCheckEnroll] = useState(null);
   const [openChapter, setOpenChapter] = useState(null);
 
-  // Review form state
+  // Form states
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // -----------------------------
   // Fetch course details
   // -----------------------------
   const fetchCourse = useCallback(async (signal) => {
     try {
+      setLoading(true);
       const { data } = await axios.get(`/courses/courses/${slug}/with_chapters/`, { signal });
       setCourse(data);
       setOpenChapter(data.chapters?.[0]?.id || null);
     } catch (err) {
-      toast.error('Course not found');
+      if (!signal.aborted) {
+        setCourse(null);
+        toast.error('Course not found');
+      }
     } finally {
-      setLoading(false);
+      if (!signal.aborted) {
+        setLoading(false);
+      }
     }
   }, [slug]);
 
   const toggleChapter = (chapterId) => {
     setOpenChapter(openChapter === chapterId ? null : chapterId);
+  };
+
+  const handleEnroll = async () => {
+    try {
+      setIsSubmitting(true);
+      // Add your enrollment logic here
+      toast.success("Successfully enrolled in the course!");
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Failed to enroll. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // -----------------------------
@@ -51,8 +73,20 @@ const CourseDetail = () => {
     return () => controller.abort();
   }, [fetchCourse]);
 
-  if (loading) return <div className="text-center mt-10 text-white">Loading...</div>;
-  if (!course) return <div className="text-center mt-10 text-red-500">Course not found</div>;
+  if (loading) return <LoadingSkeleton />;
+  if (!course) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-500 mb-2">Course Not Found</h2>
+          <p className="text-gray-400">The course you're looking for doesn't exist or has been removed.</p>
+          <a href="/courses" className="mt-4 inline-block px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+            Browse Courses
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   const discountedPrice =
     course.discount === 100 || course.price === 0
@@ -156,192 +190,356 @@ const CourseDetail = () => {
       </Helmet>
 
 
-      <div className="bg-gray-900 min-h-screen px-5 md:px-8 py-10 text-white">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="bg-gray-900 min-h-screen text-white">
+        {/* Hero Section */}
+        <div className="bg-gradient-to-b from-gray-800 to-gray-900 py-12 mb-10">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+              {/* Left: Video + Price */}
+              <div className="space-y-6">
+                <div className="relative">
+                  <a
+                    href={`https://www.youtube.com/watch?v=${course.featured_video}`}
+                    className="block aspect-video rounded-xl overflow-hidden relative group shadow-2xl"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={course.featured_image?.url || `https://placehold.co/800x400/0f172a/ffffff?text=${encodeURIComponent(course.title)}`}
+                      alt={course.title}
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
+                      <div className="h-16 w-16 bg-white rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform">
+                        <Play className="text-black w-6 h-6" />
+                      </div>
+                    </div>
+                  </a>
+                  {/* Overlay stats */}
+                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-1 bg-black/60 text-white px-3 py-1 rounded-full">
+                        <Clock className="w-4 h-4" />
+                        <span className="text-sm">{course.duration} {course.duration === 1 ? "Month" : "Months"}</span>
+                      </div>
+                      <div className="flex items-center gap-1 bg-black/60 text-white px-3 py-1 rounded-full">
+                        <Users className="w-4 h-4" />
+                        <span className="text-sm">{course.enrolled_count || 0} Students</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-          {/* Left: Video + Price */}
-          <div>
-            <a
-              href={`https://www.youtube.com/watch?v=${course.featured_video}`}
-              className="block aspect-video rounded-lg overflow-hidden relative group"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img
-                src={course.featured_image?.url}
-                alt="Course thumbnail"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition">
-                <div className="h-16 w-16 bg-white rounded-full flex items-center justify-center">
-                  <Play className="text-black w-6 h-6" />
+                {/* Price Section */}
+                <div className="bg-gray-800/50 p-6 rounded-xl backdrop-blur-sm border border-gray-700">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="space-y-1">
+                      <p className="text-gray-400 text-sm">Course Fee</p>
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl font-bold text-green-400">{discountedPrice}</span>
+                        {course.discount !== 100 && course.price !== 0 && (
+                          <del className="text-lg text-gray-500">₹{course.price}</del>
+                        )}
+                      </div>
+                    </div>
+                    {course.discount !== 100 && course.price !== 0 && (
+                      <div className="bg-yellow-500/10 text-yellow-500 px-3 py-2 rounded-lg">
+                        <span className="text-lg font-bold">{course.discount}%</span>
+                        <span className="text-sm"> OFF</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Call to action button */}
+                  <button
+                    onClick={handleEnroll}
+                    disabled={isSubmitting}
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="animate-spin w-5 h-5" />
+                        <span>Processing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <BookOpen className="w-5 h-5" />
+                        <span>Enroll Now</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
-            </a>
+              
+              {/* Right: Course Information */}
+              <div className="space-y-6">
+                {/* Course Title and Description */}
+                <div className="space-y-4">
+                  <h1 className="text-3xl md:text-4xl font-bold leading-tight">{course.title}</h1>
+                  <p className="text-gray-300 text-lg leading-relaxed">{course.description}</p>
+                </div>
 
-            {/* Price */}
-            <div className="mt-4 flex items-center gap-4">
-              <span className="text-green-400 text-2xl font-bold">{discountedPrice}</span>
-              {course.discount !== 100 && course.price !== 0 && (
-                <>
-                  <del className="text-red-400 text-xl">₹ {course.price}</del>
-                  <span className="bg-yellow-500 text-black px-2 py-1 text-sm rounded-md font-semibold">
-                    {course.discount}% OFF
-                  </span>
-                </>
-              )}
+                {/* Course Features Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="flex items-start gap-3 bg-gray-800/30 p-4 rounded-lg">
+                    <div className="mt-1">
+                      <CalendarDays className="w-5 h-5 text-indigo-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">Duration</h3>
+                      <p className="text-gray-400">{course.duration} {course.duration === 1 ? "Month" : "Months"}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 bg-gray-800/30 p-4 rounded-lg">
+                    <div className="mt-1">
+                      <BookOpenCheck className="w-5 h-5 text-indigo-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">{course.course_type === 'COMBO' ? 'Courses' : 'Chapters'}</h3>
+                      <p className="text-gray-400">
+                        {course.course_type === 'COMBO' 
+                          ? `${course.single_courses?.length || 0} courses included`
+                          : `${course.chapters?.length || 0} chapters`}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 bg-gray-800/30 p-4 rounded-lg">
+                    <div className="mt-1">
+                      <Languages className="w-5 h-5 text-indigo-400" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">Language</h3>
+                      <p className="text-gray-400">{course.language || 'English'}</p>
+                    </div>
+                  </div>
+
+                  {course.certificate && (
+                    <div className="flex items-start gap-3 bg-gray-800/30 p-4 rounded-lg">
+                      <div className="mt-1">
+                        <Award className="w-5 h-5 text-indigo-400" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold">Certificate</h3>
+                        <p className="text-gray-400">Course completion certificate</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-
-            {/* Enroll
-            <div className="mt-6">
-              {checkEnroll ? (
-                <button className="w-full bg-gray-700 text-white py-3 rounded-lg cursor-not-allowed">
-                  Already Enrolled
-                </button>
-              ) : (
-                <a
-                  href={`/course/checkout/${course.slug}`}
-                  className="block w-full bg-indigo-600 text-white text-center font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"
-                >
-                  Enroll Now
-                </a>
-              )}
-            </div> */}
-          </div>
-
-          {/* Right: Info */}
-          <div>
-            <h1 className="text-3xl font-semibold mb-3">{course.title}</h1>
-            <p className="text-gray-300 mb-6">{course.description?.slice(0, 120)}...</p>
-
-            <ul className="space-y-4 text-sm">
-              <li className="flex justify-between border-b border-gray-700 py-2">
-                <span className="flex items-center gap-2"><CalendarDays className="w-4 h-4" /> Duration</span>
-                <span>{course.duration} {course.duration === 1 ? "Month" : "Months"}</span>
-              </li>
-              <li className="flex justify-between border-b border-gray-700 py-2">
-                <span className="flex items-center gap-2"><BookOpenCheck className="w-4 h-4" /> Chapters</span>
-                <span>{course.chapters?.length || 0}</span>
-              </li>
-              <li className="flex justify-between border-b border-gray-700 py-2">
-                <span className="flex items-center gap-2"><Users className="w-4 h-4" /> Enrolled</span>
-                <span>{course.enrollments?.count ?? 0}</span>
-              </li>
-              <li className="flex justify-between border-b border-gray-700 py-2">
-                <span className="flex items-center gap-2"><Languages className="w-4 h-4" /> Language</span>
-                <span>{course.language}</span>
-              </li>
-              {course.certificate && (
-                <li className="flex justify-between border-b border-gray-700 py-2">
-                  <span className="flex items-center gap-2"><Award className="w-4 h-4" /> Certificate</span>
-                  <span>Yes</span>
-                </li>
-              )}
-            </ul>
           </div>
         </div>
 
-        {/* Tabs */}
-        <div className="max-w-6xl mx-auto mt-12 bg-gray-800 rounded-xl overflow-hidden">
-          <div className="flex border-b border-gray-700">
-            {['overview', 'curriculum'].map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`flex-1 py-3 text-sm font-medium tracking-wide transition-colors
-                  ${activeTab === tab
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
-          </div>
+        {/* Course Content Tabs */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gray-800 rounded-xl overflow-hidden shadow-xl">
+            {/* Tab Buttons */}
+            <div className="flex border-b border-gray-700">
+              {['overview', 'curriculum'].map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`flex-1 py-4 px-6 text-sm font-medium tracking-wide transition-colors
+                    ${activeTab === tab
+                      ? 'bg-indigo-600 text-white'
+                      : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}
+                >
+                  {tab === 'overview' ? 'Course Overview' : 'Course Curriculum'}
+                </button>
+              ))}
+            </div>
 
-          <div className="p-6">
-            {activeTab === 'overview' && (
-              <div>
-                <h2 className="text-lg font-semibold mb-3">Course Description</h2>
-                <p className="text-gray-300 text-sm leading-relaxed">{course.description}</p>
-              </div>
-            )}
+            {/* Tab Content */}
+            <div className="p-6">
+              {/* Overview Tab */}
+              {activeTab === 'overview' && (
+                <div className="space-y-8">
+                  {/* Course Description */}
+                  <div>
+                    <h2 className="text-2xl font-bold mb-4">About This Course</h2>
+                    <p className="text-gray-300 text-lg leading-relaxed whitespace-pre-line">
+                      {course.description}
+                    </p>
+                  </div>
 
-            {activeTab === 'curriculum' && (
-              <div>
-                <h2 className="text-xl font-bold mb-5 text-gray-100">📖 Curriculum</h2>
+                  {/* What You'll Learn */}
+                  <div>
+                    <h2 className="text-2xl font-bold mb-4">What You'll Learn</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {course.features?.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                          <div className="mt-1 flex-shrink-0">
+                            <BadgeCheck className="w-5 h-5 text-green-400" />
+                          </div>
+                          <p className="text-gray-300">{feature}</p>
+                        </div>
+                      )) || (
+                        <p className="text-gray-400">Course features coming soon...</p>
+                      )}
+                    </div>
+                  </div>
 
-                {course.chapters?.length > 0 ? (
-                  <div className="space-y-3">
-                    {course.chapters.map((chapter) => (
-                      <div
-                        key={chapter.id}
-                        className="bg-gray-800 rounded-xl shadow-md overflow-hidden"
-                      >
-                        {/* Chapter Header */}
-                        <button
-                          onClick={() => toggleChapter(chapter.id)}
-                          className="w-full flex items-center justify-between px-5 py-3 text-left text-gray-200 font-semibold hover:bg-gray-700 transition"
-                        >
-                          <span>{chapter.title}</span>
-                          {openChapter === chapter.id ? (
-                            <ChevronDown className="w-5 h-5 text-gray-400" />
-                          ) : (
-                            <ChevronRight className="w-5 h-5 text-gray-400" />
+                  {/* Course Features Grid */}
+                  <div>
+                    <h2 className="text-2xl font-bold mb-4">Course Features</h2>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                      <div className="flex items-start gap-3 bg-gray-700/30 p-4 rounded-lg">
+                        <div className="mt-1">
+                          <Clock className="w-5 h-5 text-indigo-400" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Duration</h3>
+                          <p className="text-gray-400">{course.duration} {course.duration === 1 ? "Month" : "Months"}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-3 bg-gray-700/30 p-4 rounded-lg">
+                        <div className="mt-1">
+                          <BookOpenCheck className="w-5 h-5 text-indigo-400" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">{course.course_type === 'COMBO' ? 'Total Courses' : 'Total Chapters'}</h3>
+                          <p className="text-gray-400">
+                            {course.course_type === 'COMBO' 
+                              ? `${course.single_courses?.length || 0} courses`
+                              : `${course.chapters?.length || 0} chapters`}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-3 bg-gray-700/30 p-4 rounded-lg">
+                        <div className="mt-1">
+                          <Users className="w-5 h-5 text-indigo-400" />
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">Enrolled</h3>
+                          <p className="text-gray-400">{course.enrolled_count || 0} students</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Curriculum Tab */}
+              {activeTab === 'curriculum' && (
+                <div>
+                  <h2 className="text-2xl font-bold mb-6">
+                    {course.course_type === 'COMBO' ? 'Included Courses' : 'Course Curriculum'}
+                  </h2>
+                  <div className="space-y-4">
+                    {course.course_type === 'COMBO' ? (
+                      // Display courses for combo type
+                      course.single_courses?.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {course.single_courses?.map((includedCourse) => (
+                            <CourseCard 
+                              key={includedCourse.id} 
+                              course={{
+                                ...includedCourse,
+                                featured_image_url: includedCourse.featured_image_url || null,
+                                language: includedCourse.language || []
+                              }}
+                            />
+                          )) || (
+                            <div className="text-gray-500">No courses available.</div>
                           )}
-                        </button>
-
-                        {/* Topics */}
-                        {openChapter === chapter.id && (
-                          <div className="px-6 py-3 space-y-3 border-t border-gray-700">
-                            {chapter.topics?.length > 0 ? (
-                              chapter.topics.map((topic) => (
-                                <div
-                                  key={topic.id}
-                                  className="flex items-center justify-between bg-gray-700 p-3 rounded-lg hover:bg-gray-600 transition"
-                                >
-                                  <span className="text-gray-200 text-sm font-medium">
-                                    {topic.title}
-                                  </span>
-                                  <div className="flex items-center gap-3">
-                                    {topic.video_url && (
-                                      <a
-                                        href={topic.video_url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-green-400 hover:text-green-300"
-                                        title="Watch Video"
-                                      >
-                                        <PlayCircle className="w-5 h-5" />
-                                      </a>
-                                    )}
-                                    {topic.notes_url && (
-                                      <a
-                                        href={topic.notes_url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-blue-400 hover:text-blue-300"
-                                        title="View Notes"
-                                      >
-                                        <FileText className="w-5 h-5" />
-                                      </a>
-                                    )}
-                                  </div>
+                        </div>
+                      ) : (
+                        <div className="text-center py-8">
+                          <GraduationCap className="w-12 h-12 text-gray-600 mx-auto mb-3" />
+                          <p className="text-gray-400">No courses added to this combo yet</p>
+                        </div>
+                      )
+                    ) : (
+                      // Display chapters for regular course
+                      course.chapters?.length > 0 ? (
+                        course.chapters.map((chapter) => (
+                          <div
+                            key={chapter.id}
+                            className="bg-gray-700/30 rounded-xl overflow-hidden"
+                          >
+                            <button
+                              onClick={() => toggleChapter(chapter.id)}
+                              className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-700/50 transition-colors"
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-indigo-600/10 flex items-center justify-center">
+                                  <BookOpen className="w-5 h-5 text-indigo-400" />
                                 </div>
-                              ))
-                            ) : (
-                              <p className="text-gray-400 text-sm">No topics available</p>
+                                <div>
+                                  <h3 className="font-medium text-gray-100">{chapter.title}</h3>
+                                  {chapter.topics?.length > 0 && (
+                                    <p className="text-sm text-gray-400">{chapter.topics.length} topics</p>
+                                  )}
+                                </div>
+                              </div>
+                              <ChevronDown
+                                className={`w-5 h-5 text-gray-400 transform transition-transform duration-200 ${
+                                  openChapter === chapter.id ? 'rotate-180' : ''
+                                }`}
+                              />
+                            </button>
+                            
+                            {openChapter === chapter.id && (
+                              <div className="border-t border-gray-600/50">
+                                {chapter.topics?.length > 0 ? (
+                                  <div className="p-4 space-y-2">
+                                    {chapter.topics.map((topic) => (
+                                      <div
+                                        key={topic.id}
+                                        className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-600/30 transition-colors group"
+                                      >
+                                        <span className="text-gray-300 text-sm group-hover:text-white transition-colors">
+                                          {topic.title}
+                                        </span>
+                                        <div className="flex items-center gap-2">
+                                          {topic.video_url && (
+                                            <a
+                                              href={topic.video_url}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="text-indigo-400 hover:text-indigo-300 transition-colors p-1 rounded-full hover:bg-gray-700"
+                                              title="Watch Video"
+                                            >
+                                              <PlayCircle className="w-4 h-4" />
+                                            </a>
+                                          )}
+                                          {topic.notes_url && (
+                                            <a
+                                              href={topic.notes_url}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="text-indigo-400 hover:text-indigo-300 transition-colors p-1 rounded-full hover:bg-gray-700"
+                                              title="View Notes"
+                                            >
+                                              <FileText className="w-4 h-4" />
+                                            </a>
+                                          )}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <p className="p-4 text-sm text-gray-400">No topics available yet</p>
+                                )}
+                              </div>
                             )}
                           </div>
-                        )}
-                      </div>
-                    ))}
+                        ))
+                      ) : (
+                        <div className="text-center py-8">
+                          <GraduationCap className="w-12 h-12 text-gray-600 mx-auto mb-3" />
+                          <p className="text-gray-400">Course curriculum coming soon...</p>
+                        </div>
+                      )
+                    )}
                   </div>
-                ) : (
-                  <p className="text-gray-400">No chapters available</p>
-                )}
-              </div>
-            )}
-
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -74,11 +74,8 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     authentication_classes = []
     pagination_class = CoursePagination
-    filter_backends = [drf_filters.SearchFilter, DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend]
     filterset_class = CourseFilter
-    search_fields = ['title', 'description', 'created_by__username', 'language__name', 'categories__name', 'level__name']
-    filterset_fields = ['categories', 'level', 'language', 'mode', 'course_type', 'certificate']
-    ordering_fields = ['price', 'created_at']
 
     def get_queryset(self):
         return Course.objects.filter(status='PUBLISH').select_related('level', 'created_by').prefetch_related('categories', 'language')
@@ -87,13 +84,14 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     def with_chapters(self, request, slug=None):
         course = get_object_or_404(
             Course.objects.prefetch_related(
+                'single_courses',
                 Prefetch(
                     'chapters',
                     queryset=CourseChapter.objects.prefetch_related(
                         Prefetch('topics', queryset=ChapterTopic.objects.order_by('id'))
                     ).order_by('id')
                 )
-            ),
+            ).select_related('level', 'created_by').prefetch_related('categories', 'language'),
             slug=slug
         )
         serializer = CourseDetailWithChaptersSerializer(course, context={'request': request})

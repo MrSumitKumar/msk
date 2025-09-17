@@ -185,7 +185,7 @@ class Course(models.Model):
         COMBO = 'COMBO', 'Combo Course'
 
     status = models.CharField(choices=StatusChoices.choices, max_length=10, default=StatusChoices.DRAFT)
-    featured_image = models.ImageField(upload_to="course/poster/", default="course/poster/default.jpg", blank=True)
+    featured_image = models.ImageField(upload_to="course/poster/", blank=True)
 
     featured_video = models.URLField(max_length=255, null=True, blank=True, validators=[validate_youtube_url])
     title = models.CharField(max_length=500, unique=True)

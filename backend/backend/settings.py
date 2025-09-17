@@ -10,62 +10,61 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "xrpc1c172j)rs0p5!4^o+sk21v(a6xq!t62nvc)7f+$!8dk_d-"
 DEBUG = True
 
-# ALLOWED_HOSTS = ["api.shikohabad.in", "www.api.shikohabad.in"]
-# CORS_ALLOWED_ORIGINS = [
-#     "https://msk.shikohabad.in",
-#     "https://www.msk.shikohabad.in",
-# ]
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "msk_shikohabad_in",
-#         "USER": "msk_user",
-#         "PASSWORD": "SSkk#?95postgrey",
-#         "HOST": "localhost",
-#         "PORT": "5432",
-#     }
-# }
-
-
-
-ALLOWED_HOSTS = ["*"]
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
-FRONTEND_URL = "http://localhost:5173"
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
+ALLOWED_HOSTS = ["api.shikohabad.in", "www.api.shikohabad.in"]
+CORS_ALLOWED_ORIGINS = [
+    "https://msk.shikohabad.in",
+    "https://www.msk.shikohabad.in",
 ]
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-    'cache-control',
-    'pragma'
-]
-
-# Additional CORS settings
-CORS_EXPOSE_HEADERS = ['content-type', 'content-length']
-CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "msk_shikohabad_in",
+        "USER": "msk_user",
+        "PASSWORD": "SSkk#?95postgrey",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
+
+
+
+# ALLOWED_HOSTS = ["*"]
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+# FRONTEND_URL = "http://localhost:5173"
+# CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_METHODS = [
+#     'DELETE',
+#     'GET',
+#     'OPTIONS',
+#     'PATCH',
+#     'POST',
+#     'PUT',
+# ]
+# CORS_ALLOW_HEADERS = [
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+#     'cache-control',
+#     'pragma'
+# ]
+
+# CORS_EXPOSE_HEADERS = ['content-type', 'content-length']
+# CORS_PREFLIGHT_MAX_AGE = 86400  # 24 hours
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 
 
@@ -93,7 +92,6 @@ INSTALLED_APPS = [
     "users",
     "courses",
     "mlm",
-    "notifications",
     "projects",
 ]
 
