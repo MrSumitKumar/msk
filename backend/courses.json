@@ -1,8 +1,8 @@
 [
     {
         "status": "PUBLISH",
-        "title": "Python for Beginners - 1 Month",
-        "sort_description": "Start your programming journey with Python. Learn step by step from basics like variables, loops, functions, and file handling to build a strong foundation.",
+        "title": "Python for Beginners",
+        "sort_description": "Kickstart your coding career with MSK Institute's Python Programming Course. Learn Python step by step—from variables, loops, and functions to file handling—designed to build a strong foundation for beginners.",
         "categories": [
             "Programming",
             "Python"
@@ -19,44 +19,997 @@
         "course_type": "SINGLE",
         "chapters": [
             {
-                "title": "Chapter 1: Getting Started with Python",
+                "title": "1: Introduction and Setup",
                 "topics": [
                     {
-                        "title": "Introduction to Python and Its Applications"
+                        "title": "Python Introduction"
                     },
                     {
-                        "title": "Installing Python and IDEs"
+                        "title": "VS Code Setup"
                     },
                     {
-                        "title": "Your First Python Program"
+                        "title": "Python Setup"
+                    },
+                    {
+                        "title": "Syntax & Code Structure"
+                    },
+                    {
+                        "title": "Comments & Best Practices"
                     }
                 ]
             },
             {
-                "title": "Chapter 2: Python Basics",
+                "title": "2: Variables",
                 "topics": [
                     {
-                        "title": "Variables and Data Types"
+                        "title": "Variables Introduction and Rules"
                     },
                     {
-                        "title": "Operators and Expressions"
+                        "title": "Creating a Variable"
                     },
                     {
-                        "title": "Input and Output"
+                        "title": "Output Variables & Printing Techniques"
+                    },
+                    {
+                        "title": "Multiple Assignments"
+                    },
+                    {
+                        "title": "Constants (Python Convention)"
                     }
                 ]
             },
             {
-                "title": "Chapter 3: Strings in Python",
+                "title": "3: Data Types",
                 "topics": [
                     {
-                        "title": "String Basics"
+                        "title": "Data Types Overview"
                     },
                     {
-                        "title": "String Methods and Functions"
+                        "title": "Type Conversion (Casting & type())"
                     },
                     {
-                        "title": "String Slicing and Formatting"
+                        "title": "Checking Data Types (isinstance)"
+                    }
+                ]
+            },
+            {
+                "title": "4: Numbers",
+                "topics": [
+                    {
+                        "title": "Integer, Float, Complex"
+                    },
+                    {
+                        "title": "Mathematical Operations"
+                    },
+                    {
+                        "title": "Math Module (math, random)"
+                    }
+                ]
+            },
+            {
+                "title": "5: Strings",
+                "topics": [
+                    {
+                        "title": "String Introduction"
+                    },
+                    {
+                        "title": "Slicing & Indexing"
+                    },
+                    {
+                        "title": "Modifying Strings"
+                    },
+                    {
+                        "title": "Concatenation & Formatting (f-string, format, %)"
+                    },
+                    {
+                        "title": "Escape Characters"
+                    },
+                    {
+                        "title": "String Methods"
+                    }
+                ]
+            },
+            {
+                "title": "6: Operators",
+                "topics": [
+                    {
+                        "title": "Arithmetic Operators"
+                    },
+                    {
+                        "title": "Assignment Operators"
+                    },
+                    {
+                        "title": "Comparison Operators"
+                    },
+                    {
+                        "title": "Logical Operators"
+                    },
+                    {
+                        "title": "Identity & Membership Operators"
+                    },
+                    {
+                        "title": "Bitwise Operators"
+                    }
+                ]
+            },
+            {
+                "title": "7: Casting",
+                "topics": [
+                    {
+                        "title": "Implicit Casting"
+                    },
+                    {
+                        "title": "Explicit Casting (int(), float(), str())"
+                    },
+                    {
+                        "title": "Common Pitfalls"
+                    }
+                ]
+            },
+            {
+                "title": "8: Lists",
+                "topics": [
+                    {
+                        "title": "List Introduction"
+                    },
+                    {
+                        "title": "Create & Access Lists"
+                    },
+                    {
+                        "title": "Add & Remove Items"
+                    },
+                    {
+                        "title": "Update Items"
+                    },
+                    {
+                        "title": "List Methods"
+                    },
+                    {
+                        "title": "Nested Lists"
+                    }
+                ]
+            },
+            {
+                "title": "9: Tuples",
+                "topics": [
+                    {
+                        "title": "Tuple Introduction"
+                    },
+                    {
+                        "title": "Accessing Items"
+                    },
+                    {
+                        "title": "Updating & Unpacking Tuples"
+                    },
+                    {
+                        "title": "Join Tuples"
+                    },
+                    {
+                        "title": "Tuple Methods"
+                    },
+                    {
+                        "title": "Nested Tuples"
+                    }
+                ]
+            },
+            {
+                "title": "10: Sets",
+                "topics": [
+                    {
+                        "title": "Sets Introduction"
+                    },
+                    {
+                        "title": "Adding & Removing Items"
+                    },
+                    {
+                        "title": "Set Operations"
+                    },
+                    {
+                        "title": "Set Methods"
+                    },
+                    {
+                        "title": "Nested Sets"
+                    }
+                ]
+            },
+            {
+                "title": "11: Dictionaries",
+                "topics": [
+                    {
+                        "title": "Dictionaries Introduction"
+                    },
+                    {
+                        "title": "Accessing & Updating Items"
+                    },
+                    {
+                        "title": "Adding & Removing Items"
+                    },
+                    {
+                        "title": "Copying Dictionaries"
+                    },
+                    {
+                        "title": "Dictionary Methods"
+                    },
+                    {
+                        "title": "Nested Dictionaries"
+                    },
+                    {
+                        "title": "Project: Student Records"
+                    }
+                ]
+            },
+            {
+                "title": "12: Conditional Statements",
+                "topics": [
+                    {
+                        "title": "If, Elif, Else"
+                    },
+                    {
+                        "title": "Nested Conditions"
+                    },
+                    {
+                        "title": "Short-hand If Statements"
+                    },
+                    {
+                        "title": "Ternary Operators"
+                    },
+                    {
+                        "title": "Project: Grading System"
+                    }
+                ]
+            },
+            {
+                "title": "13: Loops",
+                "topics": [
+                    {
+                        "title": "While Loop"
+                    },
+                    {
+                        "title": "For Loop"
+                    },
+                    {
+                        "title": "Nested Loops"
+                    },
+                    {
+                        "title": "Break, Continue, Pass"
+                    },
+                    {
+                        "title": "Loops with Else"
+                    },
+                    {
+                        "title": "Iterating with Loops"
+                    },
+                    {
+                        "title": "List Comprehension"
+                    },
+                    {
+                        "title": "Set Comprehension"
+                    },
+                    {
+                        "title": "Project: Multiplication Table Generator"
+                    }
+                ]
+            },
+            {
+                "title": "14: Functions",
+                "topics": [
+                    {
+                        "title": "Defining & Calling Functions"
+                    },
+                    {
+                        "title": "Arguments: Positional, Keyword"
+                    },
+                    {
+                        "title": "Arguments: Default, *args, **kwargs"
+                    },
+                    {
+                        "title": "Return Values"
+                    },
+                    {
+                        "title": "Lambda Functions"
+                    },
+                    {
+                        "title": "Recursion"
+                    },
+                    {
+                        "title": "Scope of Variables in Functions"
+                    },
+                    {
+                        "title": "Project: Calculator"
+                    }
+                ]
+            },
+            {
+                "title": "15: File Handling",
+                "topics": [
+                    {
+                        "title": "Opening & Closing Files"
+                    },
+                    {
+                        "title": "Reading & Writing Files"
+                    },
+                    {
+                        "title": "Working with open()"
+                    },
+                    {
+                        "title": "File Methods (read, readline, write)"
+                    }
+                ]
+            },
+            {
+                "title": "16: Projects",
+                "topics": [
+                    {
+                        "title": "Contact Book"
+                    },
+                    {
+                        "title": "Quiz Application"
+                    },
+                    {
+                        "title": "Expense Tracker"
+                    },
+                    {
+                        "title": "Basic Student Management System"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "Python for Intermediate",
+        "sort_description": "Enhance your Python skills with intermediate-level concepts: advanced data structures, OOP, modules, error handling, APIs, databases, and practical projects.",
+        "categories": [
+            "Programming",
+            "Python"
+        ],
+        "level": "Intermediate",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 2999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "1: Advanced Data Types & Comprehensions",
+                "topics": [
+                    {
+                        "title": "List Comprehensions Advanced"
+                    },
+                    {
+                        "title": "Set Comprehensions"
+                    },
+                    {
+                        "title": "Dictionary Comprehensions"
+                    },
+                    {
+                        "title": "Nested Comprehensions"
+                    },
+                    {
+                        "title": "Project: Data Filtering with Comprehensions"
+                    }
+                ]
+            },
+            {
+                "title": "2: Functions Deep Dive",
+                "topics": [
+                    {
+                        "title": "Arguments Recap (*args, **kwargs)"
+                    },
+                    {
+                        "title": "Default vs Keyword Arguments"
+                    },
+                    {
+                        "title": "Closures"
+                    },
+                    {
+                        "title": "Decorators Basics"
+                    },
+                    {
+                        "title": "Project: Function Decorator Example"
+                    }
+                ]
+            },
+            {
+                "title": "3: Modules and Packages",
+                "topics": [
+                    {
+                        "title": "Creating and Importing Modules"
+                    },
+                    {
+                        "title": "Using __name__ == '__main__'"
+                    },
+                    {
+                        "title": "Package Structure and __init__.py"
+                    },
+                    {
+                        "title": "Popular Python Modules Overview"
+                    },
+                    {
+                        "title": "Project: Custom Utility Package"
+                    }
+                ]
+            },
+            {
+                "title": "4: File Handling Advanced",
+                "topics": [
+                    {
+                        "title": "Working with Context Managers (with statement)"
+                    },
+                    {
+                        "title": "Reading & Writing CSV Files"
+                    },
+                    {
+                        "title": "Working with JSON Files"
+                    },
+                    {
+                        "title": "File Exceptions and Error Handling"
+                    },
+                    {
+                        "title": "Project: CSV Contact Manager"
+                    }
+                ]
+            },
+            {
+                "title": "5: Object-Oriented Programming (Intermediate)",
+                "topics": [
+                    {
+                        "title": "Creating Classes & Objects (Review)"
+                    },
+                    {
+                        "title": "Inheritance & Method Overriding"
+                    },
+                    {
+                        "title": "Polymorphism Basics"
+                    },
+                    {
+                        "title": "Encapsulation and Abstraction"
+                    },
+                    {
+                        "title": "Project: Bank Account Class System"
+                    }
+                ]
+            },
+            {
+                "title": "6: Exception Handling",
+                "topics": [
+                    {
+                        "title": "Types of Exceptions"
+                    },
+                    {
+                        "title": "Try-Except-Else-Finally"
+                    },
+                    {
+                        "title": "Raising Exceptions"
+                    },
+                    {
+                        "title": "Creating Custom Exceptions"
+                    },
+                    {
+                        "title": "Project: Error-Handled Calculator"
+                    }
+                ]
+            },
+            {
+                "title": "7: Iterators and Generators",
+                "topics": [
+                    {
+                        "title": "Understanding Iterators"
+                    },
+                    {
+                        "title": "Custom Iterators"
+                    },
+                    {
+                        "title": "Using Generators with yield"
+                    },
+                    {
+                        "title": "Generator Expressions"
+                    },
+                    {
+                        "title": "Project: Infinite Sequence Generator"
+                    }
+                ]
+            },
+            {
+                "title": "8: Working with APIs",
+                "topics": [
+                    {
+                        "title": "HTTP Requests using requests"
+                    },
+                    {
+                        "title": "GET & POST Methods"
+                    },
+                    {
+                        "title": "Parsing JSON Data"
+                    },
+                    {
+                        "title": "Practical API Example"
+                    },
+                    {
+                        "title": "Project: Weather Data Fetcher"
+                    }
+                ]
+            },
+            {
+                "title": "9: Debugging and Logging",
+                "topics": [
+                    {
+                        "title": "Using print vs logging"
+                    },
+                    {
+                        "title": "Logging Levels"
+                    },
+                    {
+                        "title": "Basic Debugging with pdb"
+                    },
+                    {
+                        "title": "Assertions"
+                    },
+                    {
+                        "title": "Project: Debugging a Student Grading App"
+                    }
+                ]
+            },
+            {
+                "title": "10: Python Standard Libraries",
+                "topics": [
+                    {
+                        "title": "Math and Random Module"
+                    },
+                    {
+                        "title": "Datetime Module"
+                    },
+                    {
+                        "title": "Collections Module"
+                    },
+                    {
+                        "title": "OS and Sys Modules"
+                    },
+                    {
+                        "title": "Project: File & Directory Utility Tool"
+                    }
+                ]
+            },
+            {
+                "title": "11: Database Basics with SQLite",
+                "topics": [
+                    {
+                        "title": "Introduction to Databases"
+                    },
+                    {
+                        "title": "SQLite Installation & Setup"
+                    },
+                    {
+                        "title": "Connecting Python with SQLite"
+                    },
+                    {
+                        "title": "CRUD Operations"
+                    },
+                    {
+                        "title": "Project: Student Records Database"
+                    }
+                ]
+            },
+            {
+                "title": "12: Virtual Environments & Pip",
+                "topics": [
+                    {
+                        "title": "Why Use Virtual Environments"
+                    },
+                    {
+                        "title": "Creating Virtual Environments"
+                    },
+                    {
+                        "title": "Using pip for Package Management"
+                    },
+                    {
+                        "title": "Requirements.txt"
+                    },
+                    {
+                        "title": "Project: Package-Ready Mini App"
+                    }
+                ]
+            },
+            {
+                "title": "13: Data Visualization Basics",
+                "topics": [
+                    {
+                        "title": "Introduction to Matplotlib"
+                    },
+                    {
+                        "title": "Line, Bar and Pie Charts"
+                    },
+                    {
+                        "title": "Customizing Graphs"
+                    },
+                    {
+                        "title": "Seaborn Basics"
+                    },
+                    {
+                        "title": "Project: Visualizing Sales Data"
+                    }
+                ]
+            },
+            {
+                "title": "14: Intermediate Projects",
+                "topics": [
+                    {
+                        "title": "Project 1: Expense Tracker with CSV"
+                    },
+                    {
+                        "title": "Project 2: API-based Dictionary App"
+                    },
+                    {
+                        "title": "Project 3: CLI-based To-do App"
+                    }
+                ]
+            },
+            {
+                "title": "15: Capstone Project",
+                "topics": [
+                    {
+                        "title": "Library Management System"
+                    },
+                    {
+                        "title": "Student Report Card Generator"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "Python for Advanced",
+        "sort_description": "Master advanced Python concepts including decorators, context managers, multithreading, multiprocessing, networking, databases, testing, and real-world projects.",
+        "categories": [
+            "Programming",
+            "Python"
+        ],
+        "level": "Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 3999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "1: Advanced OOP Concepts",
+                "topics": [
+                    {
+                        "title": "Class and Static Methods Advanced"
+                    },
+                    {
+                        "title": "Property Decorator"
+                    },
+                    {
+                        "title": "Method Resolution Order (MRO)"
+                    },
+                    {
+                        "title": "Multiple Inheritance"
+                    },
+                    {
+                        "title": "Project: Employee Management System"
+                    }
+                ]
+            },
+            {
+                "title": "2: Magic Methods & Operator Overloading",
+                "topics": [
+                    {
+                        "title": "Introduction to Dunder Methods"
+                    },
+                    {
+                        "title": "__str__, __repr__, __len__"
+                    },
+                    {
+                        "title": "Operator Overloading"
+                    },
+                    {
+                        "title": "Customizing Classes with Magic Methods"
+                    },
+                    {
+                        "title": "Project: Vector Class with Overloaded Operators"
+                    }
+                ]
+            },
+            {
+                "title": "3: Advanced Decorators and Context Managers",
+                "topics": [
+                    {
+                        "title": "Function Decorators Deep Dive"
+                    },
+                    {
+                        "title": "Class Decorators"
+                    },
+                    {
+                        "title": "Context Managers with __enter__ and __exit__"
+                    },
+                    {
+                        "title": "Using contextlib"
+                    },
+                    {
+                        "title": "Project: Resource Manager with Context Manager"
+                    }
+                ]
+            },
+            {
+                "title": "4: Itertools and Functools",
+                "topics": [
+                    {
+                        "title": "Itertools for Iteration Tools"
+                    },
+                    {
+                        "title": "functools for Higher-Order Functions"
+                    },
+                    {
+                        "title": "lru_cache and Partial Functions"
+                    },
+                    {
+                        "title": "Project: Data Pipeline with Itertools"
+                    }
+                ]
+            },
+            {
+                "title": "5: Generators & Coroutines",
+                "topics": [
+                    {
+                        "title": "Advanced Generator Patterns"
+                    },
+                    {
+                        "title": "Yield from Expression"
+                    },
+                    {
+                        "title": "Coroutines with send()"
+                    },
+                    {
+                        "title": "Project: Stream Data Processor"
+                    }
+                ]
+            },
+            {
+                "title": "6: Multithreading in Python",
+                "topics": [
+                    {
+                        "title": "Threading Module Basics"
+                    },
+                    {
+                        "title": "Thread Synchronization"
+                    },
+                    {
+                        "title": "Daemon vs Non-Daemon Threads"
+                    },
+                    {
+                        "title": "Project: Multithreaded Downloader"
+                    }
+                ]
+            },
+            {
+                "title": "7: Multiprocessing in Python",
+                "topics": [
+                    {
+                        "title": "Multiprocessing Basics"
+                    },
+                    {
+                        "title": "Process vs Thread"
+                    },
+                    {
+                        "title": "Shared Memory & Queues"
+                    },
+                    {
+                        "title": "Project: Parallel File Processor"
+                    }
+                ]
+            },
+            {
+                "title": "8: Asynchronous Programming (Asyncio)",
+                "topics": [
+                    {
+                        "title": "Introduction to Asyncio"
+                    },
+                    {
+                        "title": "Async and Await Syntax"
+                    },
+                    {
+                        "title": "Creating and Managing Tasks"
+                    },
+                    {
+                        "title": "Project: Async Web Scraper"
+                    }
+                ]
+            },
+            {
+                "title": "9: Advanced Database Handling",
+                "topics": [
+                    {
+                        "title": "SQLAlchemy ORM Basics"
+                    },
+                    {
+                        "title": "Relationships in Databases"
+                    },
+                    {
+                        "title": "Transactions and Rollbacks"
+                    },
+                    {
+                        "title": "Project: Blogging Platform Database"
+                    }
+                ]
+            },
+            {
+                "title": "10: Networking with Python",
+                "topics": [
+                    {
+                        "title": "Socket Programming Basics"
+                    },
+                    {
+                        "title": "TCP vs UDP"
+                    },
+                    {
+                        "title": "Building a Chat Server"
+                    },
+                    {
+                        "title": "Project: Simple Client-Server Application"
+                    }
+                ]
+            },
+            {
+                "title": "11: Regular Expressions Advanced",
+                "topics": [
+                    {
+                        "title": "Regex Patterns and Groups"
+                    },
+                    {
+                        "title": "Greedy vs Non-Greedy Matching"
+                    },
+                    {
+                        "title": "Substitution and Splitting"
+                    },
+                    {
+                        "title": "Project: Log File Analyzer"
+                    }
+                ]
+            },
+            {
+                "title": "12: Data Serialization & File Formats",
+                "topics": [
+                    {
+                        "title": "Pickle Module"
+                    },
+                    {
+                        "title": "Working with JSON"
+                    },
+                    {
+                        "title": "Working with YAML"
+                    },
+                    {
+                        "title": "Project: Config File Manager"
+                    }
+                ]
+            },
+            {
+                "title": "13: Testing & Best Practices",
+                "topics": [
+                    {
+                        "title": "Unit Testing with unittest"
+                    },
+                    {
+                        "title": "Pytest for Advanced Testing"
+                    },
+                    {
+                        "title": "Mocking and Fixtures"
+                    },
+                    {
+                        "title": "Test-Driven Development"
+                    },
+                    {
+                        "title": "Project: Tested Calculator Application"
+                    }
+                ]
+            },
+            {
+                "title": "14: GUI Development with Tkinter",
+                "topics": [
+                    {
+                        "title": "Tkinter Basics"
+                    },
+                    {
+                        "title": "Common Widgets"
+                    },
+                    {
+                        "title": "Event Handling"
+                    },
+                    {
+                        "title": "Project: GUI-based To-Do App"
+                    }
+                ]
+            },
+            {
+                "title": "15: Final Capstone Projects",
+                "topics": [
+                    {
+                        "title": "Project 1: Inventory Management System"
+                    },
+                    {
+                        "title": "Project 2: API-based Weather Dashboard"
+                    },
+                    {
+                        "title": "Project 3: Personal Finance Tracker with Database"
+                    }
+                ]
+            }
+        ]
+    },
+
+    
+    {
+        "status": "PUBLISH",
+        "title": "JavaScript for Beginners",
+        "sort_description": "Learn JavaScript from scratch: variables, loops, functions, DOM basics, events, and beginner-friendly projects.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "JavaScript"
+        ],
+        "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 1999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Introduction to JavaScript",
+                "topics": [
+                    {
+                        "title": "What is JavaScript?"
+                    },
+                    {
+                        "title": "How JavaScript Works in Browser"
+                    },
+                    {
+                        "title": "Setting up Environment: VSCode, Live Server"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: Basics of JavaScript",
+                "topics": [
+                    {
+                        "title": "Variables: var, let, const"
+                    },
+                    {
+                        "title": "Data Types"
+                    },
+                    {
+                        "title": "Comments and Best Practices"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: Operators in JavaScript",
+                "topics": [
+                    {
+                        "title": "Arithmetic Operators"
+                    },
+                    {
+                        "title": "Comparison Operators"
+                    },
+                    {
+                        "title": "Logical Operators"
+                    },
+                    {
+                        "title": "Assignment & Ternary Operator"
                     }
                 ]
             },
@@ -64,18 +1017,46 @@
                 "title": "Chapter 4: Control Flow",
                 "topics": [
                     {
-                        "title": "Conditional Statements (if, elif, else)"
+                        "title": "Conditional Statements: if, else if, else"
                     },
                     {
-                        "title": "Loops (for, while)"
+                        "title": "Switch Statements"
                     },
                     {
-                        "title": "Loop Control (break, continue, pass)"
+                        "title": "Truthy & Falsy Values"
                     }
                 ]
             },
             {
-                "title": "Chapter 5: Functions",
+                "title": "Chapter 5: Loops",
+                "topics": [
+                    {
+                        "title": "For Loop"
+                    },
+                    {
+                        "title": "While and Do-While Loops"
+                    },
+                    {
+                        "title": "Loop Control: break, continue"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: Strings and Template Literals",
+                "topics": [
+                    {
+                        "title": "String Basics"
+                    },
+                    {
+                        "title": "Common String Methods"
+                    },
+                    {
+                        "title": "Template Literals (Basics)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Functions",
                 "topics": [
                     {
                         "title": "Defining and Calling Functions"
@@ -84,66 +1065,534 @@
                         "title": "Function Parameters and Return Values"
                     },
                     {
-                        "title": "Built-in Functions"
+                        "title": "Arrow Functions (Basic)"
                     }
                 ]
             },
             {
-                "title": "Chapter 6: Data Structures Basics",
+                "title": "Chapter 8: Arrays and Objects",
                 "topics": [
                     {
-                        "title": "Lists and Their Methods"
+                        "title": "Array Basics and Methods"
                     },
                     {
-                        "title": "Tuples"
+                        "title": "Object Basics and Properties"
                     },
                     {
-                        "title": "Sets and Dictionaries"
+                        "title": "Iterating over Arrays and Objects"
                     }
                 ]
             },
             {
-                "title": "Chapter 7: Working with Files",
+                "title": "Chapter 9: Date, Math & Built-in Objects",
                 "topics": [
                     {
-                        "title": "Reading Files"
+                        "title": "Working with Date Object"
                     },
                     {
-                        "title": "Writing to Files"
+                        "title": "Math Object Basics"
                     },
                     {
-                        "title": "File Handling Best Practices"
+                        "title": "Random Numbers Example"
                     }
                 ]
             },
             {
-                "title": "Chapter 8: Error Handling",
+                "title": "Chapter 10: DOM Basics",
                 "topics": [
                     {
-                        "title": "Introduction to Exceptions"
+                        "title": "Selecting Elements: getElementById, querySelector"
                     },
                     {
-                        "title": "Try, Except, Finally Blocks"
+                        "title": "Changing Content and Style"
                     },
                     {
-                        "title": "Raising Exceptions"
+                        "title": "Handling Events: click, input, submit"
                     }
                 ]
             },
             {
-                "title": "Chapter 9: Mini Project",
+                "title": "Chapter 11: Debugging & Best Practices",
                 "topics": [
                     {
-                        "title": "Project: Simple Calculator"
+                        "title": "Using console.log()"
                     },
                     {
-                        "title": "Project: Student Grade Tracker"
+                        "title": "Common Errors and Fixes"
+                    },
+                    {
+                        "title": "Clean Code Practices"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 12: Beginner Projects",
+                "topics": [
+                    {
+                        "title": "Interactive Button Click Counter"
+                    },
+                    {
+                        "title": "Simple Form Validation"
+                    },
+                    {
+                        "title": "Image Slider (Basic)"
+                    },
+                    {
+                        "title": "Final Mini Project: To-Do List Application"
                     }
                 ]
             }
         ]
     },
+    {
+        "status": "PUBLISH",
+        "title": "JavaScript for Intermediate",
+        "sort_description": "Advance your JavaScript skills: ES6+ features, advanced DOM, events, fetch API, async programming, error handling, and real-world projects.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "JavaScript"
+        ],
+        "level": "Intermediate",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 2499.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: ES6+ Deep Dive",
+                "topics": [
+                    {
+                        "title": "Block Scope with let & const"
+                    },
+                    {
+                        "title": "Template Literals"
+                    },
+                    {
+                        "title": "Destructuring Arrays and Objects"
+                    },
+                    {
+                        "title": "Default Parameters"
+                    },
+                    {
+                        "title": "Enhanced Object Literals"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: Functions Advanced",
+                "topics": [
+                    {
+                        "title": "Arrow Functions Advanced"
+                    },
+                    {
+                        "title": "Rest & Spread Operators"
+                    },
+                    {
+                        "title": "Closures Introduction"
+                    },
+                    {
+                        "title": "Immediately Invoked Functions (IIFE)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: DOM Advanced",
+                "topics": [
+                    {
+                        "title": "querySelectorAll & forEach"
+                    },
+                    {
+                        "title": "Traversing DOM Nodes"
+                    },
+                    {
+                        "title": "Dynamic Element Creation & Removal"
+                    },
+                    {
+                        "title": "Styling with classList"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: Events in Depth",
+                "topics": [
+                    {
+                        "title": "Event Listeners"
+                    },
+                    {
+                        "title": "Event Bubbling & Capturing"
+                    },
+                    {
+                        "title": "Keyboard & Mouse Events"
+                    },
+                    {
+                        "title": "Form Events and Validation"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: Arrays Advanced",
+                "topics": [
+                    {
+                        "title": "map, filter, reduce"
+                    },
+                    {
+                        "title": "find, some, every"
+                    },
+                    {
+                        "title": "Array.from & Array.of"
+                    },
+                    {
+                        "title": "Deep Copy vs Shallow Copy"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: Objects Advanced",
+                "topics": [
+                    {
+                        "title": "Object.keys, Object.values, Object.entries"
+                    },
+                    {
+                        "title": "Object.assign()"
+                    },
+                    {
+                        "title": "Spread in Objects"
+                    },
+                    {
+                        "title": "Object Destructuring in Depth"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Asynchronous JavaScript",
+                "topics": [
+                    {
+                        "title": "Callbacks"
+                    },
+                    {
+                        "title": "Promises Basics"
+                    },
+                    {
+                        "title": "Promise Chaining"
+                    },
+                    {
+                        "title": "Intro to Async/Await"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Fetch API",
+                "topics": [
+                    {
+                        "title": "Fetching Data from APIs"
+                    },
+                    {
+                        "title": "Handling JSON Responses"
+                    },
+                    {
+                        "title": "GET vs POST Requests"
+                    },
+                    {
+                        "title": "Mini Project: Random Joke Generator"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Error Handling",
+                "topics": [
+                    {
+                        "title": "try...catch"
+                    },
+                    {
+                        "title": "finally block"
+                    },
+                    {
+                        "title": "Throwing Custom Errors"
+                    },
+                    {
+                        "title": "Error Handling in Async Code"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 10: Modules Introduction",
+                "topics": [
+                    {
+                        "title": "What are Modules?"
+                    },
+                    {
+                        "title": "import & export"
+                    },
+                    {
+                        "title": "Organizing Code with Modules"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 11: Browser Storage",
+                "topics": [
+                    {
+                        "title": "LocalStorage"
+                    },
+                    {
+                        "title": "SessionStorage"
+                    },
+                    {
+                        "title": "Practical Use Cases"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 12: Iterators & Generators",
+                "topics": [
+                    {
+                        "title": "Understanding Iterators"
+                    },
+                    {
+                        "title": "Creating Custom Iterators"
+                    },
+                    {
+                        "title": "Generators with function*"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 13: Debugging & Tools",
+                "topics": [
+                    {
+                        "title": "Using console methods"
+                    },
+                    {
+                        "title": "Breakpoints in DevTools"
+                    },
+                    {
+                        "title": "Network Tab for API Calls"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 14: Mini Projects",
+                "topics": [
+                    {
+                        "title": "Quiz App"
+                    },
+                    {
+                        "title": "To-Do List with Local Storage"
+                    },
+                    {
+                        "title": "Product Filter App"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 15: Final Project",
+                "topics": [
+                    {
+                        "title": "Weather App using Fetch API & Async/Await"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "JavaScript for Advanced",
+        "sort_description": "Master advanced JavaScript concepts: classes, modules, async patterns, storage, debugging, design patterns, and build real-world projects.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "JavaScript"
+        ],
+        "level": "Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 2999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Advanced Functions",
+                "topics": [
+                    "Closures Deep Dive",
+                    "Currying and Partial Application",
+                    "Memoization for Performance",
+                    "Higher-Order Functions Advanced",
+                    "Project: Custom Debounce and Throttle Utility"
+                ]
+            },
+            {
+                "title": "Chapter 2: ES6+ Classes & Inheritance",
+                "topics": [
+                    "Creating Classes and Constructors",
+                    "Inheritance and Method Overriding",
+                    "Static Methods and Properties",
+                    "Getters and Setters",
+                    "Project: OOP-based Library Management System"
+                ]
+            },
+            {
+                "title": "Chapter 3: JavaScript Modules",
+                "topics": [
+                    "Import and Export Syntax",
+                    "Default vs Named Exports",
+                    "Organizing Code with Modules",
+                    "Project: Modularized To-Do App"
+                ]
+            },
+            {
+                "title": "Chapter 4: Advanced Asynchronous Patterns",
+                "topics": [
+                    "Promise.all, Promise.race, Promise.any",
+                    "Error Handling with Async/Await",
+                    "Chaining Promises for Complex Workflows",
+                    "Project: Multi-API Data Fetching Dashboard"
+                ]
+            },
+            {
+                "title": "Chapter 5: Error Handling & Debugging",
+                "topics": [
+                    "Advanced Try...Catch Techniques",
+                    "Custom Error Classes",
+                    "Using Console and Breakpoints",
+                    "Debugging with Chrome DevTools",
+                    "Project: Debug and Fix a Broken Application"
+                ]
+            },
+            {
+                "title": "Chapter 6: Advanced DOM Manipulation",
+                "topics": [
+                    "Event Delegation Patterns",
+                    "Dynamic Element Generation",
+                    "Drag & Drop Functionality",
+                    "Animating DOM Elements",
+                    "Project: Interactive Kanban Board"
+                ]
+            },
+            {
+                "title": "Chapter 7: Browser Storage",
+                "topics": [
+                    "Local Storage and Session Storage",
+                    "Storing and Retrieving JSON Data",
+                    "Limitations and Security Considerations",
+                    "Project: Expense Tracker with Persistent Storage"
+                ]
+            },
+            {
+                "title": "Chapter 8: Advanced Event Handling",
+                "topics": [
+                    "Event Bubbling and Capturing Revisited",
+                    "Custom Events",
+                    "Throttling and Debouncing Events",
+                    "Project: Real-time Search with Debouncing"
+                ]
+            },
+            {
+                "title": "Chapter 9: Design Patterns in JavaScript",
+                "topics": [
+                    "Module Pattern",
+                    "Singleton Pattern",
+                    "Observer Pattern",
+                    "Factory Pattern",
+                    "Project: Notification System using Observer Pattern"
+                ]
+            },
+            {
+                "title": "Chapter 10: Advanced Array & Object Techniques",
+                "topics": [
+                    "Deep Cloning Objects",
+                    "Destructuring with Defaults and Nesting",
+                    "Array Methods Chaining",
+                    "Project: Data Transformation Pipeline"
+                ]
+            },
+            {
+                "title": "Chapter 11: Working with APIs in Depth",
+                "topics": [
+                    "REST APIs Advanced Concepts",
+                    "Error Handling in API Calls",
+                    "Chaining Multiple API Calls",
+                    "Project: Movie Search App with Pagination"
+                ]
+            },
+            {
+                "title": "Chapter 12: JavaScript and JSON",
+                "topics": [
+                    "Parsing and Stringifying JSON",
+                    "Deeply Nested JSON Handling",
+                    "Working with Large JSON Data",
+                    "Project: News Feed Reader using JSON Data"
+                ]
+            },
+            {
+                "title": "Chapter 13: Performance Optimization",
+                "topics": [
+                    "Memory Management in JavaScript",
+                    "Optimizing Loops and DOM Access",
+                    "Lazy Loading and Code Splitting",
+                    "Project: Optimized Image Gallery"
+                ]
+            },
+            {
+                "title": "Chapter 14: Regular Expressions Advanced",
+                "topics": [
+                    "Lookaheads and Lookbehinds",
+                    "Regex for Form Validation",
+                    "Complex Pattern Matching",
+                    "Project: Custom Regex-based Form Validator"
+                ]
+            },
+            {
+                "title": "Chapter 15: JavaScript and the Browser",
+                "topics": [
+                    "Understanding Event Loop in Depth",
+                    "Microtasks vs Macrotasks",
+                    "Rendering Optimization",
+                    "Project: Animation Framework with requestAnimationFrame"
+                ]
+            },
+            {
+                "title": "Chapter 16: Error Monitoring in Applications",
+                "topics": [
+                    "Window.onerror and Global Error Handling",
+                    "Handling Unhandled Promise Rejections",
+                    "Logging Errors to Server",
+                    "Project: Error Logging Utility for Apps"
+                ]
+            },
+            {
+                "title": "Chapter 17: Advanced Patterns with ES6+",
+                "topics": [
+                    "Spread and Rest in Nested Structures",
+                    "Advanced Template Literals",
+                    "Optional Chaining and Nullish Coalescing",
+                    "Project: Nested Data Viewer Application"
+                ]
+            },
+            {
+                "title": "Chapter 18: Capstone Project",
+                "topics": [
+                    "E-Commerce Frontend with Cart System",
+                    "API Integration with Fetch/Async-Await",
+                    "Persistent Storage for User Data",
+                    "Project: Fully Functional Shopping Cart App"
+                ]
+            }
+        ]
+    },
     
+
+
+
     {
         "status": "PUBLISH",
         "title": "HTML for Beginners - 1 Month",
@@ -239,18 +1688,12 @@
                 "topics": [
                     {
                         "title": "Meta tags: charset, viewport, description (conceptual)"
-                        
-                        
                     },
                     {
                         "title": "Linking CSS and JavaScript Files"
-                        
-                        
                     },
                     {
                         "title": "Favicons and Basic Performance Considerations"
-                        
-                        
                     }
                 ]
             },
@@ -259,18 +1702,12 @@
                 "topics": [
                     {
                         "title": "Importance of Accessibility (a11y) and semantic HTML"
-                        
-                        
                     },
                     {
                         "title": "ARIA basics and using alt, role and aria-* attributes"
-                        
-                        
                     },
                     {
                         "title": "Keyboard navigation and screen-reader friendly markup"
-                        
-                        
                     }
                 ]
             },
@@ -279,18 +1716,12 @@
                 "topics": [
                     {
                         "title": "Viewport meta and why mobile-first matters (conceptual)"
-                        
-                        
                     },
                     {
                         "title": "Responsive images (srcset) and picture element"
-                        
-                        
                     },
                     {
                         "title": "Progressive enhancement and graceful degradation"
-                        
-                        
                     }
                 ]
             },
@@ -299,24 +1730,17 @@
                 "topics": [
                     {
                         "title": "Project 1: Personal Profile Page (static HTML)"
-                        
-                        
                     },
                     {
                         "title": "Project 2: Simple Multi-page Website (Home, About, Contact)"
-                        
-                        
                     },
                     {
                         "title": "Code Organization, Comments, and Submission Guidelines"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "CSS & Responsive Design - 2 Month",
@@ -341,18 +1765,12 @@
                 "topics": [
                     {
                         "title": "What is CSS?"
-                        
-                        
                     },
                     {
                         "title": "Types of CSS (Inline, Internal, External)"
-                        
-                        
                     },
                     {
                         "title": "CSS Syntax and Selectors"
-                        
-                        
                     }
                 ]
             },
@@ -361,18 +1779,12 @@
                 "topics": [
                     {
                         "title": "Colors, Backgrounds, and Borders"
-                        
-                        
                     },
                     {
                         "title": "CSS Units (px, em, rem, %, vh, vw)"
-                        
-                        
                     },
                     {
                         "title": "Box Model (Margin, Border, Padding, Content)"
-                        
-                        
                     }
                 ]
             },
@@ -381,18 +1793,12 @@
                 "topics": [
                     {
                         "title": "Text Formatting"
-                        
-                        
                     },
                     {
                         "title": "Google Fonts & Custom Fonts"
-                        
-                        
                     },
                     {
                         "title": "Line Height, Letter Spacing, Word Spacing"
-                        
-                        
                     }
                 ]
             },
@@ -401,18 +1807,12 @@
                 "topics": [
                     {
                         "title": "Static, Relative, Absolute, Fixed"
-                        
-                        
                     },
                     {
                         "title": "Z-Index and Stacking Context"
-                        
-                        
                     },
                     {
                         "title": "Practical Positioning Examples"
-                        
-                        
                     }
                 ]
             },
@@ -421,18 +1821,12 @@
                 "topics": [
                     {
                         "title": "Flex Container and Flex Items"
-                        
-                        
                     },
                     {
                         "title": "Flexbox Alignment and Distribution"
-                        
-                        
                     },
                     {
                         "title": "Building Layouts with Flexbox"
-                        
-                        
                     }
                 ]
             },
@@ -441,18 +1835,12 @@
                 "topics": [
                     {
                         "title": "Grid Container and Grid Items"
-                        
-                        
                     },
                     {
                         "title": "Grid Lines, Areas, and Tracks"
-                        
-                        
                     },
                     {
                         "title": "Responsive Layouts with Grid"
-                        
-                        
                     }
                 ]
             },
@@ -461,18 +1849,12 @@
                 "topics": [
                     {
                         "title": "Media Queries"
-                        
-                        
                     },
                     {
                         "title": "Fluid Layouts"
-                        
-                        
                     },
                     {
                         "title": "Viewport Meta Tag"
-                        
-                        
                     }
                 ]
             },
@@ -481,18 +1863,12 @@
                 "topics": [
                     {
                         "title": "Transitions and Animations"
-                        
-                        
                     },
                     {
                         "title": "CSS Variables (Custom Properties)"
-                        
-                        
                     },
                     {
                         "title": "Pseudo-classes and Pseudo-elements"
-                        
-                        
                     }
                 ]
             },
@@ -501,18 +1877,12 @@
                 "topics": [
                     {
                         "title": "Building a Responsive Navbar"
-                        
-                        
                     },
                     {
                         "title": "Hamburger Menu with CSS"
-                        
-                        
                     },
                     {
                         "title": "Sticky Headers and Footers"
-                        
-                        
                     }
                 ]
             },
@@ -521,18 +1891,12 @@
                 "topics": [
                     {
                         "title": "Responsive Landing Page"
-                        
-                        
                     },
                     {
                         "title": "Flexbox Photo Gallery"
-                        
-                        
                     },
                     {
                         "title": "Grid-based Portfolio Page"
-                        
-                        
                     }
                 ]
             },
@@ -541,1501 +1905,18 @@
                 "topics": [
                     {
                         "title": "E-commerce Homepage (Responsive)"
-                        
-                        
                     },
                     {
                         "title": "Blog Layout with Grid & Flexbox"
-                        
-                        
                     },
                     {
                         "title": "Multi-page Responsive Website"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
-    {
-        "status": "PUBLISH",
-        "title": "Python for Intermediate - 1 Month",
-        "sort_description": "Enhance your Python skills with intermediate-level concepts: OOP, modules, file handling, exception handling, and practical projects.",
-        "categories": [
-            "Programming",
-            "Python"
-        ],
-        "level": "Intermediate",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 2999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Advanced Data Types",
-                "topics": [
-                    {
-                        "title": "List Comprehensions"
-                        
-                        
-                    },
-                    {
-                        "title": "Dictionary Comprehensions"
-                        
-                        
-                    },
-                    {
-                        "title": "Advanced Set Operations"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Functions Deep Dive",
-                "topics": [
-                    {
-                        "title": "Lambda Functions"
-                        
-                        
-                    },
-                    {
-                        "title": "Map, Filter, Reduce"
-                        
-                        
-                    },
-                    {
-                        "title": "Decorators and Closures"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Modules and Packages",
-                "topics": [
-                    {
-                        "title": "Standard Library Overview"
-                        
-                        
-                    },
-                    {
-                        "title": "Creating and Importing Modules"
-                        
-                        
-                    },
-                    {
-                        "title": "Package Structure and __init__.py"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: File Handling Advanced",
-                "topics": [
-                    {
-                        "title": "Context Managers (with statement)"
-                        
-                        
-                    },
-                    {
-                        "title": "Reading/Writing CSV and JSON Files"
-                        
-                        
-                    },
-                    {
-                        "title": "File Exceptions and Error Handling"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Object-Oriented Programming",
-                "topics": [
-                    {
-                        "title": "Classes and Objects Advanced"
-                        
-                        
-                    },
-                    {
-                        "title": "Inheritance and Polymorphism"
-                        
-                        
-                    },
-                    {
-                        "title": "Encapsulation and Abstraction"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Exception Handling",
-                "topics": [
-                    {
-                        "title": "Custom Exceptions"
-                        
-                        
-                    },
-                    {
-                        "title": "Try-Except-Else-Finally"
-                        
-                        
-                    },
-                    {
-                        "title": "Logging and Debugging Techniques"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Advanced Iterables",
-                "topics": [
-                    {
-                        "title": "Iterators and Generators"
-                        
-                        
-                    },
-                    {
-                        "title": "Enumerate and Zip"
-                        
-                        
-                    },
-                    {
-                        "title": "Advanced Loops and Itertools"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Working with APIs",
-                "topics": [
-                    {
-                        "title": "HTTP Requests using requests module"
-                        
-                        
-                    },
-                    {
-                        "title": "Parsing JSON Data"
-                        
-                        
-                    },
-                    {
-                        "title": "Practical API Integration Example"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Project 1: Contact Book CLI"
-                        
-                        
-                    },
-                    {
-                        "title": "Project 2: Text-based Game"
-                        
-                        
-                    },
-                    {
-                        "title": "Project 3: Expense Tracker"
-                        
-                        
-                    }
-                ]
-            }
-        ]
-    },
-
-    {
-        "status": "PUBLISH",
-        "title": "Python for Beginners to Intermediate - 2 Month",
-        "sort_description": "Complete Python course from basics to intermediate. Learn Python fundamentals, OOP, file handling, modules, APIs, and create real-world projects.",
-        "categories": [
-            "Programming",
-            "Python"
-        ],
-        "level": "Beginner to Intermediate",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 2,
-        "price": 4999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Python Basics Recap",
-                "topics": [
-                    {
-                        "title": "Variables and Data Types"
-                        
-                        
-                    },
-                    {
-                        "title": "Operators and Expressions"
-                        
-                        
-                    },
-                    {
-                        "title": "Input/Output and Basic Functions"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Control Flow",
-                "topics": [
-                    {
-                        "title": "Conditional Statements (if, elif, else)"
-                        
-                        
-                    },
-                    {
-                        "title": "Loops (for, while)"
-                        
-                        
-                    },
-                    {
-                        "title": "Loop Control Statements (break, continue, pass)"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Strings and Collections",
-                "topics": [
-                    {
-                        "title": "String Methods and Formatting"
-                        
-                        
-                    },
-                    {
-                        "title": "Lists, Tuples, Sets, Dictionaries"
-                        
-                        
-                    },
-                    {
-                        "title": "List Comprehensions and Dictionary Comprehensions"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: Functions and Modules",
-                "topics": [
-                    {
-                        "title": "Defining and Calling Functions"
-                        
-                        
-                    },
-                    {
-                        "title": "Lambda Functions, Map, Filter, Reduce"
-                        
-                        
-                    },
-                    {
-                        "title": "Modules, Packages, and Importing"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Object-Oriented Programming",
-                "topics": [
-                    {
-                        "title": "Classes and Objects"
-                        
-                        
-                    },
-                    {
-                        "title": "Inheritance, Polymorphism, Encapsulation"
-                        
-                        
-                    },
-                    {
-                        "title": "Special Methods (__init__, __str__, __repr__)"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: File Handling",
-                "topics": [
-                    {
-                        "title": "Reading and Writing Files"
-                        
-                        
-                    },
-                    {
-                        "title": "Working with CSV and JSON"
-                        
-                        
-                    },
-                    {
-                        "title": "Context Managers and Error Handling"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Exception Handling and Debugging",
-                "topics": [
-                    {
-                        "title": "Try, Except, Finally"
-                        
-                        
-                    },
-                    {
-                        "title": "Custom Exceptions"
-                        
-                        
-                    },
-                    {
-                        "title": "Logging and Debugging Techniques"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Working with APIs",
-                "topics": [
-                    {
-                        "title": "HTTP Requests using requests module"
-                        
-                        
-                    },
-                    {
-                        "title": "Parsing JSON Data"
-                        
-                        
-                    },
-                    {
-                        "title": "Practical API Integration Example"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Advanced Iterables",
-                "topics": [
-                    {
-                        "title": "Iterators and Generators"
-                        
-                        
-                    },
-                    {
-                        "title": "Enumerate, Zip and Advanced Loops"
-                        
-                        
-                    },
-                    {
-                        "title": "Itertools Module"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 10: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Contact Book CLI"
-                        
-                        
-                    },
-                    {
-                        "title": "Text-based Game"
-                        
-                        
-                    },
-                    {
-                        "title": "Expense Tracker"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 11: Final Projects",
-                "topics": [
-                    {
-                        "title": "Student Management System"
-                        
-                        
-                    },
-                    {
-                        "title": "Library Management CLI App"
-                        
-                        
-                    },
-                    {
-                        "title": "Simple API-based App"
-                        
-                        
-                    }
-                ]
-            }
-        ]
-    },
-
-    {
-        "status": "PUBLISH",
-        "title": "Python for Advanced - 1 Month",
-        "sort_description": "Master advanced Python concepts including decorators, context managers, generators, multithreading, database handling, APIs, and build real-world projects.",
-        "categories": [
-            "Programming",
-            "Python"
-        ],
-        "level": "Advanced",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 3999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Advanced OOP Concepts",
-                "topics": [
-                    {
-                        "title": "Magic Methods (__add__, __len__, __getitem__ etc.)"
-                        
-                        
-                    },
-                    {
-                        "title": "Classmethods and Staticmethods"
-                        
-                        
-                    },
-                    {
-                        "title": "Multiple Inheritance and MRO"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Decorators and Context Managers",
-                "topics": [
-                    {
-                        "title": "Function Decorators"
-                        
-                        
-                    },
-                    {
-                        "title": "Class Decorators"
-                        
-                        
-                    },
-                    {
-                        "title": "Context Managers and with statement"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Generators and Iterators",
-                "topics": [
-                    {
-                        "title": "Creating Generators"
-                        
-                        
-                    },
-                    {
-                        "title": "Yield vs Return"
-                        
-                        
-                    },
-                    {
-                        "title": "Custom Iterators"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: File & Database Handling",
-                "topics": [
-                    {
-                        "title": "Advanced File Operations"
-                        
-                        
-                    },
-                    {
-                        "title": "Working with SQLite Database"
-                        
-                        
-                    },
-                    {
-                        "title": "CRUD Operations using Python & SQLite"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Multithreading & Multiprocessing",
-                "topics": [
-                    {
-                        "title": "Threading Module Basics"
-                        
-                        
-                    },
-                    {
-                        "title": "Multiprocessing Module"
-                        
-                        
-                    },
-                    {
-                        "title": "Thread-safe Operations"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Working with APIs",
-                "topics": [
-                    {
-                        "title": "Advanced API Integration"
-                        
-                        
-                    },
-                    {
-                        "title": "Handling JSON & XML"
-                        
-                        
-                    },
-                    {
-                        "title": "Practical API Projects"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Advanced Modules & Libraries",
-                "topics": [
-                    {
-                        "title": "Regular Expressions (re Module)"
-                        
-                        
-                    },
-                    {
-                        "title": "Datetime and Collections Modules"
-                        
-                        
-                    },
-                    {
-                        "title": "OS, Sys and Shutil Modules"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Testing & Debugging",
-                "topics": [
-                    {
-                        "title": "Unit Testing with unittest"
-                        
-                        
-                    },
-                    {
-                        "title": "Debugging with pdb"
-                        
-                        
-                    },
-                    {
-                        "title": "Best Practices for Code Testing"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Mini Projects",
-                "topics": [
-                    {
-                        "title": "CLI-based Task Manager"
-                        
-                        
-                    },
-                    {
-                        "title": "Personal Finance Tracker"
-                        
-                        
-                    },
-                    {
-                        "title": "Simple API-based Weather App"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 10: Final Projects",
-                "topics": [
-                    {
-                        "title": "Advanced Student Management System"
-                        
-                        
-                    },
-                    {
-                        "title": "Blog CMS CLI App"
-                        
-                        
-                    },
-                    {
-                        "title": "Portfolio Website Backend Integration (Python)"
-                        
-                        
-                    }
-                ]
-            }
-        ]
-    },
-
-    {
-        "status": "PUBLISH",
-        "title": "JavaScript for Beginners - 1 Month",
-        "sort_description": "Learn JavaScript from scratch: variables, loops, functions, DOM basics, events, and small interactive projects.",
-        "categories": [
-            "Web Development",
-            "Frontend",
-            "JavaScript"
-        ],
-        "level": "Beginner",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 1999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Introduction to JavaScript",
-                "topics": [
-                    {
-                        "title": "What is JavaScript?"
-                        
-                        
-                    },
-                    {
-                        "title": "How JavaScript Works in Browser"
-                        
-                        
-                    },
-                    {
-                        "title": "Setting up Environment: VSCode, Live Server"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Basics of JavaScript",
-                "topics": [
-                    {
-                        "title": "Variables: var, let, const"
-                        
-                        
-                    },
-                    {
-                        "title": "Data Types and Operators"
-                        
-                        
-                    },
-                    {
-                        "title": "Comments and Best Practices"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Control Flow",
-                "topics": [
-                    {
-                        "title": "Conditional Statements: if, else if, else"
-                        
-                        
-                    },
-                    {
-                        "title": "Switch Statements"
-                        
-                        
-                    },
-                    {
-                        "title": "Truthy & Falsy Values"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: Loops",
-                "topics": [
-                    {
-                        "title": "For Loop"
-                        
-                        
-                    },
-                    {
-                        "title": "While and Do-While Loops"
-                        
-                        
-                    },
-                    {
-                        "title": "Loop Control: break, continue"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Functions",
-                "topics": [
-                    {
-                        "title": "Defining and Calling Functions"
-                        
-                        
-                    },
-                    {
-                        "title": "Function Parameters and Return Values"
-                        
-                        
-                    },
-                    {
-                        "title": "Arrow Functions (Basic)"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Arrays and Objects",
-                "topics": [
-                    {
-                        "title": "Array Basics and Methods"
-                        
-                        
-                    },
-                    {
-                        "title": "Object Basics and Properties"
-                        
-                        
-                    },
-                    {
-                        "title": "Iterating over Arrays and Objects"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: DOM Basics",
-                "topics": [
-                    {
-                        "title": "Selecting Elements: getElementById, querySelector"
-                        
-                        
-                    },
-                    {
-                        "title": "Changing Content and Style"
-                        
-                        
-                    },
-                    {
-                        "title": "Handling Events: click, input, submit"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Basic Projects",
-                "topics": [
-                    {
-                        "title": "Interactive Button Click Counter"
-                        
-                        
-                    },
-                    {
-                        "title": "Simple Form Validation"
-                        
-                        
-                    },
-                    {
-                        "title": "Image Slider (Basic)"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Final Mini Project",
-                "topics": [
-                    {
-                        "title": "To-Do List Application"
-                        
-                        
-                    }
-                ]
-            }
-        ]
-    },
-
-    {
-        "status": "PUBLISH",
-        "title": "JavaScript Intermediate - 1 Month",
-        "sort_description": "Advance your JavaScript skills: ES6 features, DOM manipulation, events, fetch API, async programming, and practical projects.",
-        "categories": [
-            "Web Development",
-            "Frontend",
-            "JavaScript"
-        ],
-        "level": "Intermediate",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 2499.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Advanced ES6 Features",
-                "topics": [
-                    {
-                        "title": "Let, Const, Block Scope"
-                        
-                        
-                    },
-                    {
-                        "title": "Template Literals"
-                        
-                        
-                    },
-                    {
-                        "title": "Destructuring Arrays and Objects"
-                        
-                        
-                    },
-                    {
-                        "title": "Default Parameters"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Functions Deep Dive",
-                "topics": [
-                    {
-                        "title": "Arrow Functions Advanced"
-                        
-                        
-                    },
-                    {
-                        "title": "Rest & Spread Operators"
-                        
-                        
-                    },
-                    {
-                        "title": "Closures"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: DOM Advanced",
-                "topics": [
-                    {
-                        "title": "querySelectorAll & forEach"
-                        
-                        
-                    },
-                    {
-                        "title": "Traversing DOM Nodes"
-                        
-                        
-                    },
-                    {
-                        "title": "Dynamic Element Creation & Removal"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: Event Handling",
-                "topics": [
-                    {
-                        "title": "Event Listeners"
-                        
-                        
-                    },
-                    {
-                        "title": "Event Bubbling & Capturing"
-                        
-                        
-                    },
-                    {
-                        "title": "Form Events and Validation"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Arrays & Objects Advanced",
-                "topics": [
-                    {
-                        "title": "Array Methods: map, filter, reduce"
-                        
-                        
-                    },
-                    {
-                        "title": "Object.keys, Object.values, Object.entries"
-                        
-                        
-                    },
-                    {
-                        "title": "Deep Cloning Objects"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Asynchronous JavaScript",
-                "topics": [
-                    {
-                        "title": "Callbacks"
-                        
-                        
-                    },
-                    {
-                        "title": "Promises"
-                        
-                        
-                    },
-                    {
-                        "title": "Async/Await"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Fetch API",
-                "topics": [
-                    {
-                        "title": "Fetching Data from APIs"
-                        
-                        
-                    },
-                    {
-                        "title": "Handling JSON Responses"
-                        
-                        
-                    },
-                    {
-                        "title": "Practical API Project Example"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Interactive Quiz App"
-                        
-                        
-                    },
-                    {
-                        "title": "To-Do List with Local Storage"
-                        
-                        
-                    },
-                    {
-                        "title": "Dynamic Product List Filter"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Final Project",
-                "topics": [
-                    {
-                        "title": "Weather App using API"
-                        
-                        
-                    }
-                ]
-            }
-        ]
-    },
-
-    {
-        "status": "PUBLISH",
-        "title": "JavaScript for Beginners to Intermediate - 2 Month",
-        "sort_description": "Complete JavaScript course from basics to intermediate. Learn syntax, DOM manipulation, events, ES6 features, asynchronous programming, fetch API, and real-world projects.",
-        "categories": [
-            "Web Development",
-            "Frontend",
-            "JavaScript"
-        ],
-        "level": "Beginner to Intermediate",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 2,
-        "price": 3999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: JavaScript Basics Recap",
-                "topics": [
-                    {
-                        "title": "Variables: var, let, const"
-                        
-                        
-                    },
-                    {
-                        "title": "Data Types and Operators"
-                        
-                        
-                    },
-                    {
-                        "title": "Conditionals and Loops"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Functions & Scope",
-                "topics": [
-                    {
-                        "title": "Defining and Calling Functions"
-                        
-                        
-                    },
-                    {
-                        "title": "Function Parameters & Return Values"
-                        
-                        
-                    },
-                    {
-                        "title": "Arrow Functions & Closures"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Arrays & Objects",
-                "topics": [
-                    {
-                        "title": "Array Methods: push, pop, shift, unshift"
-                        
-                        
-                    },
-                    {
-                        "title": "Object Properties and Iteration"
-                        
-                        
-                    },
-                    {
-                        "title": "Advanced Array Methods: map, filter, reduce"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: DOM Basics & Events",
-                "topics": [
-                    {
-                        "title": "Selecting Elements"
-                        
-                        
-                    },
-                    {
-                        "title": "Changing Content and Styles"
-                        
-                        
-                    },
-                    {
-                        "title": "Event Listeners & Form Handling"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: ES6 Features",
-                "topics": [
-                    {
-                        "title": "Template Literals"
-                        
-                        
-                    },
-                    {
-                        "title": "Destructuring Arrays & Objects"
-                        
-                        
-                    },
-                    {
-                        "title": "Rest & Spread Operators"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Advanced DOM & Events",
-                "topics": [
-                    {
-                        "title": "querySelectorAll & forEach"
-                        
-                        
-                    },
-                    {
-                        "title": "DOM Traversing & Dynamic Elements"
-                        
-                        
-                    },
-                    {
-                        "title": "Event Bubbling & Capturing"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Asynchronous JavaScript",
-                "topics": [
-                    {
-                        "title": "Callbacks"
-                        
-                        
-                    },
-                    {
-                        "title": "Promises"
-                        
-                        
-                    },
-                    {
-                        "title": "Async/Await"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Fetch API",
-                "topics": [
-                    {
-                        "title": "Fetching Data from APIs"
-                        
-                        
-                    },
-                    {
-                        "title": "Handling JSON Responses"
-                        
-                        
-                    },
-                    {
-                        "title": "Practical API Project Example"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Interactive Quiz App"
-                        
-                        
-                    },
-                    {
-                        "title": "To-Do List with Local Storage"
-                        
-                        
-                    },
-                    {
-                        "title": "Dynamic Product List Filter"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 10: Final Project",
-                "topics": [
-                    {
-                        "title": "Weather App using API"
-                        
-                        
-                    },
-                    {
-                        "title": "Movie Search App using API"
-                        
-                        
-                    }
-                ]
-            }
-        ]
-    },
-
-    {
-        "status": "PUBLISH",
-        "title": "JavaScript for Advanced - 1 Month",
-        "sort_description": "Master advanced JavaScript concepts: ES6 classes, modules, async programming, fetch API, browser storage, debugging, and build real-world interactive projects.",
-        "categories": [
-            "Web Development",
-            "Frontend",
-            "JavaScript"
-        ],
-        "level": "Advanced",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 2999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Advanced ES6+ Concepts",
-                "topics": [
-                    {
-                        "title": "Classes and Inheritance"
-                        
-                        
-                    },
-                    {
-                        "title": "Modules: import/export"
-                        
-                        
-                    },
-                    {
-                        "title": "Spread & Rest with Advanced Usage"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Advanced Functions",
-                "topics": [
-                    {
-                        "title": "Closures Deep Dive"
-                        
-                        
-                    },
-                    {
-                        "title": "Callback Hell & Solution Patterns"
-                        
-                        
-                    },
-                    {
-                        "title": "Function Currying & Composition"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Asynchronous JavaScript Advanced",
-                "topics": [
-                    {
-                        "title": "Advanced Promises"
-                        
-                        
-                    },
-                    {
-                        "title": "Async/Await with Error Handling"
-                        
-                        
-                    },
-                    {
-                        "title": "Promise.all, Promise.race"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: Browser Storage & APIs",
-                "topics": [
-                    {
-                        "title": "Local Storage & Session Storage"
-                        
-                        
-                    },
-                    {
-                        "title": "Web Storage Practical Examples"
-                        
-                        
-                    },
-                    {
-                        "title": "Introduction to Browser APIs"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Error Handling & Debugging",
-                "topics": [
-                    {
-                        "title": "Try/Catch/Finally Advanced"
-                        
-                        
-                    },
-                    {
-                        "title": "Custom Error Classes"
-                        
-                        
-                    },
-                    {
-                        "title": "Debugging with Browser DevTools"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Advanced DOM Manipulation",
-                "topics": [
-                    {
-                        "title": "Dynamic Elements with Event Delegation"
-                        
-                        
-                    },
-                    {
-                        "title": "Animation with JavaScript"
-                        
-                        
-                    },
-                    {
-                        "title": "Drag & Drop, Sortable Lists"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: ES6+ Advanced Patterns",
-                "topics": [
-                    {
-                        "title": "Destructuring Nested Objects"
-                        
-                        
-                    },
-                    {
-                        "title": "Template Literals Advanced Usage"
-                        
-                        
-                    },
-                    {
-                        "title": "Modules for Project Structure"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Interactive Quiz App with Timer"
-                        
-                        
-                    },
-                    {
-                        "title": "Expense Tracker using Local Storage"
-                        
-                        
-                    },
-                    {
-                        "title": "Dynamic Portfolio Page"
-                        
-                        
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Final Advanced Project",
-                "topics": [
-                    {
-                        "title": "Weather App with Fetch API & Async/Await"
-                        
-                        
-                    },
-                    {
-                        "title": "Movie Search App with API Integration"
-                        
-                        
-                    },
-                    {
-                        "title": "Interactive Blogging Frontend with JS"
-                        
-                        
-                    }
-                ]
-            }
-        ]
-    },
+    
 
     {
         "status": "PUBLISH",
@@ -2062,18 +1943,12 @@
                 "topics": [
                     {
                         "title": "What is Bootstrap?"
-                        
-                        
                     },
                     {
                         "title": "Setting up Bootstrap (CDN & Download)"
-                        
-                        
                     },
                     {
                         "title": "Understanding Containers"
-                        
-                        
                     }
                 ]
             },
@@ -2082,18 +1957,12 @@
                 "topics": [
                     {
                         "title": "Rows and Columns"
-                        
-                        
                     },
                     {
                         "title": "Column Sizes & Breakpoints"
-                        
-                        
                     },
                     {
                         "title": "Responsive Layouts"
-                        
-                        
                     }
                 ]
             },
@@ -2102,18 +1971,12 @@
                 "topics": [
                     {
                         "title": "Text Classes"
-                        
-                        
                     },
                     {
                         "title": "Background & Color Utilities"
-                        
-                        
                     },
                     {
                         "title": "Spacing Utilities"
-                        
-                        
                     }
                 ]
             },
@@ -2122,18 +1985,12 @@
                 "topics": [
                     {
                         "title": "Button Classes"
-                        
-                        
                     },
                     {
                         "title": "Button Groups"
-                        
-                        
                     },
                     {
                         "title": "Bootstrap Icons Integration"
-                        
-                        
                     }
                 ]
             },
@@ -2142,18 +1999,12 @@
                 "topics": [
                     {
                         "title": "Form Controls"
-                        
-                        
                     },
                     {
                         "title": "Form Layouts & Validation"
-                        
-                        
                     },
                     {
                         "title": "Custom Checkboxes & Radios"
-                        
-                        
                     }
                 ]
             },
@@ -2162,18 +2013,12 @@
                 "topics": [
                     {
                         "title": "Navbar Basics"
-                        
-                        
                     },
                     {
                         "title": "Navbar with Dropdowns"
-                        
-                        
                     },
                     {
                         "title": "Responsive Navbar"
-                        
-                        
                     }
                 ]
             },
@@ -2182,18 +2027,12 @@
                 "topics": [
                     {
                         "title": "Card Component"
-                        
-                        
                     },
                     {
                         "title": "Alerts, Badges, and Progress Bars"
-                        
-                        
                     },
                     {
                         "title": "Modals & Tooltips"
-                        
-                        
                     }
                 ]
             },
@@ -2202,18 +2041,12 @@
                 "topics": [
                     {
                         "title": "Media Queries with Bootstrap"
-                        
-                        
                     },
                     {
                         "title": "Flex Utilities"
-                        
-                        
                     },
                     {
                         "title": "Grid & Component Adjustments"
-                        
-                        
                     }
                 ]
             },
@@ -2222,24 +2055,17 @@
                 "topics": [
                     {
                         "title": "Landing Page"
-                        
-                        
                     },
                     {
                         "title": "Portfolio Page"
-                        
-                        
                     },
                     {
                         "title": "Contact Form Page"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Bootstrap Advanced - 1 Month",
@@ -2265,18 +2091,12 @@
                 "topics": [
                     {
                         "title": "Nested Grids & Complex Layouts"
-                        
-                        
                     },
                     {
                         "title": "Responsive Breakpoints Advanced"
-                        
-                        
                     },
                     {
                         "title": "Flex Utilities for Layouts"
-                        
-                        
                     }
                 ]
             },
@@ -2285,18 +2105,12 @@
                 "topics": [
                     {
                         "title": "Carousel Component"
-                        
-                        
                     },
                     {
                         "title": "Accordion Component"
-                        
-                        
                     },
                     {
                         "title": "Collapse & Tabs"
-                        
-                        
                     }
                 ]
             },
@@ -2305,18 +2119,12 @@
                 "topics": [
                     {
                         "title": "Modals & Tooltips"
-                        
-                        
                     },
                     {
                         "title": "Popovers & Toasts"
-                        
-                        
                     },
                     {
                         "title": "Dropdowns Advanced"
-                        
-                        
                     }
                 ]
             },
@@ -2325,18 +2133,12 @@
                 "topics": [
                     {
                         "title": "Using Bootstrap JS Components"
-                        
-                        
                     },
                     {
                         "title": "Event Handling with Bootstrap JS"
-                        
-                        
                     },
                     {
                         "title": "Integrating Plugins in Projects"
-                        
-                        
                     }
                 ]
             },
@@ -2345,18 +2147,12 @@
                 "topics": [
                     {
                         "title": "Custom Validation & Styling"
-                        
-                        
                     },
                     {
                         "title": "Input Groups & Floating Labels"
-                        
-                        
                     },
                     {
                         "title": "Range Sliders & File Inputs"
-                        
-                        
                     }
                 ]
             },
@@ -2365,18 +2161,12 @@
                 "topics": [
                     {
                         "title": "Sticky & Fixed Navbar"
-                        
-                        
                     },
                     {
                         "title": "Responsive Navbars with JS"
-                        
-                        
                     },
                     {
                         "title": "Mega Menu Design"
-                        
-                        
                     }
                 ]
             },
@@ -2385,18 +2175,12 @@
                 "topics": [
                     {
                         "title": "Cards with Carousel & Overlays"
-                        
-                        
                     },
                     {
                         "title": "Advanced Spacing & Display Utilities"
-                        
-                        
                     },
                     {
                         "title": "Customizing Components with CSS"
-                        
-                        
                     }
                 ]
             },
@@ -2405,18 +2189,12 @@
                 "topics": [
                     {
                         "title": "Media Queries with Bootstrap"
-                        
-                        
                     },
                     {
                         "title": "Grid & Flex Utilities in Projects"
-                        
-                        
                     },
                     {
                         "title": "Responsive Navigation & Components"
-                        
-                        
                     }
                 ]
             },
@@ -2425,18 +2203,12 @@
                 "topics": [
                     {
                         "title": "Interactive Landing Page"
-                        
-                        
                     },
                     {
                         "title": "Portfolio Page with Modals"
-                        
-                        
                     },
                     {
                         "title": "Dashboard Page with Cards & Tabs"
-                        
-                        
                     }
                 ]
             },
@@ -2445,19 +2217,14 @@
                 "topics": [
                     {
                         "title": "Complete Admin Dashboard"
-                        
-                        
                     },
                     {
                         "title": "Interactive Product Landing Page"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "React.js for Beginners - 1 Month",
@@ -2483,18 +2250,12 @@
                 "topics": [
                     {
                         "title": "What is React.js?"
-                        
-                        
                     },
                     {
                         "title": "Setting up React Environment (Vite/Create React App)"
-                        
-                        
                     },
                     {
                         "title": "React Folder Structure"
-                        
-                        
                     }
                 ]
             },
@@ -2503,18 +2264,12 @@
                 "topics": [
                     {
                         "title": "JSX Syntax & Rules"
-                        
-                        
                     },
                     {
                         "title": "Embedding Expressions"
-                        
-                        
                     },
                     {
                         "title": "JSX vs HTML"
-                        
-                        
                     }
                 ]
             },
@@ -2523,18 +2278,12 @@
                 "topics": [
                     {
                         "title": "Functional Components"
-                        
-                        
                     },
                     {
                         "title": "Props in Components"
-                        
-                        
                     },
                     {
                         "title": "Component Reusability"
-                        
-                        
                     }
                 ]
             },
@@ -2543,18 +2292,12 @@
                 "topics": [
                     {
                         "title": "useState Hook Basics"
-                        
-                        
                     },
                     {
                         "title": "Updating State Dynamically"
-                        
-                        
                     },
                     {
                         "title": "State vs Props"
-                        
-                        
                     }
                 ]
             },
@@ -2563,18 +2306,12 @@
                 "topics": [
                     {
                         "title": "Handling Click & Input Events"
-                        
-                        
                     },
                     {
                         "title": "Form Handling in React"
-                        
-                        
                     },
                     {
                         "title": "Passing Events as Props"
-                        
-                        
                     }
                 ]
             },
@@ -2583,18 +2320,12 @@
                 "topics": [
                     {
                         "title": "Rendering Lists"
-                        
-                        
                     },
                     {
                         "title": "Keys in Lists"
-                        
-                        
                     },
                     {
                         "title": "Dynamic List Rendering"
-                        
-                        
                     }
                 ]
             },
@@ -2603,18 +2334,12 @@
                 "topics": [
                     {
                         "title": "if-else in JSX"
-                        
-                        
                     },
                     {
                         "title": "Ternary Operators"
-                        
-                        
                     },
                     {
                         "title": "Logical && Operator"
-                        
-                        
                     }
                 ]
             },
@@ -2623,18 +2348,12 @@
                 "topics": [
                     {
                         "title": "Counter App"
-                        
-                        
                     },
                     {
                         "title": "To-Do List App"
-                        
-                        
                     },
                     {
                         "title": "Simple Calculator"
-                        
-                        
                     }
                 ]
             },
@@ -2643,14 +2362,11 @@
                 "topics": [
                     {
                         "title": "Interactive Quiz App"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "React.js Intermediate - 1 Month",
@@ -2676,18 +2392,12 @@
                 "topics": [
                     {
                         "title": "useState Deep Dive"
-                        
-                        
                     },
                     {
                         "title": "State Updates with Functions"
-                        
-                        
                     },
                     {
                         "title": "Lifting State Up & Props Drilling"
-                        
-                        
                     }
                 ]
             },
@@ -2696,18 +2406,12 @@
                 "topics": [
                     {
                         "title": "useEffect Basics"
-                        
-                        
                     },
                     {
                         "title": "Dependency Array Explained"
-                        
-                        
                     },
                     {
                         "title": "Cleanup & Side Effects"
-                        
-                        
                     }
                 ]
             },
@@ -2716,18 +2420,12 @@
                 "topics": [
                     {
                         "title": "Controlled Components"
-                        
-                        
                     },
                     {
                         "title": "Handling Form Submission"
-                        
-                        
                     },
                     {
                         "title": "Validation & Error Messages"
-                        
-                        
                     }
                 ]
             },
@@ -2736,18 +2434,12 @@
                 "topics": [
                     {
                         "title": "Dynamic Rendering with Props"
-                        
-                        
                     },
                     {
                         "title": "Nested Lists Rendering"
-                        
-                        
                     },
                     {
                         "title": "Keys Importance in Dynamic Lists"
-                        
-                        
                     }
                 ]
             },
@@ -2756,18 +2448,12 @@
                 "topics": [
                     {
                         "title": "Ternary Operators in JSX"
-                        
-                        
                     },
                     {
                         "title": "Conditional Rendering with &&"
-                        
-                        
                     },
                     {
                         "title": "Switch Case Conditional Patterns"
-                        
-                        
                     }
                 ]
             },
@@ -2776,18 +2462,12 @@
                 "topics": [
                     {
                         "title": "Installing React Router"
-                        
-                        
                     },
                     {
                         "title": "Route, Link & NavLink"
-                        
-                        
                     },
                     {
                         "title": "Nested Routes & Parameters"
-                        
-                        
                     }
                 ]
             },
@@ -2796,18 +2476,12 @@
                 "topics": [
                     {
                         "title": "Fetching Data with fetch API"
-                        
-                        
                     },
                     {
                         "title": "Handling Async/Await"
-                        
-                        
                     },
                     {
                         "title": "Error Handling & Loading States"
-                        
-                        
                     }
                 ]
             },
@@ -2816,18 +2490,12 @@
                 "topics": [
                     {
                         "title": "CRUD Todo App"
-                        
-                        
                     },
                     {
                         "title": "User List App with API"
-                        
-                        
                     },
                     {
                         "title": "Weather App Integration"
-                        
-                        
                     }
                 ]
             },
@@ -2836,14 +2504,11 @@
                 "topics": [
                     {
                         "title": "Dynamic Dashboard App"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "React.js Advanced - 1 Month",
@@ -2869,18 +2534,12 @@
                 "topics": [
                     {
                         "title": "Introduction to Context API"
-                        
-                        
                     },
                     {
                         "title": "Creating Global State with Context"
-                        
-                        
                     },
                     {
                         "title": "Using Context in Components"
-                        
-                        
                     }
                 ]
             },
@@ -2889,18 +2548,12 @@
                 "topics": [
                     {
                         "title": "What are Custom Hooks?"
-                        
-                        
                     },
                     {
                         "title": "Building Reusable Hooks"
-                        
-                        
                     },
                     {
                         "title": "Practical Custom Hook Examples"
-                        
-                        
                     }
                 ]
             },
@@ -2909,18 +2562,12 @@
                 "topics": [
                     {
                         "title": "React.memo Usage"
-                        
-                        
                     },
                     {
                         "title": "useCallback & useMemo"
-                        
-                        
                     },
                     {
                         "title": "Avoiding Unnecessary Re-renders"
-                        
-                        
                     }
                 ]
             },
@@ -2929,18 +2576,12 @@
                 "topics": [
                     {
                         "title": "Nested Routes & Outlet"
-                        
-                        
                     },
                     {
                         "title": "Route Parameters & Query Params"
-                        
-                        
                     },
                     {
                         "title": "Protected Routes & Redirects"
-                        
-                        
                     }
                 ]
             },
@@ -2949,18 +2590,12 @@
                 "topics": [
                     {
                         "title": "Using Formik for Forms"
-                        
-                        
                     },
                     {
                         "title": "React Hook Form Basics"
-                        
-                        
                     },
                     {
                         "title": "Validation & Submission Handling"
-                        
-                        
                     }
                 ]
             },
@@ -2969,18 +2604,12 @@
                 "topics": [
                     {
                         "title": "Reducer Pattern with useReducer"
-                        
-                        
                     },
                     {
                         "title": "Combining Context + Reducer"
-                        
-                        
                     },
                     {
                         "title": "Best Practices for Large Apps"
-                        
-                        
                     }
                 ]
             },
@@ -2989,18 +2618,12 @@
                 "topics": [
                     {
                         "title": "Fetching Data with Axios"
-                        
-                        
                     },
                     {
                         "title": "Error Handling & Loading States"
-                        
-                        
                     },
                     {
                         "title": "Optimizing API Calls"
-                        
-                        
                     }
                 ]
             },
@@ -3009,18 +2632,12 @@
                 "topics": [
                     {
                         "title": "CRUD Dashboard App"
-                        
-                        
                     },
                     {
                         "title": "E-commerce Frontend Prototype"
-                        
-                        
                     },
                     {
                         "title": "Interactive Blogging Platform UI"
-                        
-                        
                     }
                 ]
             },
@@ -3029,19 +2646,14 @@
                 "topics": [
                     {
                         "title": "Complete Admin Dashboard with API Integration"
-                        
-                        
                     },
                     {
                         "title": "Dynamic E-commerce Website Frontend"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "SQL for Beginners - 1 Month",
@@ -3067,18 +2679,12 @@
                 "topics": [
                     {
                         "title": "What is a Database?"
-                        
-                        
                     },
                     {
                         "title": "Relational Database Concepts"
-                        
-                        
                     },
                     {
                         "title": "Tables, Rows, Columns"
-                        
-                        
                     }
                 ]
             },
@@ -3087,18 +2693,12 @@
                 "topics": [
                     {
                         "title": "SELECT Statement"
-                        
-                        
                     },
                     {
                         "title": "Filtering Data with WHERE"
-                        
-                        
                     },
                     {
                         "title": "Sorting Data with ORDER BY"
-                        
-                        
                     }
                 ]
             },
@@ -3107,18 +2707,12 @@
                 "topics": [
                     {
                         "title": "Aggregate Functions: COUNT, SUM, AVG"
-                        
-                        
                     },
                     {
                         "title": "MIN & MAX Functions"
-                        
-                        
                     },
                     {
                         "title": "String Functions in SQL"
-                        
-                        
                     }
                 ]
             },
@@ -3127,18 +2721,12 @@
                 "topics": [
                     {
                         "title": "INSERT INTO"
-                        
-                        
                     },
                     {
                         "title": "UPDATE Statement"
-                        
-                        
                     },
                     {
                         "title": "DELETE Statement"
-                        
-                        
                     }
                 ]
             },
@@ -3147,18 +2735,12 @@
                 "topics": [
                     {
                         "title": "Primary Key & Foreign Key"
-                        
-                        
                     },
                     {
                         "title": "Unique, Not Null, Default"
-                        
-                        
                     },
                     {
                         "title": "Auto Increment & Index"
-                        
-                        
                     }
                 ]
             },
@@ -3167,18 +2749,12 @@
                 "topics": [
                     {
                         "title": "INNER JOIN"
-                        
-                        
                     },
                     {
                         "title": "LEFT, RIGHT & FULL JOIN"
-                        
-                        
                     },
                     {
                         "title": "Self Join & Cross Join"
-                        
-                        
                     }
                 ]
             },
@@ -3187,18 +2763,12 @@
                 "topics": [
                     {
                         "title": "GROUP BY Clause"
-                        
-                        
                     },
                     {
                         "title": "HAVING Clause"
-                        
-                        
                     },
                     {
                         "title": "Combining GROUP BY with Functions"
-                        
-                        
                     }
                 ]
             },
@@ -3207,18 +2777,12 @@
                 "topics": [
                     {
                         "title": "Introduction to Normalization"
-                        
-                        
                     },
                     {
                         "title": "1NF, 2NF, 3NF Explained"
-                        
-                        
                     },
                     {
                         "title": "Designing Efficient Tables"
-                        
-                        
                     }
                 ]
             },
@@ -3227,24 +2791,17 @@
                 "topics": [
                     {
                         "title": "Student Management Database"
-                        
-                        
                     },
                     {
                         "title": "Inventory Management Database"
-                        
-                        
                     },
                     {
                         "title": "Simple Blog Database"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "SQL Advanced - 1 Month",
@@ -3270,18 +2827,12 @@
                 "topics": [
                     {
                         "title": "Self Join & Multi-table Joins"
-                        
-                        
                     },
                     {
                         "title": "Cross Joins & Natural Joins"
-                        
-                        
                     },
                     {
                         "title": "Combining Joins with Subqueries"
-                        
-                        
                     }
                 ]
             },
@@ -3290,18 +2841,12 @@
                 "topics": [
                     {
                         "title": "Scalar & Correlated Subqueries"
-                        
-                        
                     },
                     {
                         "title": "Nested Subqueries"
-                        
-                        
                     },
                     {
                         "title": "Using Subqueries with Joins"
-                        
-                        
                     }
                 ]
             },
@@ -3310,18 +2855,12 @@
                 "topics": [
                     {
                         "title": "Creating Views"
-                        
-                        
                     },
                     {
                         "title": "Updating Views"
-                        
-                        
                     },
                     {
                         "title": "Using Views in Queries"
-                        
-                        
                     }
                 ]
             },
@@ -3330,18 +2869,12 @@
                 "topics": [
                     {
                         "title": "Creating Stored Procedures"
-                        
-                        
                     },
                     {
                         "title": "Parameters & Return Values"
-                        
-                        
                     },
                     {
                         "title": "Executing Stored Procedures"
-                        
-                        
                     }
                 ]
             },
@@ -3350,18 +2883,12 @@
                 "topics": [
                     {
                         "title": "Introduction to Triggers"
-                        
-                        
                     },
                     {
                         "title": "Creating Before & After Triggers"
-                        
-                        
                     },
                     {
                         "title": "Trigger Use Cases"
-                        
-                        
                     }
                 ]
             },
@@ -3370,18 +2897,12 @@
                 "topics": [
                     {
                         "title": "BEGIN, COMMIT & ROLLBACK"
-                        
-                        
                     },
                     {
                         "title": "Transaction Isolation Levels"
-                        
-                        
                     },
                     {
                         "title": "Handling Concurrency"
-                        
-                        
                     }
                 ]
             },
@@ -3390,18 +2911,12 @@
                 "topics": [
                     {
                         "title": "Creating Indexes"
-                        
-                        
                     },
                     {
                         "title": "Query Optimization Techniques"
-                        
-                        
                     },
                     {
                         "title": "Using EXPLAIN for Query Analysis"
-                        
-                        
                     }
                 ]
             },
@@ -3410,18 +2925,12 @@
                 "topics": [
                     {
                         "title": "CHECK Constraints"
-                        
-                        
                     },
                     {
                         "title": "Composite Keys"
-                        
-                        
                     },
                     {
                         "title": "Enforcing Data Integrity"
-                        
-                        
                     }
                 ]
             },
@@ -3430,18 +2939,12 @@
                 "topics": [
                     {
                         "title": "Inventory Management System"
-                        
-                        
                     },
                     {
                         "title": "E-commerce Database"
-                        
-                        
                     },
                     {
                         "title": "Student Management System"
-                        
-                        
                     }
                 ]
             },
@@ -3450,14 +2953,11 @@
                 "topics": [
                     {
                         "title": "Complete Real-world Database Design"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "MS Word for Beginners - 1 Month",
@@ -3483,18 +2983,12 @@
                 "topics": [
                     {
                         "title": "MS Word Interface Overview"
-                        
-                        
                     },
                     {
                         "title": "Ribbons, Tabs & Quick Access Toolbar"
-                        
-                        
                     },
                     {
                         "title": "Creating & Saving Documents"
-                        
-                        
                     }
                 ]
             },
@@ -3503,18 +2997,12 @@
                 "topics": [
                     {
                         "title": "Font Style, Size & Color"
-                        
-                        
                     },
                     {
                         "title": "Bold, Italic, Underline & Effects"
-                        
-                        
                     },
                     {
                         "title": "Clear Formatting & Styles"
-                        
-                        
                     }
                 ]
             },
@@ -3523,18 +3011,12 @@
                 "topics": [
                     {
                         "title": "Alignment & Indentation"
-                        
-                        
                     },
                     {
                         "title": "Line & Paragraph Spacing"
-                        
-                        
                     },
                     {
                         "title": "Bullets & Numbering"
-                        
-                        
                     }
                 ]
             },
@@ -3543,18 +3025,12 @@
                 "topics": [
                     {
                         "title": "Creating & Formatting Tables"
-                        
-                        
                     },
                     {
                         "title": "Merging & Splitting Cells"
-                        
-                        
                     },
                     {
                         "title": "Table Styles & Design"
-                        
-                        
                     }
                 ]
             },
@@ -3563,18 +3039,12 @@
                 "topics": [
                     {
                         "title": "Inserting & Formatting Images"
-                        
-                        
                     },
                     {
                         "title": "Adding Shapes & Icons"
-                        
-                        
                     },
                     {
                         "title": "SmartArt Graphics & Design"
-                        
-                        
                     }
                 ]
             },
@@ -3583,18 +3053,12 @@
                 "topics": [
                     {
                         "title": "Margins, Orientation & Size"
-                        
-                        
                     },
                     {
                         "title": "Columns & Page Breaks"
-                        
-                        
                     },
                     {
                         "title": "Headers, Footers & Page Numbers"
-                        
-                        
                     }
                 ]
             },
@@ -3603,18 +3067,12 @@
                 "topics": [
                     {
                         "title": "Inserting Footnotes & Endnotes"
-                        
-                        
                     },
                     {
                         "title": "Adding Table of Contents"
-                        
-                        
                     },
                     {
                         "title": "Track Changes & Comments"
-                        
-                        
                     }
                 ]
             },
@@ -3623,18 +3081,12 @@
                 "topics": [
                     {
                         "title": "Essential Keyboard Shortcuts"
-                        
-                        
                     },
                     {
                         "title": "Quick Formatting Tricks"
-                        
-                        
                     },
                     {
                         "title": "Efficiency Tips for Documents"
-                        
-                        
                     }
                 ]
             },
@@ -3643,24 +3095,17 @@
                 "topics": [
                     {
                         "title": "Creating a Resume"
-                        
-                        
                     },
                     {
                         "title": "Designing a Report"
-                        
-                        
                     },
                     {
                         "title": "Invitation Card & Certificate"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "MS Word Advanced - 1 Month",
@@ -3686,18 +3131,12 @@
                 "topics": [
                     {
                         "title": "Nested Tables & Formatting"
-                        
-                        
                     },
                     {
                         "title": "Formulas in Tables"
-                        
-                        
                     },
                     {
                         "title": "Table Styles & Design"
-                        
-                        
                     }
                 ]
             },
@@ -3706,18 +3145,12 @@
                 "topics": [
                     {
                         "title": "Introduction to Mail Merge"
-                        
-                        
                     },
                     {
                         "title": "Using Data Sources"
-                        
-                        
                     },
                     {
                         "title": "Generating Letters, Labels, Envelopes"
-                        
-                        
                     }
                 ]
             },
@@ -3726,18 +3159,12 @@
                 "topics": [
                     {
                         "title": "Recording & Running Macros"
-                        
-                        
                     },
                     {
                         "title": "Assigning Macros to Buttons"
-                        
-                        
                     },
                     {
                         "title": "Practical Macro Examples"
-                        
-                        
                     }
                 ]
             },
@@ -3746,18 +3173,12 @@
                 "topics": [
                     {
                         "title": "Creating & Using Templates"
-                        
-                        
                     },
                     {
                         "title": "Custom Styles & Themes"
-                        
-                        
                     },
                     {
                         "title": "Consistent Document Formatting"
-                        
-                        
                     }
                 ]
             },
@@ -3766,18 +3187,12 @@
                 "topics": [
                     {
                         "title": "Track Changes & Comments"
-                        
-                        
                     },
                     {
                         "title": "Compare & Combine Documents"
-                        
-                        
                     },
                     {
                         "title": "Sharing & Protecting Documents"
-                        
-                        
                     }
                 ]
             },
@@ -3786,18 +3201,12 @@
                 "topics": [
                     {
                         "title": "Custom Bullets & Numbering"
-                        
-                        
                     },
                     {
                         "title": "Advanced Indentation & Spacing"
-                        
-                        
                     },
                     {
                         "title": "Drop Caps & Special Effects"
-                        
-                        
                     }
                 ]
             },
@@ -3806,18 +3215,12 @@
                 "topics": [
                     {
                         "title": "Advanced SmartArt & Charts"
-                        
-                        
                     },
                     {
                         "title": "Watermarks, Backgrounds & Page Borders"
-                        
-                        
                     },
                     {
                         "title": "Linking & Embedding Objects"
-                        
-                        
                     }
                 ]
             },
@@ -3826,18 +3229,12 @@
                 "topics": [
                     {
                         "title": "Keyboard Shortcuts & Quick Access"
-                        
-                        
                     },
                     {
                         "title": "Document Navigation & Search Tips"
-                        
-                        
                     },
                     {
                         "title": "Automation Techniques"
-                        
-                        
                     }
                 ]
             },
@@ -3846,24 +3243,17 @@
                 "topics": [
                     {
                         "title": "Automated Invoice using Mail Merge"
-                        
-                        
                     },
                     {
                         "title": "Professional Report Template"
-                        
-                        
                     },
                     {
                         "title": "Certificate & Invitation Template"
-                        
-                        
                     }
                 ]
             }
         ]
     },
-    
     {
         "status": "PUBLISH",
         "title": "Git & GitHub Basics - 1 Month",
@@ -3962,7 +3352,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "MS PowerPoint - 1 Month",
@@ -4056,7 +3445,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "MS Excel for Beginners - 1 Month",
@@ -4150,7 +3538,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "MS Excel for Intermediate - 2 Months",
@@ -4252,7 +3639,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "MS Excel Advanced - 2 Months",
@@ -4359,7 +3745,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Power BI for Beginners - 1 Month",
@@ -4461,7 +3846,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Power BI Intermediate - 1 Month",
@@ -4562,7 +3946,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Power BI Advanced - 1 Month",
@@ -4671,7 +4054,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Python for Data Analysis - Basics & Pandas - 1 Month",
@@ -4742,7 +4124,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Python for Data Analysis - Visualization & Statistics - 1 Month",
@@ -4812,7 +4193,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Python for Data Analysis - Advanced Pandas & ML Basics - 1 Month",
@@ -4883,7 +4263,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Tableau for Beginners - 1 Month",
@@ -4977,7 +4356,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Django for Backend Development - 2 Months",
@@ -5090,7 +4468,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "ORM Concepts for Backend Development - 1 Month",
@@ -5187,7 +4564,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "REST API Development with Django - 1 Month",
@@ -5293,7 +4669,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Authentication & Authorization for Backend - 1 Month",
@@ -5391,7 +4766,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Deployment & Hosting for Backend - 1 Month",
@@ -5489,7 +4863,6 @@
             }
         ]
     },
-
     {
         "status": "PUBLISH",
         "title": "Advanced Backend Concepts - 1 Month",
@@ -5587,5 +4960,4 @@
             }
         ]
     }
-
 ]

@@ -1,0 +1,645 @@
+[
+
+    {
+        "status": "PUBLISH",
+        "title": "JavaScript for Beginners",
+        "sort_description": "Learn JavaScript from scratch: variables, loops, functions, DOM basics, events, and beginner-friendly projects.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "JavaScript"
+        ],
+        "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 1999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Introduction to JavaScript",
+                "topics": [
+                    {
+                        "title": "What is JavaScript?"
+                    },
+                    {
+                        "title": "How JavaScript Works in Browser"
+                    },
+                    {
+                        "title": "Setting up Environment: VSCode, Live Server"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: Basics of JavaScript",
+                "topics": [
+                    {
+                        "title": "Variables: var, let, const"
+                    },
+                    {
+                        "title": "Data Types"
+                    },
+                    {
+                        "title": "Comments and Best Practices"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: Operators in JavaScript",
+                "topics": [
+                    {
+                        "title": "Arithmetic Operators"
+                    },
+                    {
+                        "title": "Comparison Operators"
+                    },
+                    {
+                        "title": "Logical Operators"
+                    },
+                    {
+                        "title": "Assignment & Ternary Operator"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: Control Flow",
+                "topics": [
+                    {
+                        "title": "Conditional Statements: if, else if, else"
+                    },
+                    {
+                        "title": "Switch Statements"
+                    },
+                    {
+                        "title": "Truthy & Falsy Values"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: Loops",
+                "topics": [
+                    {
+                        "title": "For Loop"
+                    },
+                    {
+                        "title": "While and Do-While Loops"
+                    },
+                    {
+                        "title": "Loop Control: break, continue"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: Strings and Template Literals",
+                "topics": [
+                    {
+                        "title": "String Basics"
+                    },
+                    {
+                        "title": "Common String Methods"
+                    },
+                    {
+                        "title": "Template Literals (Basics)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Functions",
+                "topics": [
+                    {
+                        "title": "Defining and Calling Functions"
+                    },
+                    {
+                        "title": "Function Parameters and Return Values"
+                    },
+                    {
+                        "title": "Arrow Functions (Basic)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Arrays and Objects",
+                "topics": [
+                    {
+                        "title": "Array Basics and Methods"
+                    },
+                    {
+                        "title": "Object Basics and Properties"
+                    },
+                    {
+                        "title": "Iterating over Arrays and Objects"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Date, Math & Built-in Objects",
+                "topics": [
+                    {
+                        "title": "Working with Date Object"
+                    },
+                    {
+                        "title": "Math Object Basics"
+                    },
+                    {
+                        "title": "Random Numbers Example"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 10: DOM Basics",
+                "topics": [
+                    {
+                        "title": "Selecting Elements: getElementById, querySelector"
+                    },
+                    {
+                        "title": "Changing Content and Style"
+                    },
+                    {
+                        "title": "Handling Events: click, input, submit"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 11: Debugging & Best Practices",
+                "topics": [
+                    {
+                        "title": "Using console.log()"
+                    },
+                    {
+                        "title": "Common Errors and Fixes"
+                    },
+                    {
+                        "title": "Clean Code Practices"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 12: Beginner Projects",
+                "topics": [
+                    {
+                        "title": "Interactive Button Click Counter"
+                    },
+                    {
+                        "title": "Simple Form Validation"
+                    },
+                    {
+                        "title": "Image Slider (Basic)"
+                    },
+                    {
+                        "title": "Final Mini Project: To-Do List Application"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "JavaScript for Intermediate",
+        "sort_description": "Advance your JavaScript skills: ES6+ features, advanced DOM, events, fetch API, async programming, error handling, and real-world projects.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "JavaScript"
+        ],
+        "level": "Intermediate",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 2499.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: ES6+ Deep Dive",
+                "topics": [
+                    {
+                        "title": "Block Scope with let & const"
+                    },
+                    {
+                        "title": "Template Literals"
+                    },
+                    {
+                        "title": "Destructuring Arrays and Objects"
+                    },
+                    {
+                        "title": "Default Parameters"
+                    },
+                    {
+                        "title": "Enhanced Object Literals"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: Functions Advanced",
+                "topics": [
+                    {
+                        "title": "Arrow Functions Advanced"
+                    },
+                    {
+                        "title": "Rest & Spread Operators"
+                    },
+                    {
+                        "title": "Closures Introduction"
+                    },
+                    {
+                        "title": "Immediately Invoked Functions (IIFE)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: DOM Advanced",
+                "topics": [
+                    {
+                        "title": "querySelectorAll & forEach"
+                    },
+                    {
+                        "title": "Traversing DOM Nodes"
+                    },
+                    {
+                        "title": "Dynamic Element Creation & Removal"
+                    },
+                    {
+                        "title": "Styling with classList"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: Events in Depth",
+                "topics": [
+                    {
+                        "title": "Event Listeners"
+                    },
+                    {
+                        "title": "Event Bubbling & Capturing"
+                    },
+                    {
+                        "title": "Keyboard & Mouse Events"
+                    },
+                    {
+                        "title": "Form Events and Validation"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: Arrays Advanced",
+                "topics": [
+                    {
+                        "title": "map, filter, reduce"
+                    },
+                    {
+                        "title": "find, some, every"
+                    },
+                    {
+                        "title": "Array.from & Array.of"
+                    },
+                    {
+                        "title": "Deep Copy vs Shallow Copy"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: Objects Advanced",
+                "topics": [
+                    {
+                        "title": "Object.keys, Object.values, Object.entries"
+                    },
+                    {
+                        "title": "Object.assign()"
+                    },
+                    {
+                        "title": "Spread in Objects"
+                    },
+                    {
+                        "title": "Object Destructuring in Depth"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Asynchronous JavaScript",
+                "topics": [
+                    {
+                        "title": "Callbacks"
+                    },
+                    {
+                        "title": "Promises Basics"
+                    },
+                    {
+                        "title": "Promise Chaining"
+                    },
+                    {
+                        "title": "Intro to Async/Await"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Fetch API",
+                "topics": [
+                    {
+                        "title": "Fetching Data from APIs"
+                    },
+                    {
+                        "title": "Handling JSON Responses"
+                    },
+                    {
+                        "title": "GET vs POST Requests"
+                    },
+                    {
+                        "title": "Mini Project: Random Joke Generator"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Error Handling",
+                "topics": [
+                    {
+                        "title": "try...catch"
+                    },
+                    {
+                        "title": "finally block"
+                    },
+                    {
+                        "title": "Throwing Custom Errors"
+                    },
+                    {
+                        "title": "Error Handling in Async Code"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 10: Modules Introduction",
+                "topics": [
+                    {
+                        "title": "What are Modules?"
+                    },
+                    {
+                        "title": "import & export"
+                    },
+                    {
+                        "title": "Organizing Code with Modules"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 11: Browser Storage",
+                "topics": [
+                    {
+                        "title": "LocalStorage"
+                    },
+                    {
+                        "title": "SessionStorage"
+                    },
+                    {
+                        "title": "Practical Use Cases"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 12: Iterators & Generators",
+                "topics": [
+                    {
+                        "title": "Understanding Iterators"
+                    },
+                    {
+                        "title": "Creating Custom Iterators"
+                    },
+                    {
+                        "title": "Generators with function*"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 13: Debugging & Tools",
+                "topics": [
+                    {
+                        "title": "Using console methods"
+                    },
+                    {
+                        "title": "Breakpoints in DevTools"
+                    },
+                    {
+                        "title": "Network Tab for API Calls"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 14: Mini Projects",
+                "topics": [
+                    {
+                        "title": "Quiz App"
+                    },
+                    {
+                        "title": "To-Do List with Local Storage"
+                    },
+                    {
+                        "title": "Product Filter App"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 15: Final Project",
+                "topics": [
+                    {
+                        "title": "Weather App using Fetch API & Async/Await"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "JavaScript for Advanced",
+        "sort_description": "Master advanced JavaScript concepts: classes, modules, async patterns, storage, debugging, design patterns, and build real-world projects.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "JavaScript"
+        ],
+        "level": "Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 2999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Advanced Functions",
+                "topics": [
+                    "Closures Deep Dive",
+                    "Currying and Partial Application",
+                    "Memoization for Performance",
+                    "Higher-Order Functions Advanced",
+                    "Project: Custom Debounce and Throttle Utility"
+                ]
+            },
+            {
+                "title": "Chapter 2: ES6+ Classes & Inheritance",
+                "topics": [
+                    "Creating Classes and Constructors",
+                    "Inheritance and Method Overriding",
+                    "Static Methods and Properties",
+                    "Getters and Setters",
+                    "Project: OOP-based Library Management System"
+                ]
+            },
+            {
+                "title": "Chapter 3: JavaScript Modules",
+                "topics": [
+                    "Import and Export Syntax",
+                    "Default vs Named Exports",
+                    "Organizing Code with Modules",
+                    "Project: Modularized To-Do App"
+                ]
+            },
+            {
+                "title": "Chapter 4: Advanced Asynchronous Patterns",
+                "topics": [
+                    "Promise.all, Promise.race, Promise.any",
+                    "Error Handling with Async/Await",
+                    "Chaining Promises for Complex Workflows",
+                    "Project: Multi-API Data Fetching Dashboard"
+                ]
+            },
+            {
+                "title": "Chapter 5: Error Handling & Debugging",
+                "topics": [
+                    "Advanced Try...Catch Techniques",
+                    "Custom Error Classes",
+                    "Using Console and Breakpoints",
+                    "Debugging with Chrome DevTools",
+                    "Project: Debug and Fix a Broken Application"
+                ]
+            },
+            {
+                "title": "Chapter 6: Advanced DOM Manipulation",
+                "topics": [
+                    "Event Delegation Patterns",
+                    "Dynamic Element Generation",
+                    "Drag & Drop Functionality",
+                    "Animating DOM Elements",
+                    "Project: Interactive Kanban Board"
+                ]
+            },
+            {
+                "title": "Chapter 7: Browser Storage",
+                "topics": [
+                    "Local Storage and Session Storage",
+                    "Storing and Retrieving JSON Data",
+                    "Limitations and Security Considerations",
+                    "Project: Expense Tracker with Persistent Storage"
+                ]
+            },
+            {
+                "title": "Chapter 8: Advanced Event Handling",
+                "topics": [
+                    "Event Bubbling and Capturing Revisited",
+                    "Custom Events",
+                    "Throttling and Debouncing Events",
+                    "Project: Real-time Search with Debouncing"
+                ]
+            },
+            {
+                "title": "Chapter 9: Design Patterns in JavaScript",
+                "topics": [
+                    "Module Pattern",
+                    "Singleton Pattern",
+                    "Observer Pattern",
+                    "Factory Pattern",
+                    "Project: Notification System using Observer Pattern"
+                ]
+            },
+            {
+                "title": "Chapter 10: Advanced Array & Object Techniques",
+                "topics": [
+                    "Deep Cloning Objects",
+                    "Destructuring with Defaults and Nesting",
+                    "Array Methods Chaining",
+                    "Project: Data Transformation Pipeline"
+                ]
+            },
+            {
+                "title": "Chapter 11: Working with APIs in Depth",
+                "topics": [
+                    "REST APIs Advanced Concepts",
+                    "Error Handling in API Calls",
+                    "Chaining Multiple API Calls",
+                    "Project: Movie Search App with Pagination"
+                ]
+            },
+            {
+                "title": "Chapter 12: JavaScript and JSON",
+                "topics": [
+                    "Parsing and Stringifying JSON",
+                    "Deeply Nested JSON Handling",
+                    "Working with Large JSON Data",
+                    "Project: News Feed Reader using JSON Data"
+                ]
+            },
+            {
+                "title": "Chapter 13: Performance Optimization",
+                "topics": [
+                    "Memory Management in JavaScript",
+                    "Optimizing Loops and DOM Access",
+                    "Lazy Loading and Code Splitting",
+                    "Project: Optimized Image Gallery"
+                ]
+            },
+            {
+                "title": "Chapter 14: Regular Expressions Advanced",
+                "topics": [
+                    "Lookaheads and Lookbehinds",
+                    "Regex for Form Validation",
+                    "Complex Pattern Matching",
+                    "Project: Custom Regex-based Form Validator"
+                ]
+            },
+            {
+                "title": "Chapter 15: JavaScript and the Browser",
+                "topics": [
+                    "Understanding Event Loop in Depth",
+                    "Microtasks vs Macrotasks",
+                    "Rendering Optimization",
+                    "Project: Animation Framework with requestAnimationFrame"
+                ]
+            },
+            {
+                "title": "Chapter 16: Error Monitoring in Applications",
+                "topics": [
+                    "Window.onerror and Global Error Handling",
+                    "Handling Unhandled Promise Rejections",
+                    "Logging Errors to Server",
+                    "Project: Error Logging Utility for Apps"
+                ]
+            },
+            {
+                "title": "Chapter 17: Advanced Patterns with ES6+",
+                "topics": [
+                    "Spread and Rest in Nested Structures",
+                    "Advanced Template Literals",
+                    "Optional Chaining and Nullish Coalescing",
+                    "Project: Nested Data Viewer Application"
+                ]
+            },
+            {
+                "title": "Chapter 18: Capstone Project",
+                "topics": [
+                    "E-Commerce Frontend with Cart System",
+                    "API Integration with Fetch/Async-Await",
+                    "Persistent Storage for User Data",
+                    "Project: Fully Functional Shopping Cart App"
+                ]
+            }
+        ]
+    }
+    
+]

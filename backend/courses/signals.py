@@ -1,22 +1,8 @@
 # courses/signals.py
 
-from django.db.models.signals import pre_delete, post_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.files.storage import default_storage
 from .models import Course
-
-
-@receiver(pre_delete, sender=Course)
-def delete_course_image(sender, instance, **kwargs):
-    """
-    Delete course image file from storage when a Course instance is deleted.
-    Ensures the file exists before attempting deletion to avoid errors.
-    """
-    if instance.image:
-        image_path = instance.image.name
-        if image_path and default_storage.exists(image_path):
-            default_storage.delete(image_path)
-
 
 @receiver(post_save, sender=Course)
 def after_course_save(sender, instance, created, **kwargs):

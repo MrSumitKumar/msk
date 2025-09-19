@@ -185,7 +185,7 @@ class Course(models.Model):
         COMBO = 'COMBO', 'Combo Course'
 
     status = models.CharField(choices=StatusChoices.choices, max_length=10, default=StatusChoices.DRAFT)
-    featured_image = models.ImageField(upload_to="course/poster/", blank=True)
+    featured_image = models.ImageField(upload_to="course/poster/", null=True, blank=True,)
 
     featured_video = models.URLField(max_length=255, null=True, blank=True, validators=[validate_youtube_url])
     title = models.CharField(max_length=500, unique=True)
@@ -208,7 +208,8 @@ class Course(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='courses_created')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(unique=True, blank=True, max_length=255)
+
 
     class Meta:
         verbose_name = "Course"
@@ -223,14 +224,15 @@ class Course(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+    
 
 @receiver(pre_save, sender=Course)
 def generate_course_slug(sender, instance, **kwargs):
     if not instance.slug:
-        base_slug = slugify(instance.title)
+        base_slug = slugify(instance.title)[:50]
         slug = base_slug
         while Course.objects.filter(slug=slug).exclude(pk=instance.pk).exists():
-            slug = f"{base_slug}-{get_random_string(4)}"
+            slug = f"{base_slug[:45]}-{get_random_string(4)}"
         instance.slug = slug
 
 @receiver(post_delete, sender=Course)
