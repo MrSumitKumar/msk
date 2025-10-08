@@ -2,6 +2,7 @@
 from django.urls import path, include
 from .views import *
 from . import admin_urls
+from .my_enrollments import MyEnrollmentsView
 
 urlpatterns = [
     # 🔐 Authentication
@@ -17,6 +18,9 @@ urlpatterns = [
     path('me/', CurrentUserView.as_view(), name='current_user_alias'),
     path('user/', CurrentUserView.as_view(), name='current_user'),
     path('profile/update/', UserProfileUpdateView.as_view(), name='profile-update'),
+    
+    # 📚 Enrollments
+    path('my-enrollments/', MyEnrollmentsView.as_view(), name='my-enrollments'),
 
     # 🔑 Password Reset
     path('password/forgot/', ForgotPasswordView.as_view(), name='forgot-password'),

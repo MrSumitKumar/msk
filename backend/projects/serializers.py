@@ -45,6 +45,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             "description",
             "categories",
             "languages",
+            "level_id",
             "category_ids",
             "language_ids",
         ]

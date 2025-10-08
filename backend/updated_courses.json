@@ -1,15 +1,322 @@
 [
-
     {
         "status": "PUBLISH",
-        "title": "JavaScript for Beginners",
-        "sort_description": "Learn JavaScript from scratch: variables, loops, functions, DOM basics, events, and beginner-friendly projects.",
+        "title": "HTML Complete Course",
+        "sort_description": "Learn HTML step-by-step: structure pages, semantic tags, forms, media, accessibility, and SEO. Build real pages and mini projects for hands-on practice.",
         "categories": [
             "Web Development",
             "Frontend",
-            "JavaScript"
+            "HTML"
         ],
         "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Introduction to the Web and HTML",
+                "topics": [
+                    "How the Web Works (Client, Server, Browser)",
+                    "What is HTML? History and Role in Web Development",
+                    "Setting Up Environment: Editors, Live Server"
+                ]
+            },
+            {
+                "title": "Chapter 2: Basic HTML Structure & Elements",
+                "topics": [
+                    "DOCTYPE, html, head, body",
+                    "Headings, Paragraphs, and Text Content",
+                    "Comments and Best Practices"
+                ]
+            },
+            {
+                "title": "Chapter 3: Text Formatting & Quotations",
+                "topics": [
+                    "Bold, Italic, Underline, Subscript, Superscript",
+                    "Blockquote, q, cite",
+                    "Code snippets and preformatted text"
+                ]
+            },
+            {
+                "title": "Chapter 4: Links, Images and Multimedia",
+                "topics": [
+                    "Anchor Tags, Relative vs Absolute URLs",
+                    "Images: img tag, alt attribute, srcset basics",
+                    "Embedding Audio and Video"
+                ]
+            },
+            {
+                "title": "Chapter 5: Lists, Tables and Semantic Grouping",
+                "topics": [
+                    "Ordered, Unordered and Description Lists",
+                    "Table Structure: table, thead, tbody, tr, td, th",
+                    "Semantic Elements: section, article, nav, aside, footer"
+                ]
+            },
+            {
+                "title": "Chapter 6: Forms and User Input",
+                "topics": [
+                    "Form Elements: input, textarea, select, button",
+                    "Form Attributes and Validation (HTML5)",
+                    "Form Submission: GET vs POST (conceptual)"
+                ]
+            },
+            {
+                "title": "Chapter 7: Attributes, Metadata and Head Elements",
+                "topics": [
+                    "Global Attributes: id, class, title, data-*",
+                    "Meta tags: charset, viewport, description",
+                    "Favicons and Linking CSS/JavaScript Files"
+                ]
+            },
+            {
+                "title": "Chapter 8: HTML5 APIs Basics",
+                "topics": [
+                    "Geolocation API",
+                    "Drag and Drop API",
+                    "Local Storage and Session Storage"
+                ]
+            },
+            {
+                "title": "Chapter 9: Accessibility and Semantic Markup",
+                "topics": [
+                    "Importance of Accessibility (a11y)",
+                    "ARIA basics and using alt, role and aria-* attributes",
+                    "Keyboard navigation and screen-reader friendly markup"
+                ]
+            },
+            {
+                "title": "Chapter 10: Responsive HTML Concepts",
+                "topics": [
+                    "Viewport meta and Mobile-first Concept",
+                    "Responsive images with srcset and picture element",
+                    "Progressive enhancement and graceful degradation"
+                ]
+            },
+            {
+                "title": "Chapter 11: SEO and Best Practices",
+                "topics": [
+                    "Semantic tags for SEO",
+                    "Heading hierarchy and content structure",
+                    "Schema.org basics for rich snippets"
+                ]
+            },
+            {
+                "title": "Chapter 12: Final Projects",
+                "topics": [
+                    "Project 1: Personal Profile Page",
+                    "Project 2: Multi-page Portfolio Website",
+                    "Project 3: Blog Layout with Forms and Media"
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "CSS for Beginners",
+        "sort_description": "Learn CSS step-by-step: selectors, colors, box model, typography, backgrounds, and basic layouts. Build mini projects to practice styling web pages.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "CSS"
+        ],
+        "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 1499.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Introduction to CSS",
+                "topics": [
+                    {
+                        "title": "What is CSS and Why it Matters"
+                    },
+                    {
+                        "title": "How CSS Works with HTML"
+                    },
+                    {
+                        "title": "Inline, Internal, External CSS"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: CSS Syntax & Selectors Basics",
+                "topics": [
+                    {
+                        "title": "CSS Syntax: Selectors, Properties, Values"
+                    },
+                    {
+                        "title": "Basic Selectors: element, class, id"
+                    },
+                    {
+                        "title": "Grouping & Combining Selectors"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: Colors and Backgrounds",
+                "topics": [
+                    {
+                        "title": "Color Formats: Names, HEX, RGB, HSL"
+                    },
+                    {
+                        "title": "Background Color, Image, Position"
+                    },
+                    {
+                        "title": "Gradients (linear, radial)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: The CSS Box Model",
+                "topics": [
+                    {
+                        "title": "Content, Padding, Border, Margin"
+                    },
+                    {
+                        "title": "Width, Height, Max/Min Values"
+                    },
+                    {
+                        "title": "Box-Sizing Property"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: Text and Fonts",
+                "topics": [
+                    {
+                        "title": "Font Families and Web-safe Fonts"
+                    },
+                    {
+                        "title": "Font Size, Weight, Style"
+                    },
+                    {
+                        "title": "Text Alignment, Decoration, Transform"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: CSS Units and Measurements",
+                "topics": [
+                    {
+                        "title": "Absolute Units: px, pt"
+                    },
+                    {
+                        "title": "Relative Units: %, em, rem, vh, vw"
+                    },
+                    {
+                        "title": "Best Practices for Responsive Units"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Borders, Shadows and Rounded Corners",
+                "topics": [
+                    {
+                        "title": "Border Styles and Shorthand"
+                    },
+                    {
+                        "title": "Box Shadows and Text Shadows"
+                    },
+                    {
+                        "title": "Border Radius and Rounded Elements"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Links, Lists and Tables Styling",
+                "topics": [
+                    {
+                        "title": "Styling Links with Pseudo-classes"
+                    },
+                    {
+                        "title": "Styling Ordered and Unordered Lists"
+                    },
+                    {
+                        "title": "Styling Tables: Borders, Striping"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Display and Visibility",
+                "topics": [
+                    {
+                        "title": "Block vs Inline vs Inline-Block"
+                    },
+                    {
+                        "title": "Display: none vs Visibility: hidden"
+                    },
+                    {
+                        "title": "Overflow Property (scroll, hidden, auto)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 10: Introduction to Positioning",
+                "topics": [
+                    {
+                        "title": "Static, Relative, Absolute Positioning"
+                    },
+                    {
+                        "title": "Fixed and Sticky Positioning"
+                    },
+                    {
+                        "title": "z-index Basics"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 11: Basic Layout Techniques",
+                "topics": [
+                    {
+                        "title": "Float and Clear Basics"
+                    },
+                    {
+                        "title": "Aligning Elements with Text-align and Margin"
+                    },
+                    {
+                        "title": "Intro to Flexbox (concept only)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 12: Beginner Projects",
+                "topics": [
+                    {
+                        "title": "Styled Profile Card"
+                    },
+                    {
+                        "title": "Simple Landing Page Layout"
+                    },
+                    {
+                        "title": "Navigation Bar Styling"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "CSS for Intermediate",
+        "sort_description": "Master modern CSS: flexbox, grid, responsive design, transitions, animations, and practical layouts. Build interactive, mobile-friendly web pages.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "CSS"
+        ],
+        "level": "Intermediate",
         "language": [
             "English",
             "Hindi"
@@ -21,176 +328,170 @@
         "course_type": "SINGLE",
         "chapters": [
             {
-                "title": "Chapter 1: Introduction to JavaScript",
+                "title": "Chapter 1: Advanced Selectors",
                 "topics": [
                     {
-                        "title": "What is JavaScript?"
+                        "title": "Attribute Selectors ([attr], ^=, $=, *=)"
                     },
                     {
-                        "title": "How JavaScript Works in Browser"
+                        "title": "Child, Descendant, Sibling Selectors"
                     },
                     {
-                        "title": "Setting up Environment: VSCode, Live Server"
+                        "title": "Pseudo-classes and Pseudo-elements"
                     }
                 ]
             },
             {
-                "title": "Chapter 2: Basics of JavaScript",
+                "title": "Chapter 2: Combinators and Specificity",
                 "topics": [
                     {
-                        "title": "Variables: var, let, const"
+                        "title": "Understanding Combinators (>, +, ~)"
                     },
                     {
-                        "title": "Data Types"
+                        "title": "CSS Specificity Rules"
                     },
                     {
-                        "title": "Comments and Best Practices"
+                        "title": "Using !important carefully"
                     }
                 ]
             },
             {
-                "title": "Chapter 3: Operators in JavaScript",
+                "title": "Chapter 3: Advanced Colors and Gradients",
                 "topics": [
                     {
-                        "title": "Arithmetic Operators"
+                        "title": "Opacity and RGBA/HSLA colors"
                     },
                     {
-                        "title": "Comparison Operators"
+                        "title": "Linear and Radial Gradients (advanced)"
                     },
                     {
-                        "title": "Logical Operators"
-                    },
-                    {
-                        "title": "Assignment & Ternary Operator"
+                        "title": "Background Blend Modes"
                     }
                 ]
             },
             {
-                "title": "Chapter 4: Control Flow",
+                "title": "Chapter 4: Flexbox Fundamentals",
                 "topics": [
                     {
-                        "title": "Conditional Statements: if, else if, else"
+                        "title": "Flex Container and Flex Items"
                     },
                     {
-                        "title": "Switch Statements"
+                        "title": "Justify-content, Align-items, Align-self"
                     },
                     {
-                        "title": "Truthy & Falsy Values"
+                        "title": "Flex-grow, Flex-shrink, Flex-basis"
                     }
                 ]
             },
             {
-                "title": "Chapter 5: Loops",
+                "title": "Chapter 5: Flexbox Layouts",
                 "topics": [
                     {
-                        "title": "For Loop"
+                        "title": "Row vs Column Direction"
                     },
                     {
-                        "title": "While and Do-While Loops"
+                        "title": "Wrapping and Nested Flexbox"
                     },
                     {
-                        "title": "Loop Control: break, continue"
+                        "title": "Building a Responsive Navbar with Flexbox"
                     }
                 ]
             },
             {
-                "title": "Chapter 6: Strings and Template Literals",
+                "title": "Chapter 6: Introduction to CSS Grid",
                 "topics": [
                     {
-                        "title": "String Basics"
+                        "title": "Grid Container and Grid Items"
                     },
                     {
-                        "title": "Common String Methods"
+                        "title": "Grid Template Columns & Rows"
                     },
                     {
-                        "title": "Template Literals (Basics)"
+                        "title": "Gap, Fractional Units (fr), Repeat()"
                     }
                 ]
             },
             {
-                "title": "Chapter 7: Functions",
+                "title": "Chapter 7: Advanced CSS Grid",
                 "topics": [
                     {
-                        "title": "Defining and Calling Functions"
+                        "title": "Grid Areas and Named Lines"
                     },
                     {
-                        "title": "Function Parameters and Return Values"
+                        "title": "Auto-fit and Auto-fill Concepts"
                     },
                     {
-                        "title": "Arrow Functions (Basic)"
+                        "title": "Building Page Layouts with Grid"
                     }
                 ]
             },
             {
-                "title": "Chapter 8: Arrays and Objects",
+                "title": "Chapter 8: Responsive Design with Media Queries",
                 "topics": [
                     {
-                        "title": "Array Basics and Methods"
+                        "title": "Min-width, Max-width Queries"
                     },
                     {
-                        "title": "Object Basics and Properties"
+                        "title": "Mobile-first vs Desktop-first"
                     },
                     {
-                        "title": "Iterating over Arrays and Objects"
+                        "title": "Breakpoints and Best Practices"
                     }
                 ]
             },
             {
-                "title": "Chapter 9: Date, Math & Built-in Objects",
+                "title": "Chapter 9: Transitions and Animations",
                 "topics": [
                     {
-                        "title": "Working with Date Object"
+                        "title": "CSS Transitions (hover, focus effects)"
                     },
                     {
-                        "title": "Math Object Basics"
+                        "title": "CSS Animations and @keyframes"
                     },
                     {
-                        "title": "Random Numbers Example"
+                        "title": "Practical Button Hover Effects"
                     }
                 ]
             },
             {
-                "title": "Chapter 10: DOM Basics",
+                "title": "Chapter 10: CSS Variables and Custom Properties",
                 "topics": [
                     {
-                        "title": "Selecting Elements: getElementById, querySelector"
+                        "title": "Declaring and Using Variables"
                     },
                     {
-                        "title": "Changing Content and Style"
+                        "title": "The :root Selector"
                     },
                     {
-                        "title": "Handling Events: click, input, submit"
+                        "title": "Theme Switching with CSS Variables"
                     }
                 ]
             },
             {
-                "title": "Chapter 11: Debugging & Best Practices",
+                "title": "Chapter 11: Shadows, Filters, and Advanced Effects",
                 "topics": [
                     {
-                        "title": "Using console.log()"
+                        "title": "Box-shadow and Text-shadow Tricks"
                     },
                     {
-                        "title": "Common Errors and Fixes"
+                        "title": "CSS Filters (blur, brightness, grayscale)"
                     },
                     {
-                        "title": "Clean Code Practices"
+                        "title": "Glassmorphism and Neumorphism Basics"
                     }
                 ]
             },
             {
-                "title": "Chapter 12: Beginner Projects",
+                "title": "Chapter 12: Intermediate Projects",
                 "topics": [
                     {
-                        "title": "Interactive Button Click Counter"
+                        "title": "Project 1: Responsive Landing Page with Flexbox"
                     },
                     {
-                        "title": "Simple Form Validation"
+                        "title": "Project 2: Blog Layout using CSS Grid"
                     },
                     {
-                        "title": "Image Slider (Basic)"
-                    },
-                    {
-                        "title": "Final Mini Project: To-Do List Application"
+                        "title": "Project 3: Animated Pricing Table"
                     }
                 ]
             }
@@ -198,14 +499,14 @@
     },
     {
         "status": "PUBLISH",
-        "title": "JavaScript for Intermediate",
-        "sort_description": "Advance your JavaScript skills: ES6+ features, advanced DOM, events, fetch API, async programming, error handling, and real-world projects.",
+        "title": "CSS for Advanced",
+        "sort_description": "Advance your CSS skills: 3D transforms, keyframe animations, CSS variables, SASS, advanced responsive techniques, and modern UI/UX design projects.",
         "categories": [
             "Web Development",
             "Frontend",
-            "JavaScript"
+            "CSS"
         ],
-        "level": "Intermediate",
+        "level": "Advanced",
         "language": [
             "English",
             "Hindi"
@@ -217,429 +518,173 @@
         "course_type": "SINGLE",
         "chapters": [
             {
-                "title": "Chapter 1: ES6+ Deep Dive",
+                "title": "Chapter 1: Advanced CSS Functions",
                 "topics": [
                     {
-                        "title": "Block Scope with let & const"
+                        "title": "calc(), min(), max(), clamp()"
                     },
                     {
-                        "title": "Template Literals"
+                        "title": "Advanced nth-child and nth-of-type patterns"
                     },
                     {
-                        "title": "Destructuring Arrays and Objects"
-                    },
-                    {
-                        "title": "Default Parameters"
-                    },
-                    {
-                        "title": "Enhanced Object Literals"
+                        "title": "Custom properties with fallback values"
                     }
                 ]
             },
             {
-                "title": "Chapter 2: Functions Advanced",
+                "title": "Chapter 2: 2D and 3D Transforms",
                 "topics": [
                     {
-                        "title": "Arrow Functions Advanced"
+                        "title": "2D Transforms: translate, rotate, scale, skew"
                     },
                     {
-                        "title": "Rest & Spread Operators"
+                        "title": "3D Transforms: perspective, rotateX, rotateY"
                     },
                     {
-                        "title": "Closures Introduction"
-                    },
-                    {
-                        "title": "Immediately Invoked Functions (IIFE)"
+                        "title": "Combining transforms for advanced effects"
                     }
                 ]
             },
             {
-                "title": "Chapter 3: DOM Advanced",
+                "title": "Chapter 3: Mastering Animations",
                 "topics": [
                     {
-                        "title": "querySelectorAll & forEach"
+                        "title": "@keyframes deep dive"
                     },
                     {
-                        "title": "Traversing DOM Nodes"
+                        "title": "Chaining animations and delays"
                     },
                     {
-                        "title": "Dynamic Element Creation & Removal"
-                    },
-                    {
-                        "title": "Styling with classList"
+                        "title": "CSS Animation Performance Optimization"
                     }
                 ]
             },
             {
-                "title": "Chapter 4: Events in Depth",
+                "title": "Chapter 4: CSS Shapes and Advanced Layouts",
                 "topics": [
                     {
-                        "title": "Event Listeners"
+                        "title": "CSS Shapes for text wrapping (circle, polygon)"
                     },
                     {
-                        "title": "Event Bubbling & Capturing"
+                        "title": "Multi-column layouts"
                     },
                     {
-                        "title": "Keyboard & Mouse Events"
-                    },
-                    {
-                        "title": "Form Events and Validation"
+                        "title": "Advanced responsive layouts with Grid + Flexbox"
                     }
                 ]
             },
             {
-                "title": "Chapter 5: Arrays Advanced",
+                "title": "Chapter 5: CSS Filters and Blend Modes",
                 "topics": [
                     {
-                        "title": "map, filter, reduce"
+                        "title": "Image effects with CSS filters"
                     },
                     {
-                        "title": "find, some, every"
+                        "title": "Mix-blend-mode and background-blend-mode"
                     },
                     {
-                        "title": "Array.from & Array.of"
-                    },
-                    {
-                        "title": "Deep Copy vs Shallow Copy"
+                        "title": "Creative UI effects with filters + gradients"
                     }
                 ]
             },
             {
-                "title": "Chapter 6: Objects Advanced",
+                "title": "Chapter 6: CSS Variables (Advanced Usage)",
                 "topics": [
                     {
-                        "title": "Object.keys, Object.values, Object.entries"
+                        "title": "Dynamic theming with CSS variables"
                     },
                     {
-                        "title": "Object.assign()"
+                        "title": "Dark/Light Mode Implementation"
                     },
                     {
-                        "title": "Spread in Objects"
-                    },
-                    {
-                        "title": "Object Destructuring in Depth"
+                        "title": "Scoped variables and performance considerations"
                     }
                 ]
             },
             {
-                "title": "Chapter 7: Asynchronous JavaScript",
+                "title": "Chapter 7: Introduction to Preprocessors (SASS/SCSS)",
                 "topics": [
                     {
-                        "title": "Callbacks"
+                        "title": "Variables, Nesting, and Partials"
                     },
                     {
-                        "title": "Promises Basics"
+                        "title": "Mixins, Functions, and Inheritance"
                     },
                     {
-                        "title": "Promise Chaining"
-                    },
-                    {
-                        "title": "Intro to Async/Await"
+                        "title": "Compiling and Organizing SCSS files"
                     }
                 ]
             },
             {
-                "title": "Chapter 8: Fetch API",
+                "title": "Chapter 8: Advanced Responsive Design",
                 "topics": [
                     {
-                        "title": "Fetching Data from APIs"
+                        "title": "Fluid typography and responsive units (vw, vh, rem)"
                     },
                     {
-                        "title": "Handling JSON Responses"
+                        "title": "Container Queries (modern CSS)"
                     },
                     {
-                        "title": "GET vs POST Requests"
-                    },
-                    {
-                        "title": "Mini Project: Random Joke Generator"
+                        "title": "Best Practices for Multi-device Testing"
                     }
                 ]
             },
             {
-                "title": "Chapter 9: Error Handling",
+                "title": "Chapter 9: CSS Architecture and Best Practices",
                 "topics": [
                     {
-                        "title": "try...catch"
+                        "title": "BEM Methodology (Block, Element, Modifier)"
                     },
                     {
-                        "title": "finally block"
+                        "title": "Utility-first vs Component-based CSS"
                     },
                     {
-                        "title": "Throwing Custom Errors"
-                    },
-                    {
-                        "title": "Error Handling in Async Code"
+                        "title": "Writing Maintainable and Scalable CSS"
                     }
                 ]
             },
             {
-                "title": "Chapter 10: Modules Introduction",
+                "title": "Chapter 10: Advanced UI/UX Effects",
                 "topics": [
                     {
-                        "title": "What are Modules?"
+                        "title": "Glassmorphism and Neumorphism Designs"
                     },
                     {
-                        "title": "import & export"
+                        "title": "CSS Parallax Scrolling Effects"
                     },
                     {
-                        "title": "Organizing Code with Modules"
+                        "title": "Modern Loading Spinners and Skeleton Screens"
                     }
                 ]
             },
             {
-                "title": "Chapter 11: Browser Storage",
+                "title": "Chapter 11: Optimization and Performance",
                 "topics": [
                     {
-                        "title": "LocalStorage"
+                        "title": "Critical CSS and Render Blocking"
                     },
                     {
-                        "title": "SessionStorage"
+                        "title": "Minification and Purging unused CSS"
                     },
                     {
-                        "title": "Practical Use Cases"
+                        "title": "Improving Lighthouse CSS Scores"
                     }
                 ]
             },
             {
-                "title": "Chapter 12: Iterators & Generators",
+                "title": "Chapter 12: Final Projects",
                 "topics": [
                     {
-                        "title": "Understanding Iterators"
+                        "title": "Project 1: Interactive Dashboard UI"
                     },
                     {
-                        "title": "Creating Custom Iterators"
+                        "title": "Project 2: Portfolio Website with Dark/Light Theme"
                     },
                     {
-                        "title": "Generators with function*"
+                        "title": "Project 3: Responsive E-commerce Product Page"
                     }
-                ]
-            },
-            {
-                "title": "Chapter 13: Debugging & Tools",
-                "topics": [
-                    {
-                        "title": "Using console methods"
-                    },
-                    {
-                        "title": "Breakpoints in DevTools"
-                    },
-                    {
-                        "title": "Network Tab for API Calls"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 14: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Quiz App"
-                    },
-                    {
-                        "title": "To-Do List with Local Storage"
-                    },
-                    {
-                        "title": "Product Filter App"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 15: Final Project",
-                "topics": [
-                    {
-                        "title": "Weather App using Fetch API & Async/Await"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "status": "PUBLISH",
-        "title": "JavaScript for Advanced",
-        "sort_description": "Master advanced JavaScript concepts: classes, modules, async patterns, storage, debugging, design patterns, and build real-world projects.",
-        "categories": [
-            "Web Development",
-            "Frontend",
-            "JavaScript"
-        ],
-        "level": "Advanced",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 2999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Advanced Functions",
-                "topics": [
-                    "Closures Deep Dive",
-                    "Currying and Partial Application",
-                    "Memoization for Performance",
-                    "Higher-Order Functions Advanced",
-                    "Project: Custom Debounce and Throttle Utility"
-                ]
-            },
-            {
-                "title": "Chapter 2: ES6+ Classes & Inheritance",
-                "topics": [
-                    "Creating Classes and Constructors",
-                    "Inheritance and Method Overriding",
-                    "Static Methods and Properties",
-                    "Getters and Setters",
-                    "Project: OOP-based Library Management System"
-                ]
-            },
-            {
-                "title": "Chapter 3: JavaScript Modules",
-                "topics": [
-                    "Import and Export Syntax",
-                    "Default vs Named Exports",
-                    "Organizing Code with Modules",
-                    "Project: Modularized To-Do App"
-                ]
-            },
-            {
-                "title": "Chapter 4: Advanced Asynchronous Patterns",
-                "topics": [
-                    "Promise.all, Promise.race, Promise.any",
-                    "Error Handling with Async/Await",
-                    "Chaining Promises for Complex Workflows",
-                    "Project: Multi-API Data Fetching Dashboard"
-                ]
-            },
-            {
-                "title": "Chapter 5: Error Handling & Debugging",
-                "topics": [
-                    "Advanced Try...Catch Techniques",
-                    "Custom Error Classes",
-                    "Using Console and Breakpoints",
-                    "Debugging with Chrome DevTools",
-                    "Project: Debug and Fix a Broken Application"
-                ]
-            },
-            {
-                "title": "Chapter 6: Advanced DOM Manipulation",
-                "topics": [
-                    "Event Delegation Patterns",
-                    "Dynamic Element Generation",
-                    "Drag & Drop Functionality",
-                    "Animating DOM Elements",
-                    "Project: Interactive Kanban Board"
-                ]
-            },
-            {
-                "title": "Chapter 7: Browser Storage",
-                "topics": [
-                    "Local Storage and Session Storage",
-                    "Storing and Retrieving JSON Data",
-                    "Limitations and Security Considerations",
-                    "Project: Expense Tracker with Persistent Storage"
-                ]
-            },
-            {
-                "title": "Chapter 8: Advanced Event Handling",
-                "topics": [
-                    "Event Bubbling and Capturing Revisited",
-                    "Custom Events",
-                    "Throttling and Debouncing Events",
-                    "Project: Real-time Search with Debouncing"
-                ]
-            },
-            {
-                "title": "Chapter 9: Design Patterns in JavaScript",
-                "topics": [
-                    "Module Pattern",
-                    "Singleton Pattern",
-                    "Observer Pattern",
-                    "Factory Pattern",
-                    "Project: Notification System using Observer Pattern"
-                ]
-            },
-            {
-                "title": "Chapter 10: Advanced Array & Object Techniques",
-                "topics": [
-                    "Deep Cloning Objects",
-                    "Destructuring with Defaults and Nesting",
-                    "Array Methods Chaining",
-                    "Project: Data Transformation Pipeline"
-                ]
-            },
-            {
-                "title": "Chapter 11: Working with APIs in Depth",
-                "topics": [
-                    "REST APIs Advanced Concepts",
-                    "Error Handling in API Calls",
-                    "Chaining Multiple API Calls",
-                    "Project: Movie Search App with Pagination"
-                ]
-            },
-            {
-                "title": "Chapter 12: JavaScript and JSON",
-                "topics": [
-                    "Parsing and Stringifying JSON",
-                    "Deeply Nested JSON Handling",
-                    "Working with Large JSON Data",
-                    "Project: News Feed Reader using JSON Data"
-                ]
-            },
-            {
-                "title": "Chapter 13: Performance Optimization",
-                "topics": [
-                    "Memory Management in JavaScript",
-                    "Optimizing Loops and DOM Access",
-                    "Lazy Loading and Code Splitting",
-                    "Project: Optimized Image Gallery"
-                ]
-            },
-            {
-                "title": "Chapter 14: Regular Expressions Advanced",
-                "topics": [
-                    "Lookaheads and Lookbehinds",
-                    "Regex for Form Validation",
-                    "Complex Pattern Matching",
-                    "Project: Custom Regex-based Form Validator"
-                ]
-            },
-            {
-                "title": "Chapter 15: JavaScript and the Browser",
-                "topics": [
-                    "Understanding Event Loop in Depth",
-                    "Microtasks vs Macrotasks",
-                    "Rendering Optimization",
-                    "Project: Animation Framework with requestAnimationFrame"
-                ]
-            },
-            {
-                "title": "Chapter 16: Error Monitoring in Applications",
-                "topics": [
-                    "Window.onerror and Global Error Handling",
-                    "Handling Unhandled Promise Rejections",
-                    "Logging Errors to Server",
-                    "Project: Error Logging Utility for Apps"
-                ]
-            },
-            {
-                "title": "Chapter 17: Advanced Patterns with ES6+",
-                "topics": [
-                    "Spread and Rest in Nested Structures",
-                    "Advanced Template Literals",
-                    "Optional Chaining and Nullish Coalescing",
-                    "Project: Nested Data Viewer Application"
-                ]
-            },
-            {
-                "title": "Chapter 18: Capstone Project",
-                "topics": [
-                    "E-Commerce Frontend with Cart System",
-                    "API Integration with Fetch/Async-Await",
-                    "Persistent Storage for User Data",
-                    "Project: Fully Functional Shopping Cart App"
                 ]
             }
         ]
     }
-    
 ]

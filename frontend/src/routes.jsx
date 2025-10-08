@@ -21,12 +21,14 @@ import ProjectDetail from './pages/projects/ProjectDetail.jsx';
 import NotFound from './pages/NotFound.jsx';
 import ForgotPassword from './pages/auth/ForgotPassword.jsx';
 import ResetPassword from './pages/auth/ResetPassword.jsx';
+import CertificateVerification from './pages/CertificateVerification.jsx';
 
 // -----------------------------
 // Public Routes
 // -----------------------------
 export const publicRoutes = [
   { path: "/", element: <Home /> },
+  { path: "/verify-certificate", element: <CertificateVerification /> },
   { path: "/about", element: <About /> },
   { path: "/contact", element: <Contact /> },
   { path: "/notes", element: <Notes /> },

@@ -1,4 +1,5 @@
 [
+    
     {
         "status": "PUBLISH",
         "title": "Python for Beginners",
@@ -355,6 +356,7 @@
             }
         ]
     },
+
     {
         "status": "PUBLISH",
         "title": "Python for Intermediate",
@@ -661,6 +663,7 @@
             }
         ]
     },
+
     {
         "status": "PUBLISH",
         "title": "Python for Advanced",
@@ -947,7 +950,6 @@
         ]
     },
 
-    
     {
         "status": "PUBLISH",
         "title": "JavaScript for Beginners",
@@ -1144,6 +1146,7 @@
             }
         ]
     },
+
     {
         "status": "PUBLISH",
         "title": "JavaScript for Intermediate",
@@ -1400,6 +1403,7 @@
             }
         ]
     },
+
     {
         "status": "PUBLISH",
         "title": "JavaScript for Advanced",
@@ -1589,645 +1593,10 @@
             }
         ]
     },
-    
-
-
 
     {
         "status": "PUBLISH",
-        "title": "HTML for Beginners - 1 Month",
-        "sort_description": "Learn HTML step-by-step: structure pages, semantic tags, forms, media, and accessibility. Build real pages and small projects to practice.",
-        "categories": [
-            "Web Development",
-            "Frontend",
-            "HTML"
-        ],
-        "level": "Beginner",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Introduction to the Web and HTML",
-                "topics": [
-                    {
-                        "title": "How the Web Works (Client, Server, Browser)"
-                    },
-                    {
-                        "title": "What is HTML? History and Role in Web Development"
-                    },
-                    {
-                        "title": "Setting Up Environment: Editors, Live Server"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Basic HTML Structure & Elements",
-                "topics": [
-                    {
-                        "title": "DOCTYPE, html, head, body"
-                    },
-                    {
-                        "title": "Headings, Paragraphs, and Text Content"
-                    },
-                    {
-                        "title": "Comments and Best Practices"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Links, Images and Multimedia",
-                "topics": [
-                    {
-                        "title": "Anchor Tags, Relative vs Absolute URLs"
-                    },
-                    {
-                        "title": "Images: img tag, alt attribute, srcset basics"
-                    },
-                    {
-                        "title": "Embedding Audio and Video"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: Lists, Tables and Semantic Grouping",
-                "topics": [
-                    {
-                        "title": "Ordered, Unordered and Description Lists"
-                    },
-                    {
-                        "title": "Table Structure: table, thead, tbody, tr, td, th"
-                    },
-                    {
-                        "title": "Semantic Elements: section, article, nav, aside, footer"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Forms and User Input",
-                "topics": [
-                    {
-                        "title": "Form Elements: input, textarea, select, button"
-                    },
-                    {
-                        "title": "Form Attributes and Validation (basic HTML5)"
-                    },
-                    {
-                        "title": "Form Submission: GET vs POST (conceptual)"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Attributes, Metadata and Head Elements",
-                "topics": [
-                    {
-                        "title": "Meta tags: charset, viewport, description (conceptual)"
-                    },
-                    {
-                        "title": "Linking CSS and JavaScript Files"
-                    },
-                    {
-                        "title": "Favicons and Basic Performance Considerations"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Accessibility and Semantic Markup",
-                "topics": [
-                    {
-                        "title": "Importance of Accessibility (a11y) and semantic HTML"
-                    },
-                    {
-                        "title": "ARIA basics and using alt, role and aria-* attributes"
-                    },
-                    {
-                        "title": "Keyboard navigation and screen-reader friendly markup"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Responsive Basics & Mobile-first Concepts (HTML focused)",
-                "topics": [
-                    {
-                        "title": "Viewport meta and why mobile-first matters (conceptual)"
-                    },
-                    {
-                        "title": "Responsive images (srcset) and picture element"
-                    },
-                    {
-                        "title": "Progressive enhancement and graceful degradation"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Practical Projects and Best Practices",
-                "topics": [
-                    {
-                        "title": "Project 1: Personal Profile Page (static HTML)"
-                    },
-                    {
-                        "title": "Project 2: Simple Multi-page Website (Home, About, Contact)"
-                    },
-                    {
-                        "title": "Code Organization, Comments, and Submission Guidelines"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "status": "PUBLISH",
-        "title": "CSS & Responsive Design - 2 Month",
-        "sort_description": "Master CSS from basics to responsive design. Learn Flexbox, Grid, animations, and create professional, responsive websites with real-world projects.",
-        "categories": [
-            "Web Development",
-            "Frontend"
-        ],
-        "level": "Beginner to Intermediate",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 2,
-        "price": 3499.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Introduction to CSS",
-                "topics": [
-                    {
-                        "title": "What is CSS?"
-                    },
-                    {
-                        "title": "Types of CSS (Inline, Internal, External)"
-                    },
-                    {
-                        "title": "CSS Syntax and Selectors"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: CSS Fundamentals",
-                "topics": [
-                    {
-                        "title": "Colors, Backgrounds, and Borders"
-                    },
-                    {
-                        "title": "CSS Units (px, em, rem, %, vh, vw)"
-                    },
-                    {
-                        "title": "Box Model (Margin, Border, Padding, Content)"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Text and Fonts",
-                "topics": [
-                    {
-                        "title": "Text Formatting"
-                    },
-                    {
-                        "title": "Google Fonts & Custom Fonts"
-                    },
-                    {
-                        "title": "Line Height, Letter Spacing, Word Spacing"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: CSS Positioning",
-                "topics": [
-                    {
-                        "title": "Static, Relative, Absolute, Fixed"
-                    },
-                    {
-                        "title": "Z-Index and Stacking Context"
-                    },
-                    {
-                        "title": "Practical Positioning Examples"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: CSS Flexbox",
-                "topics": [
-                    {
-                        "title": "Flex Container and Flex Items"
-                    },
-                    {
-                        "title": "Flexbox Alignment and Distribution"
-                    },
-                    {
-                        "title": "Building Layouts with Flexbox"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: CSS Grid",
-                "topics": [
-                    {
-                        "title": "Grid Container and Grid Items"
-                    },
-                    {
-                        "title": "Grid Lines, Areas, and Tracks"
-                    },
-                    {
-                        "title": "Responsive Layouts with Grid"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Responsive Design Basics",
-                "topics": [
-                    {
-                        "title": "Media Queries"
-                    },
-                    {
-                        "title": "Fluid Layouts"
-                    },
-                    {
-                        "title": "Viewport Meta Tag"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Advanced CSS Techniques",
-                "topics": [
-                    {
-                        "title": "Transitions and Animations"
-                    },
-                    {
-                        "title": "CSS Variables (Custom Properties)"
-                    },
-                    {
-                        "title": "Pseudo-classes and Pseudo-elements"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Responsive Navigation",
-                "topics": [
-                    {
-                        "title": "Building a Responsive Navbar"
-                    },
-                    {
-                        "title": "Hamburger Menu with CSS"
-                    },
-                    {
-                        "title": "Sticky Headers and Footers"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 10: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Responsive Landing Page"
-                    },
-                    {
-                        "title": "Flexbox Photo Gallery"
-                    },
-                    {
-                        "title": "Grid-based Portfolio Page"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 11: Final Projects",
-                "topics": [
-                    {
-                        "title": "E-commerce Homepage (Responsive)"
-                    },
-                    {
-                        "title": "Blog Layout with Grid & Flexbox"
-                    },
-                    {
-                        "title": "Multi-page Responsive Website"
-                    }
-                ]
-            }
-        ]
-    },
-    
-
-    {
-        "status": "PUBLISH",
-        "title": "Bootstrap for Beginners - 1 Month",
-        "sort_description": "Learn Bootstrap from scratch: grid system, components, utilities, responsive design, and build real-world mini projects like landing pages and portfolio websites.",
-        "categories": [
-            "Web Development",
-            "Frontend",
-            "Bootstrap"
-        ],
-        "level": "Beginner",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 1999.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Introduction to Bootstrap",
-                "topics": [
-                    {
-                        "title": "What is Bootstrap?"
-                    },
-                    {
-                        "title": "Setting up Bootstrap (CDN & Download)"
-                    },
-                    {
-                        "title": "Understanding Containers"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Grid System Basics",
-                "topics": [
-                    {
-                        "title": "Rows and Columns"
-                    },
-                    {
-                        "title": "Column Sizes & Breakpoints"
-                    },
-                    {
-                        "title": "Responsive Layouts"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Typography & Utilities",
-                "topics": [
-                    {
-                        "title": "Text Classes"
-                    },
-                    {
-                        "title": "Background & Color Utilities"
-                    },
-                    {
-                        "title": "Spacing Utilities"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: Buttons & Icons",
-                "topics": [
-                    {
-                        "title": "Button Classes"
-                    },
-                    {
-                        "title": "Button Groups"
-                    },
-                    {
-                        "title": "Bootstrap Icons Integration"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Forms",
-                "topics": [
-                    {
-                        "title": "Form Controls"
-                    },
-                    {
-                        "title": "Form Layouts & Validation"
-                    },
-                    {
-                        "title": "Custom Checkboxes & Radios"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Navigation & Navbar",
-                "topics": [
-                    {
-                        "title": "Navbar Basics"
-                    },
-                    {
-                        "title": "Navbar with Dropdowns"
-                    },
-                    {
-                        "title": "Responsive Navbar"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Cards & Components",
-                "topics": [
-                    {
-                        "title": "Card Component"
-                    },
-                    {
-                        "title": "Alerts, Badges, and Progress Bars"
-                    },
-                    {
-                        "title": "Modals & Tooltips"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Responsive Design Techniques",
-                "topics": [
-                    {
-                        "title": "Media Queries with Bootstrap"
-                    },
-                    {
-                        "title": "Flex Utilities"
-                    },
-                    {
-                        "title": "Grid & Component Adjustments"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Landing Page"
-                    },
-                    {
-                        "title": "Portfolio Page"
-                    },
-                    {
-                        "title": "Contact Form Page"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "status": "PUBLISH",
-        "title": "Bootstrap Advanced - 1 Month",
-        "sort_description": "Master advanced Bootstrap: components, responsive design, JS plugins, and build real-world projects like dashboards and interactive landing pages.",
-        "categories": [
-            "Web Development",
-            "Frontend",
-            "Bootstrap"
-        ],
-        "level": "Advanced",
-        "language": [
-            "English",
-            "Hindi"
-        ],
-        "duration": 1,
-        "price": 2499.00,
-        "certificate": true,
-        "mode": "ONLINE",
-        "course_type": "SINGLE",
-        "chapters": [
-            {
-                "title": "Chapter 1: Advanced Grid Techniques",
-                "topics": [
-                    {
-                        "title": "Nested Grids & Complex Layouts"
-                    },
-                    {
-                        "title": "Responsive Breakpoints Advanced"
-                    },
-                    {
-                        "title": "Flex Utilities for Layouts"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 2: Advanced Components I",
-                "topics": [
-                    {
-                        "title": "Carousel Component"
-                    },
-                    {
-                        "title": "Accordion Component"
-                    },
-                    {
-                        "title": "Collapse & Tabs"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 3: Advanced Components II",
-                "topics": [
-                    {
-                        "title": "Modals & Tooltips"
-                    },
-                    {
-                        "title": "Popovers & Toasts"
-                    },
-                    {
-                        "title": "Dropdowns Advanced"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 4: Bootstrap JS Plugins",
-                "topics": [
-                    {
-                        "title": "Using Bootstrap JS Components"
-                    },
-                    {
-                        "title": "Event Handling with Bootstrap JS"
-                    },
-                    {
-                        "title": "Integrating Plugins in Projects"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 5: Forms Advanced",
-                "topics": [
-                    {
-                        "title": "Custom Validation & Styling"
-                    },
-                    {
-                        "title": "Input Groups & Floating Labels"
-                    },
-                    {
-                        "title": "Range Sliders & File Inputs"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 6: Navigation Advanced",
-                "topics": [
-                    {
-                        "title": "Sticky & Fixed Navbar"
-                    },
-                    {
-                        "title": "Responsive Navbars with JS"
-                    },
-                    {
-                        "title": "Mega Menu Design"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 7: Cards & Utilities Advanced",
-                "topics": [
-                    {
-                        "title": "Cards with Carousel & Overlays"
-                    },
-                    {
-                        "title": "Advanced Spacing & Display Utilities"
-                    },
-                    {
-                        "title": "Customizing Components with CSS"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 8: Responsive Design Advanced",
-                "topics": [
-                    {
-                        "title": "Media Queries with Bootstrap"
-                    },
-                    {
-                        "title": "Grid & Flex Utilities in Projects"
-                    },
-                    {
-                        "title": "Responsive Navigation & Components"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 9: Mini Projects",
-                "topics": [
-                    {
-                        "title": "Interactive Landing Page"
-                    },
-                    {
-                        "title": "Portfolio Page with Modals"
-                    },
-                    {
-                        "title": "Dashboard Page with Cards & Tabs"
-                    }
-                ]
-            },
-            {
-                "title": "Chapter 10: Final Project",
-                "topics": [
-                    {
-                        "title": "Complete Admin Dashboard"
-                    },
-                    {
-                        "title": "Interactive Product Landing Page"
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "status": "PUBLISH",
-        "title": "React.js for Beginners - 1 Month",
+        "title": "React.js for Beginners",
         "sort_description": "Learn React.js from scratch: JSX, components, props, state, hooks, event handling, and build real-world mini projects like counter and to-do apps.",
         "categories": [
             "Web Development",
@@ -2248,129 +1617,114 @@
             {
                 "title": "Chapter 1: Introduction to React",
                 "topics": [
-                    {
-                        "title": "What is React.js?"
-                    },
-                    {
-                        "title": "Setting up React Environment (Vite/Create React App)"
-                    },
-                    {
-                        "title": "React Folder Structure"
-                    }
+                    "What is React.js?",
+                    "Setting up React Environment (Vite/Create React App)",
+                    "React Folder Structure",
+                    "Project: Setup and Run Your First React App"
                 ]
             },
             {
                 "title": "Chapter 2: JSX Basics",
                 "topics": [
-                    {
-                        "title": "JSX Syntax & Rules"
-                    },
-                    {
-                        "title": "Embedding Expressions"
-                    },
-                    {
-                        "title": "JSX vs HTML"
-                    }
+                    "JSX Syntax & Rules",
+                    "Embedding Expressions",
+                    "JSX vs HTML",
+                    "Project: Build a Simple JSX-based Greeting Component"
                 ]
             },
             {
                 "title": "Chapter 3: Components",
                 "topics": [
-                    {
-                        "title": "Functional Components"
-                    },
-                    {
-                        "title": "Props in Components"
-                    },
-                    {
-                        "title": "Component Reusability"
-                    }
+                    "Functional Components",
+                    "Props in Components",
+                    "Component Reusability",
+                    "Project: Create a Reusable Card Component"
                 ]
             },
             {
                 "title": "Chapter 4: State Management",
                 "topics": [
-                    {
-                        "title": "useState Hook Basics"
-                    },
-                    {
-                        "title": "Updating State Dynamically"
-                    },
-                    {
-                        "title": "State vs Props"
-                    }
+                    "useState Hook Basics",
+                    "Updating State Dynamically",
+                    "State vs Props",
+                    "Project: Build a Click Counter App"
                 ]
             },
             {
                 "title": "Chapter 5: Event Handling",
                 "topics": [
-                    {
-                        "title": "Handling Click & Input Events"
-                    },
-                    {
-                        "title": "Form Handling in React"
-                    },
-                    {
-                        "title": "Passing Events as Props"
-                    }
+                    "Handling Click & Input Events",
+                    "Form Handling in React",
+                    "Passing Events as Props",
+                    "Project: Form with Validation"
                 ]
             },
             {
                 "title": "Chapter 6: Lists & Keys",
                 "topics": [
-                    {
-                        "title": "Rendering Lists"
-                    },
-                    {
-                        "title": "Keys in Lists"
-                    },
-                    {
-                        "title": "Dynamic List Rendering"
-                    }
+                    "Rendering Lists",
+                    "Keys in Lists",
+                    "Dynamic List Rendering",
+                    "Project: Dynamic Student List App"
                 ]
             },
             {
                 "title": "Chapter 7: Conditional Rendering",
                 "topics": [
-                    {
-                        "title": "if-else in JSX"
-                    },
-                    {
-                        "title": "Ternary Operators"
-                    },
-                    {
-                        "title": "Logical && Operator"
-                    }
+                    "if-else in JSX",
+                    "Ternary Operators",
+                    "Logical && Operator",
+                    "Project: Conditional Login/Logout UI"
                 ]
             },
             {
-                "title": "Chapter 8: Mini Projects",
+                "title": "Chapter 8: Hooks Basics",
                 "topics": [
-                    {
-                        "title": "Counter App"
-                    },
-                    {
-                        "title": "To-Do List App"
-                    },
-                    {
-                        "title": "Simple Calculator"
-                    }
+                    "What are React Hooks?",
+                    "Using Multiple useState Hooks",
+                    "Basic Introduction to useEffect",
+                    "Project: Auto-Updating Clock App"
                 ]
             },
             {
-                "title": "Chapter 9: Final Project",
+                "title": "Chapter 9: Styling in React",
                 "topics": [
-                    {
-                        "title": "Interactive Quiz App"
-                    }
+                    "Inline Styling",
+                    "CSS Modules",
+                    "Styled Components (Basics)",
+                    "Project: Styled Profile Card"
+                ]
+            },
+            {
+                "title": "Chapter 10: Mini Projects",
+                "topics": [
+                    "Counter App",
+                    "To-Do List App",
+                    "Simple Calculator"
+                ]
+            },
+            {
+                "title": "Chapter 11: Debugging in React",
+                "topics": [
+                    "Using React Developer Tools",
+                    "Console Logging in React",
+                    "Common Beginner Errors",
+                    "Project: Fix Errors in a Broken React App"
+                ]
+            },
+            {
+                "title": "Chapter 12: Final Project",
+                "topics": [
+                    "Interactive Quiz App"
                 ]
             }
         ]
     },
+
     {
         "status": "PUBLISH",
-        "title": "React.js Intermediate - 1 Month",
-        "sort_description": "Advance your React.js skills: state management, props drilling, useEffect, forms, routing, API integration, and build real-world dynamic apps.",
+        "title": "React.js for Intermediate",
+        "sort_description": "Advance your React.js skills with hooks, context API, routing, forms, API integration, performance optimization, and real-world projects.",
         "categories": [
             "Web Development",
             "Frontend",
@@ -2382,137 +1736,144 @@
             "Hindi"
         ],
         "duration": 1,
-        "price": 3499.00,
+        "price": 3999.00,
         "certificate": true,
         "mode": "ONLINE",
         "course_type": "SINGLE",
         "chapters": [
             {
-                "title": "Chapter 1: Advanced State Management",
+                "title": "Chapter 1: Advanced JSX & Components",
                 "topics": [
-                    {
-                        "title": "useState Deep Dive"
-                    },
-                    {
-                        "title": "State Updates with Functions"
-                    },
-                    {
-                        "title": "Lifting State Up & Props Drilling"
-                    }
+                    "Fragment Usage",
+                    "Dynamic Props",
+                    "Default Props & PropTypes",
+                    "Project: Reusable Button Component with Props Validation"
                 ]
             },
             {
-                "title": "Chapter 2: useEffect Hook",
+                "title": "Chapter 2: State & useEffect Hook in Depth",
                 "topics": [
-                    {
-                        "title": "useEffect Basics"
-                    },
-                    {
-                        "title": "Dependency Array Explained"
-                    },
-                    {
-                        "title": "Cleanup & Side Effects"
-                    }
+                    "Advanced useState Usage",
+                    "useEffect with Dependencies",
+                    "Cleanup Functions",
+                    "Project: Build a Timer with Start/Stop/Reset"
                 ]
             },
             {
-                "title": "Chapter 3: Forms & Validation",
+                "title": "Chapter 3: Handling Forms",
                 "topics": [
-                    {
-                        "title": "Controlled Components"
-                    },
-                    {
-                        "title": "Handling Form Submission"
-                    },
-                    {
-                        "title": "Validation & Error Messages"
-                    }
+                    "Controlled vs Uncontrolled Components",
+                    "Form Validation in React",
+                    "Handling Multiple Inputs",
+                    "Project: Signup Form with Validation"
                 ]
             },
             {
-                "title": "Chapter 4: Lists & Keys Advanced",
+                "title": "Chapter 4: React Router Basics",
                 "topics": [
-                    {
-                        "title": "Dynamic Rendering with Props"
-                    },
-                    {
-                        "title": "Nested Lists Rendering"
-                    },
-                    {
-                        "title": "Keys Importance in Dynamic Lists"
-                    }
+                    "What is React Router?",
+                    "Setting up Routes",
+                    "Route Parameters",
+                    "Project: Multi-Page React App with Navigation"
                 ]
             },
             {
-                "title": "Chapter 5: Conditional Rendering Advanced",
+                "title": "Chapter 5: Context API",
                 "topics": [
-                    {
-                        "title": "Ternary Operators in JSX"
-                    },
-                    {
-                        "title": "Conditional Rendering with &&"
-                    },
-                    {
-                        "title": "Switch Case Conditional Patterns"
-                    }
+                    "What is Context?",
+                    "Creating and Using Context",
+                    "Avoiding Prop Drilling",
+                    "Project: Dark/Light Theme Switcher"
                 ]
             },
             {
-                "title": "Chapter 6: React Router Basics",
+                "title": "Chapter 6: useReducer Hook",
                 "topics": [
-                    {
-                        "title": "Installing React Router"
-                    },
-                    {
-                        "title": "Route, Link & NavLink"
-                    },
-                    {
-                        "title": "Nested Routes & Parameters"
-                    }
+                    "Reducer Function Basics",
+                    "useReducer vs useState",
+                    "Complex State Management",
+                    "Project: Todo App with useReducer"
                 ]
             },
             {
                 "title": "Chapter 7: API Integration",
                 "topics": [
-                    {
-                        "title": "Fetching Data with fetch API"
-                    },
-                    {
-                        "title": "Handling Async/Await"
-                    },
-                    {
-                        "title": "Error Handling & Loading States"
-                    }
+                    "Fetching Data with Fetch API",
+                    "Fetching Data with Axios",
+                    "Loading and Error States",
+                    "Project: Weather App with API"
                 ]
             },
             {
-                "title": "Chapter 8: Mini Projects",
+                "title": "Chapter 8: Performance Optimization",
                 "topics": [
-                    {
-                        "title": "CRUD Todo App"
-                    },
-                    {
-                        "title": "User List App with API"
-                    },
-                    {
-                        "title": "Weather App Integration"
-                    }
+                    "React.memo",
+                    "useCallback Hook",
+                    "useMemo Hook",
+                    "Project: Performance Optimized Search Filter"
                 ]
             },
             {
-                "title": "Chapter 9: Final Project",
+                "title": "Chapter 9: Custom Hooks",
                 "topics": [
-                    {
-                        "title": "Dynamic Dashboard App"
-                    }
+                    "Why Create Custom Hooks?",
+                    "Creating Reusable Hooks",
+                    "Project: Custom useLocalStorage Hook"
+                ]
+            },
+            {
+                "title": "Chapter 10: Error Handling",
+                "topics": [
+                    "Error Boundaries",
+                    "Try/Catch with Async Code",
+                    "Project: Error Boundary Wrapper for App"
+                ]
+            },
+            {
+                "title": "Chapter 11: React Portals",
+                "topics": [
+                    "What are Portals?",
+                    "Modal with Portals",
+                    "Project: Create a Reusable Modal Component"
+                ]
+            },
+            {
+                "title": "Chapter 12: Prop Drilling Alternatives",
+                "topics": [
+                    "When Prop Drilling is Problematic",
+                    "Using Context Instead",
+                    "Project: Nested Components with Shared State"
+                ]
+            },
+            {
+                "title": "Chapter 13: Testing Basics",
+                "topics": [
+                    "Introduction to Testing Library",
+                    "Writing Unit Tests",
+                    "Project: Testing a Simple Counter App"
+                ]
+            },
+            {
+                "title": "Chapter 14: Debugging Advanced",
+                "topics": [
+                    "React DevTools Profiler",
+                    "Tracking Render Issues",
+                    "Project: Debugging and Fixing Slow Component"
+                ]
+            },
+            {
+                "title": "Chapter 15: Final Project",
+                "topics": [
+                    "Build a Task Management App with Routing, API Integration, and Context API"
                 ]
             }
         ]
     },
+
     {
         "status": "PUBLISH",
-        "title": "React.js Advanced - 1 Month",
-        "sort_description": "Master advanced React.js: Context API, custom hooks, performance optimization, advanced routing, form libraries, and build large-scale interactive projects.",
+        "title": "React.js for Advanced",
+        "sort_description": "Master advanced React.js concepts like Redux, advanced routing, TypeScript integration, testing, performance optimization, SSR, and scalable architecture with real-world projects.",
         "categories": [
             "Web Development",
             "Frontend",
@@ -2524,131 +1885,472 @@
             "Hindi"
         ],
         "duration": 1,
-        "price": 3999.00,
+        "price": 4999.00,
         "certificate": true,
         "mode": "ONLINE",
         "course_type": "SINGLE",
         "chapters": [
             {
-                "title": "Chapter 1: Context API & Global State",
+                "title": "Chapter 1: Advanced React Patterns",
                 "topics": [
-                    {
-                        "title": "Introduction to Context API"
-                    },
-                    {
-                        "title": "Creating Global State with Context"
-                    },
-                    {
-                        "title": "Using Context in Components"
-                    }
+                    "Render Props",
+                    "Higher-Order Components",
+                    "Compound Components",
+                    "Project: Build a Reusable Dropdown Component with Advanced Patterns"
                 ]
             },
             {
-                "title": "Chapter 2: Custom Hooks",
+                "title": "Chapter 2: Advanced State Management",
                 "topics": [
-                    {
-                        "title": "What are Custom Hooks?"
-                    },
-                    {
-                        "title": "Building Reusable Hooks"
-                    },
-                    {
-                        "title": "Practical Custom Hook Examples"
-                    }
+                    "Introduction to Redux",
+                    "Redux Toolkit",
+                    "Async Thunks",
+                    "Project: Todo App with Redux Toolkit"
                 ]
             },
             {
-                "title": "Chapter 3: Performance Optimization",
+                "title": "Chapter 3: Advanced Context API",
                 "topics": [
-                    {
-                        "title": "React.memo Usage"
-                    },
-                    {
-                        "title": "useCallback & useMemo"
-                    },
-                    {
-                        "title": "Avoiding Unnecessary Re-renders"
-                    }
+                    "Multiple Contexts",
+                    "Context Performance Optimization",
+                    "Project: Theme + Language Switcher with Context API"
                 ]
             },
             {
                 "title": "Chapter 4: Advanced React Router",
                 "topics": [
+                    "Nested Routes",
+                    "Protected Routes",
+                    "Lazy Loading Routes",
+                    "Project: Authenticated Dashboard App"
+                ]
+            },
+            {
+                "title": "Chapter 5: Server-Side Rendering (SSR)",
+                "topics": [
+                    "What is SSR?",
+                    "Next.js Basics",
+                    "Static vs Server Rendering",
+                    "Project: Blog App with Next.js SSR"
+                ]
+            },
+            {
+                "title": "Chapter 6: Code Splitting & Lazy Loading",
+                "topics": [
+                    "Dynamic Imports",
+                    "React.lazy and Suspense",
+                    "Bundle Optimization",
+                    "Project: Optimize Large React App with Lazy Loading"
+                ]
+            },
+            {
+                "title": "Chapter 7: Advanced Hooks",
+                "topics": [
+                    "useLayoutEffect",
+                    "useImperativeHandle",
+                    "Forwarding Refs",
+                    "Project: Build a Custom Carousel Component"
+                ]
+            },
+            {
+                "title": "Chapter 8: Performance Optimization Deep Dive",
+                "topics": [
+                    "Virtualization with react-window",
+                    "Code Memoization Strategies",
+                    "React Profiler Advanced",
+                    "Project: Large Data Table with Virtual Scrolling"
+                ]
+            },
+            {
+                "title": "Chapter 9: TypeScript with React",
+                "topics": [
+                    "Introduction to TypeScript in React",
+                    "Typing Props and State",
+                    "Generics in Components",
+                    "Project: Type-Safe Todo App"
+                ]
+            },
+            {
+                "title": "Chapter 10: Authentication & Authorization",
+                "topics": [
+                    "JWT Authentication",
+                    "OAuth Basics",
+                    "Role-based Access Control",
+                    "Project: Secure Login & Role-Based Dashboard"
+                ]
+            },
+            {
+                "title": "Chapter 11: Testing in Depth",
+                "topics": [
+                    "Jest Advanced Features",
+                    "Mocking APIs",
+                    "Integration Testing",
+                    "Project: Testing an E-Commerce Cart"
+                ]
+            },
+            {
+                "title": "Chapter 12: Advanced Forms with Formik & Yup",
+                "topics": [
+                    "Formik for Form Handling",
+                    "Yup for Validation",
+                    "Dynamic Form Fields",
+                    "Project: Multi-Step Registration Form"
+                ]
+            },
+            {
+                "title": "Chapter 13: GraphQL with React",
+                "topics": [
+                    "Introduction to GraphQL",
+                    "Apollo Client Setup",
+                    "Fetching Data with Queries and Mutations",
+                    "Project: Blog with GraphQL API"
+                ]
+            },
+            {
+                "title": "Chapter 14: Real-Time Applications",
+                "topics": [
+                    "WebSockets in React",
+                    "Using Socket.io",
+                    "Project: Real-Time Chat App"
+                ]
+            },
+            {
+                "title": "Chapter 15: Internationalization (i18n)",
+                "topics": [
+                    "Why i18n is Important",
+                    "Using react-i18next",
+                    "Project: Multi-Language Portfolio App"
+                ]
+            },
+            {
+                "title": "Chapter 16: React with Micro-Frontends",
+                "topics": [
+                    "What are Micro-Frontends?",
+                    "Module Federation Basics",
+                    "Project: Micro-Frontend Based Dashboard"
+                ]
+            },
+            {
+                "title": "Chapter 17: Deployment & CI/CD",
+                "topics": [
+                    "Building React App for Production",
+                    "CI/CD with GitHub Actions",
+                    "Deployment on Vercel/Netlify",
+                    "Project: Deploy a Full React App with CI/CD Pipeline"
+                ]
+            },
+            {
+                "title": "Chapter 18: Final Capstone Project",
+                "topics": [
+                    "Build a Full-Featured E-Commerce Application with Authentication, Routing, API Integration, Redux, Testing, and Deployment"
+                ]
+            }
+        ]
+    },
+
+    {
+        "status": "PUBLISH",
+        "title": "HTML Complete Course",
+        "sort_description": "Learn HTML step-by-step: structure pages, semantic tags, forms, media, accessibility, and SEO. Build real pages and mini projects for hands-on practice.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "HTML"
+        ],
+        "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Introduction to the Web and HTML",
+                "topics": [
+                    "How the Web Works (Client, Server, Browser)",
+                    "What is HTML? History and Role in Web Development",
+                    "Setting Up Environment: Editors, Live Server"
+                ]
+            },
+            {
+                "title": "Chapter 2: Basic HTML Structure & Elements",
+                "topics": [
+                    "DOCTYPE, html, head, body",
+                    "Headings, Paragraphs, and Text Content",
+                    "Comments and Best Practices"
+                ]
+            },
+            {
+                "title": "Chapter 3: Text Formatting & Quotations",
+                "topics": [
+                    "Bold, Italic, Underline, Subscript, Superscript",
+                    "Blockquote, q, cite",
+                    "Code snippets and preformatted text"
+                ]
+            },
+            {
+                "title": "Chapter 4: Links, Images and Multimedia",
+                "topics": [
+                    "Anchor Tags, Relative vs Absolute URLs",
+                    "Images: img tag, alt attribute, srcset basics",
+                    "Embedding Audio and Video"
+                ]
+            },
+            {
+                "title": "Chapter 5: Lists, Tables and Semantic Grouping",
+                "topics": [
+                    "Ordered, Unordered and Description Lists",
+                    "Table Structure: table, thead, tbody, tr, td, th",
+                    "Semantic Elements: section, article, nav, aside, footer"
+                ]
+            },
+            {
+                "title": "Chapter 6: Forms and User Input",
+                "topics": [
+                    "Form Elements: input, textarea, select, button",
+                    "Form Attributes and Validation (HTML5)",
+                    "Form Submission: GET vs POST (conceptual)"
+                ]
+            },
+            {
+                "title": "Chapter 7: Attributes, Metadata and Head Elements",
+                "topics": [
+                    "Global Attributes: id, class, title, data-*",
+                    "Meta tags: charset, viewport, description",
+                    "Favicons and Linking CSS/JavaScript Files"
+                ]
+            },
+            {
+                "title": "Chapter 8: HTML5 APIs Basics",
+                "topics": [
+                    "Geolocation API",
+                    "Drag and Drop API",
+                    "Local Storage and Session Storage"
+                ]
+            },
+            {
+                "title": "Chapter 9: Accessibility and Semantic Markup",
+                "topics": [
+                    "Importance of Accessibility (a11y)",
+                    "ARIA basics and using alt, role and aria-* attributes",
+                    "Keyboard navigation and screen-reader friendly markup"
+                ]
+            },
+            {
+                "title": "Chapter 10: Responsive HTML Concepts",
+                "topics": [
+                    "Viewport meta and Mobile-first Concept",
+                    "Responsive images with srcset and picture element",
+                    "Progressive enhancement and graceful degradation"
+                ]
+            },
+            {
+                "title": "Chapter 11: SEO and Best Practices",
+                "topics": [
+                    "Semantic tags for SEO",
+                    "Heading hierarchy and content structure",
+                    "Schema.org basics for rich snippets"
+                ]
+            },
+            {
+                "title": "Chapter 12: Final Projects",
+                "topics": [
+                    "Project 1: Personal Profile Page",
+                    "Project 2: Multi-page Portfolio Website",
+                    "Project 3: Blog Layout with Forms and Media"
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "CSS for Beginners",
+        "sort_description": "Learn CSS step-by-step: selectors, colors, box model, typography, backgrounds, and basic layouts. Build mini projects to practice styling web pages.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "CSS"
+        ],
+        "level": "Beginner",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 1499.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Introduction to CSS",
+                "topics": [
                     {
-                        "title": "Nested Routes & Outlet"
+                        "title": "What is CSS and Why it Matters"
                     },
                     {
-                        "title": "Route Parameters & Query Params"
+                        "title": "How CSS Works with HTML"
                     },
                     {
-                        "title": "Protected Routes & Redirects"
+                        "title": "Inline, Internal, External CSS"
                     }
                 ]
             },
             {
-                "title": "Chapter 5: Form Libraries",
+                "title": "Chapter 2: CSS Syntax & Selectors Basics",
                 "topics": [
                     {
-                        "title": "Using Formik for Forms"
+                        "title": "CSS Syntax: Selectors, Properties, Values"
                     },
                     {
-                        "title": "React Hook Form Basics"
+                        "title": "Basic Selectors: element, class, id"
                     },
                     {
-                        "title": "Validation & Submission Handling"
+                        "title": "Grouping & Combining Selectors"
                     }
                 ]
             },
             {
-                "title": "Chapter 6: State Management Patterns",
+                "title": "Chapter 3: Colors and Backgrounds",
                 "topics": [
                     {
-                        "title": "Reducer Pattern with useReducer"
+                        "title": "Color Formats: Names, HEX, RGB, HSL"
                     },
                     {
-                        "title": "Combining Context + Reducer"
+                        "title": "Background Color, Image, Position"
                     },
                     {
-                        "title": "Best Practices for Large Apps"
+                        "title": "Gradients (linear, radial)"
                     }
                 ]
             },
             {
-                "title": "Chapter 7: API Integration Advanced",
+                "title": "Chapter 4: The CSS Box Model",
                 "topics": [
                     {
-                        "title": "Fetching Data with Axios"
+                        "title": "Content, Padding, Border, Margin"
                     },
                     {
-                        "title": "Error Handling & Loading States"
+                        "title": "Width, Height, Max/Min Values"
                     },
                     {
-                        "title": "Optimizing API Calls"
+                        "title": "Box-Sizing Property"
                     }
                 ]
             },
             {
-                "title": "Chapter 8: Mini Projects",
+                "title": "Chapter 5: Text and Fonts",
                 "topics": [
                     {
-                        "title": "CRUD Dashboard App"
+                        "title": "Font Families and Web-safe Fonts"
                     },
                     {
-                        "title": "E-commerce Frontend Prototype"
+                        "title": "Font Size, Weight, Style"
                     },
                     {
-                        "title": "Interactive Blogging Platform UI"
+                        "title": "Text Alignment, Decoration, Transform"
                     }
                 ]
             },
             {
-                "title": "Chapter 9: Final Project",
+                "title": "Chapter 6: CSS Units and Measurements",
                 "topics": [
                     {
-                        "title": "Complete Admin Dashboard with API Integration"
+                        "title": "Absolute Units: px, pt"
                     },
                     {
-                        "title": "Dynamic E-commerce Website Frontend"
+                        "title": "Relative Units: %, em, rem, vh, vw"
+                    },
+                    {
+                        "title": "Best Practices for Responsive Units"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Borders, Shadows and Rounded Corners",
+                "topics": [
+                    {
+                        "title": "Border Styles and Shorthand"
+                    },
+                    {
+                        "title": "Box Shadows and Text Shadows"
+                    },
+                    {
+                        "title": "Border Radius and Rounded Elements"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Links, Lists and Tables Styling",
+                "topics": [
+                    {
+                        "title": "Styling Links with Pseudo-classes"
+                    },
+                    {
+                        "title": "Styling Ordered and Unordered Lists"
+                    },
+                    {
+                        "title": "Styling Tables: Borders, Striping"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Display and Visibility",
+                "topics": [
+                    {
+                        "title": "Block vs Inline vs Inline-Block"
+                    },
+                    {
+                        "title": "Display: none vs Visibility: hidden"
+                    },
+                    {
+                        "title": "Overflow Property (scroll, hidden, auto)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 10: Introduction to Positioning",
+                "topics": [
+                    {
+                        "title": "Static, Relative, Absolute Positioning"
+                    },
+                    {
+                        "title": "Fixed and Sticky Positioning"
+                    },
+                    {
+                        "title": "z-index Basics"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 11: Basic Layout Techniques",
+                "topics": [
+                    {
+                        "title": "Float and Clear Basics"
+                    },
+                    {
+                        "title": "Aligning Elements with Text-align and Margin"
+                    },
+                    {
+                        "title": "Intro to Flexbox (concept only)"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 12: Beginner Projects",
+                "topics": [
+                    {
+                        "title": "Styled Profile Card"
+                    },
+                    {
+                        "title": "Simple Landing Page Layout"
+                    },
+                    {
+                        "title": "Navigation Bar Styling"
                     }
                 ]
             }
@@ -2656,7 +2358,652 @@
     },
     {
         "status": "PUBLISH",
-        "title": "SQL for Beginners - 1 Month",
+        "title": "CSS for Intermediate",
+        "sort_description": "Master modern CSS: flexbox, grid, responsive design, transitions, animations, and practical layouts. Build interactive, mobile-friendly web pages.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "CSS"
+        ],
+        "level": "Intermediate",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 1999.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Advanced Selectors",
+                "topics": [
+                    {
+                        "title": "Attribute Selectors ([attr], ^=, $=, *=)"
+                    },
+                    {
+                        "title": "Child, Descendant, Sibling Selectors"
+                    },
+                    {
+                        "title": "Pseudo-classes and Pseudo-elements"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: Combinators and Specificity",
+                "topics": [
+                    {
+                        "title": "Understanding Combinators (>, +, ~)"
+                    },
+                    {
+                        "title": "CSS Specificity Rules"
+                    },
+                    {
+                        "title": "Using !important carefully"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: Advanced Colors and Gradients",
+                "topics": [
+                    {
+                        "title": "Opacity and RGBA/HSLA colors"
+                    },
+                    {
+                        "title": "Linear and Radial Gradients (advanced)"
+                    },
+                    {
+                        "title": "Background Blend Modes"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: Flexbox Fundamentals",
+                "topics": [
+                    {
+                        "title": "Flex Container and Flex Items"
+                    },
+                    {
+                        "title": "Justify-content, Align-items, Align-self"
+                    },
+                    {
+                        "title": "Flex-grow, Flex-shrink, Flex-basis"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: Flexbox Layouts",
+                "topics": [
+                    {
+                        "title": "Row vs Column Direction"
+                    },
+                    {
+                        "title": "Wrapping and Nested Flexbox"
+                    },
+                    {
+                        "title": "Building a Responsive Navbar with Flexbox"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: Introduction to CSS Grid",
+                "topics": [
+                    {
+                        "title": "Grid Container and Grid Items"
+                    },
+                    {
+                        "title": "Grid Template Columns & Rows"
+                    },
+                    {
+                        "title": "Gap, Fractional Units (fr), Repeat()"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Advanced CSS Grid",
+                "topics": [
+                    {
+                        "title": "Grid Areas and Named Lines"
+                    },
+                    {
+                        "title": "Auto-fit and Auto-fill Concepts"
+                    },
+                    {
+                        "title": "Building Page Layouts with Grid"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Responsive Design with Media Queries",
+                "topics": [
+                    {
+                        "title": "Min-width, Max-width Queries"
+                    },
+                    {
+                        "title": "Mobile-first vs Desktop-first"
+                    },
+                    {
+                        "title": "Breakpoints and Best Practices"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: Transitions and Animations",
+                "topics": [
+                    {
+                        "title": "CSS Transitions (hover, focus effects)"
+                    },
+                    {
+                        "title": "CSS Animations and @keyframes"
+                    },
+                    {
+                        "title": "Practical Button Hover Effects"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 10: CSS Variables and Custom Properties",
+                "topics": [
+                    {
+                        "title": "Declaring and Using Variables"
+                    },
+                    {
+                        "title": "The :root Selector"
+                    },
+                    {
+                        "title": "Theme Switching with CSS Variables"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 11: Shadows, Filters, and Advanced Effects",
+                "topics": [
+                    {
+                        "title": "Box-shadow and Text-shadow Tricks"
+                    },
+                    {
+                        "title": "CSS Filters (blur, brightness, grayscale)"
+                    },
+                    {
+                        "title": "Glassmorphism and Neumorphism Basics"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 12: Intermediate Projects",
+                "topics": [
+                    {
+                        "title": "Project 1: Responsive Landing Page with Flexbox"
+                    },
+                    {
+                        "title": "Project 2: Blog Layout using CSS Grid"
+                    },
+                    {
+                        "title": "Project 3: Animated Pricing Table"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "CSS for Advanced",
+        "sort_description": "Advance your CSS skills: 3D transforms, keyframe animations, CSS variables, SASS, advanced responsive techniques, and modern UI/UX design projects.",
+        "categories": [
+            "Web Development",
+            "Frontend",
+            "CSS"
+        ],
+        "level": "Advanced",
+        "language": [
+            "English",
+            "Hindi"
+        ],
+        "duration": 1,
+        "price": 2499.00,
+        "certificate": true,
+        "mode": "ONLINE",
+        "course_type": "SINGLE",
+        "chapters": [
+            {
+                "title": "Chapter 1: Advanced CSS Functions",
+                "topics": [
+                    {
+                        "title": "calc(), min(), max(), clamp()"
+                    },
+                    {
+                        "title": "Advanced nth-child and nth-of-type patterns"
+                    },
+                    {
+                        "title": "Custom properties with fallback values"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 2: 2D and 3D Transforms",
+                "topics": [
+                    {
+                        "title": "2D Transforms: translate, rotate, scale, skew"
+                    },
+                    {
+                        "title": "3D Transforms: perspective, rotateX, rotateY"
+                    },
+                    {
+                        "title": "Combining transforms for advanced effects"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 3: Mastering Animations",
+                "topics": [
+                    {
+                        "title": "@keyframes deep dive"
+                    },
+                    {
+                        "title": "Chaining animations and delays"
+                    },
+                    {
+                        "title": "CSS Animation Performance Optimization"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 4: CSS Shapes and Advanced Layouts",
+                "topics": [
+                    {
+                        "title": "CSS Shapes for text wrapping (circle, polygon)"
+                    },
+                    {
+                        "title": "Multi-column layouts"
+                    },
+                    {
+                        "title": "Advanced responsive layouts with Grid + Flexbox"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 5: CSS Filters and Blend Modes",
+                "topics": [
+                    {
+                        "title": "Image effects with CSS filters"
+                    },
+                    {
+                        "title": "Mix-blend-mode and background-blend-mode"
+                    },
+                    {
+                        "title": "Creative UI effects with filters + gradients"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 6: CSS Variables (Advanced Usage)",
+                "topics": [
+                    {
+                        "title": "Dynamic theming with CSS variables"
+                    },
+                    {
+                        "title": "Dark/Light Mode Implementation"
+                    },
+                    {
+                        "title": "Scoped variables and performance considerations"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 7: Introduction to Preprocessors (SASS/SCSS)",
+                "topics": [
+                    {
+                        "title": "Variables, Nesting, and Partials"
+                    },
+                    {
+                        "title": "Mixins, Functions, and Inheritance"
+                    },
+                    {
+                        "title": "Compiling and Organizing SCSS files"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 8: Advanced Responsive Design",
+                "topics": [
+                    {
+                        "title": "Fluid typography and responsive units (vw, vh, rem)"
+                    },
+                    {
+                        "title": "Container Queries (modern CSS)"
+                    },
+                    {
+                        "title": "Best Practices for Multi-device Testing"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 9: CSS Architecture and Best Practices",
+                "topics": [
+                    {
+                        "title": "BEM Methodology (Block, Element, Modifier)"
+                    },
+                    {
+                        "title": "Utility-first vs Component-based CSS"
+                    },
+                    {
+                        "title": "Writing Maintainable and Scalable CSS"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 10: Advanced UI/UX Effects",
+                "topics": [
+                    {
+                        "title": "Glassmorphism and Neumorphism Designs"
+                    },
+                    {
+                        "title": "CSS Parallax Scrolling Effects"
+                    },
+                    {
+                        "title": "Modern Loading Spinners and Skeleton Screens"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 11: Optimization and Performance",
+                "topics": [
+                    {
+                        "title": "Critical CSS and Render Blocking"
+                    },
+                    {
+                        "title": "Minification and Purging unused CSS"
+                    },
+                    {
+                        "title": "Improving Lighthouse CSS Scores"
+                    }
+                ]
+            },
+            {
+                "title": "Chapter 12: Final Projects",
+                "topics": [
+                    {
+                        "title": "Project 1: Interactive Dashboard UI"
+                    },
+                    {
+                        "title": "Project 2: Portfolio Website with Dark/Light Theme"
+                    },
+                    {
+                        "title": "Project 3: Responsive E-commerce Product Page"
+                    }
+                ]
+            }
+        ]
+    },
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    {
+    "status": "PUBLISH",
+    "title": "Bootstrap for Beginner",
+    "sort_description": "Learn Bootstrap from scratch: grid system, utilities, components, forms, and responsive layouts. Build mini projects like a portfolio and landing page.",
+    "categories": [
+        "Web Development",
+        "Frontend",
+        "Bootstrap"
+    ],
+    "level": "Beginner",
+    "language": [
+        "English",
+        "Hindi"
+    ],
+    "duration": 1,
+    "price": 1499.00,
+    "certificate": true,
+    "mode": "ONLINE",
+    "course_type": "SINGLE",
+    "chapters": [
+        {
+        "title": "Chapter 1: Introduction to Bootstrap",
+        "topics": [
+            { "title": "What is Bootstrap and Why Use It?" },
+            { "title": "Bootstrap Versions Overview (v4 vs v5)" },
+            { "title": "Setting Up Bootstrap (CDN vs Local)" }
+        ]
+        },
+        {
+        "title": "Chapter 2: Bootstrap Container and Grid System",
+        "topics": [
+            { "title": "Container, Container-fluid" },
+            { "title": "Rows and Columns Basics" },
+            { "title": "Responsive Breakpoints (sm, md, lg, xl)" }
+        ]
+        },
+        {
+        "title": "Chapter 3: Typography and Text Utilities",
+        "topics": [
+            { "title": "Headings, Paragraphs, and Display Classes" },
+            { "title": "Text Alignment, Transformation, and Colors" },
+            { "title": "Blockquotes and Inline Text Utilities" }
+        ]
+        },
+        {
+        "title": "Chapter 4: Colors, Backgrounds, and Spacing",
+        "topics": [
+            { "title": "Bootstrap Color Utility Classes" },
+            { "title": "Background Utilities" },
+            { "title": "Spacing (Margin and Padding Classes)" }
+        ]
+        },
+        {
+        "title": "Chapter 5: Buttons and Badges",
+        "topics": [
+            { "title": "Bootstrap Button Styles and Sizes" },
+            { "title": "Button Groups and Dropdown Buttons" },
+            { "title": "Using Badges with Buttons and Headings" }
+        ]
+        },
+        {
+        "title": "Chapter 6: Images and Media Objects",
+        "topics": [
+            { "title": "Responsive Images and Thumbnails" },
+            { "title": "Image Shapes: Rounded, Circle, Thumbnail" },
+            { "title": "Media Object Component" }
+        ]
+        },
+        {
+        "title": "Chapter 7: Navigation and Navbar",
+        "topics": [
+            { "title": "Basic Nav and Navbar" },
+            { "title": "Navbar with Branding, Links, and Toggler" },
+            { "title": "Responsive Navbar with Collapse" }
+        ]
+        },
+        {
+        "title": "Chapter 8: Cards and Layout Components",
+        "topics": [
+            { "title": "Introduction to Cards" },
+            { "title": "Card Groups and Decks" },
+            { "title": "Card with Images and Buttons" }
+        ]
+        },
+        {
+        "title": "Chapter 9: Forms Basics",
+        "topics": [
+            { "title": "Bootstrap Form Controls" },
+            { "title": "Form Layouts: Inline, Horizontal, Vertical" },
+            { "title": "Checkboxes, Radios, and Switches" }
+        ]
+        },
+        {
+        "title": "Chapter 10: Tables and Alerts",
+        "topics": [
+            { "title": "Bootstrap Table Styling" },
+            { "title": "Striped, Bordered, and Hoverable Tables" },
+            { "title": "Alerts with Colors and Dismissible Alerts" }
+        ]
+        },
+        {
+        "title": "Chapter 11: Bootstrap Utilities",
+        "topics": [
+            { "title": "Display and Visibility Classes" },
+            { "title": "Float and Position Utilities" },
+            { "title": "Flexbox Utilities Basics" }
+        ]
+        },
+        {
+        "title": "Chapter 12: Mini Projects",
+        "topics": [
+            { "title": "Project 1: Personal Portfolio Page" },
+            { "title": "Project 2: Simple Landing Page" },
+            { "title": "Project 3: Multi-section Homepage" }
+        ]
+        }
+    ]
+    },
+    {
+    "status": "PUBLISH",
+    "title": "Bootstrap for Advanced",
+    "sort_description": "Master Bootstrap with advanced components, responsive utilities, customization, and real-world projects like an e-commerce template and admin dashboard.",
+    "categories": [
+        "Web Development",
+        "Frontend",
+        "Bootstrap"
+    ],
+    "level": "Advanced",
+    "language": [
+        "English",
+        "Hindi"
+    ],
+    "duration": 1,
+    "price": 1999.00,
+    "certificate": true,
+    "mode": "ONLINE",
+    "course_type": "SINGLE",
+    "chapters": [
+        {
+        "title": "Chapter 1: Advanced Grid System",
+        "topics": [
+            { "title": "Nested Grids and Column Wrapping" },
+            { "title": "Column Offsets and Ordering" },
+            { "title": "Responsive Design Patterns with Grid" }
+        ]
+        },
+        {
+        "title": "Chapter 2: Advanced Flexbox Utilities",
+        "topics": [
+            { "title": "Flex Direction, Justify, and Align Classes" },
+            { "title": "Responsive Flexbox Utilities" },
+            { "title": "Practical Flexbox Layouts in Bootstrap" }
+        ]
+        },
+        {
+        "title": "Chapter 3: Advanced Forms",
+        "topics": [
+            { "title": "Form Validation with Bootstrap Classes" },
+            { "title": "Custom Form Controls (File Upload, Range Sliders)" },
+            { "title": "Floating Labels and Input Groups" }
+        ]
+        },
+        {
+        "title": "Chapter 4: Advanced Tables",
+        "topics": [
+            { "title": "Responsive Tables" },
+            { "title": "Table Dark Mode and Styling" },
+            { "title": "Combining Tables with Utilities" }
+        ]
+        },
+        {
+        "title": "Chapter 5: JavaScript Components Basics",
+        "topics": [
+            { "title": "Bootstrap JS Setup (CDN & Bundle)" },
+            { "title": "Introduction to Bootstrap JS Plugins" },
+            { "title": "Event Handling with Data Attributes" }
+        ]
+        },
+        {
+        "title": "Chapter 6: Modals and Popups",
+        "topics": [
+            { "title": "Creating and Customizing Modals" },
+            { "title": "Modal Sizes and Options" },
+            { "title": "Interactive Modals with Forms" }
+        ]
+        },
+        {
+        "title": "Chapter 7: Carousels and Sliders",
+        "topics": [
+            { "title": "Bootstrap Carousel Basics" },
+            { "title": "Carousel with Controls and Indicators" },
+            { "title": "Customizing Carousel with Captions" }
+        ]
+        },
+        {
+        "title": "Chapter 8: Accordions, Collapse, and Tabs",
+        "topics": [
+            { "title": "Accordion Component Basics" },
+            { "title": "Collapse for Hidden Content" },
+            { "title": "Tabs and Pills Navigation" }
+        ]
+        },
+        {
+        "title": "Chapter 9: Tooltips and Popovers",
+        "topics": [
+            { "title": "Enabling Tooltips with Data Attributes" },
+            { "title": "Customizing Tooltip Position and Styles" },
+            { "title": "Using Popovers for Extra Information" }
+        ]
+        },
+        {
+        "title": "Chapter 10: Toasts and Spinners",
+        "topics": [
+            { "title": "Bootstrap Toast Notifications" },
+            { "title": "Customizing Toasts (Colors, Positions)" },
+            { "title": "Loading Spinners for UI Feedback" }
+        ]
+        },
+        {
+        "title": "Chapter 11: Customizing Bootstrap",
+        "topics": [
+            { "title": "Overriding Bootstrap with Custom CSS" },
+            { "title": "Using Bootstrap Variables (SCSS)" },
+            { "title": "Building Custom Themes" }
+        ]
+        },
+        {
+        "title": "Chapter 12: Advanced Utilities",
+        "topics": [
+            { "title": "Responsive Display Utilities" },
+            { "title": "Shadow, Border, and Overflow Classes" },
+            { "title": "Z-index and Position Utilities" }
+        ]
+        },
+        {
+        "title": "Chapter 13: Integration with JavaScript",
+        "topics": [
+            { "title": "Bootstrap with Vanilla JavaScript" },
+            { "title": "Bootstrap with jQuery (Legacy)" },
+            { "title": "Practical JS + Bootstrap UI Enhancements" }
+        ]
+        },
+        {
+        "title": "Chapter 14: Final Projects",
+        "topics": [
+            { "title": "Project 1: E-commerce Homepage Template" },
+            { "title": "Project 2: Admin Dashboard Layout" },
+            { "title": "Project 3: Blogging Website Frontend" }
+        ]
+        }
+    ]
+    },
+    {
+        "status": "PUBLISH",
+        "title": "SQL for Beginners",
         "sort_description": "Learn SQL from scratch: database fundamentals, queries, joins, aggregate functions, keys, constraints, normalization, and hands-on mini projects.",
         "categories": [
             "Web Development",
@@ -2804,7 +3151,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "SQL Advanced - 1 Month",
+        "title": "SQL for Advanced",
         "sort_description": "Advance your SQL skills: complex joins, subqueries, views, triggers, stored procedures, transactions, and build real-world database projects.",
         "categories": [
             "Web Development",
@@ -2960,7 +3307,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "MS Word for Beginners - 1 Month",
+        "title": "MS Word for Beginners",
         "sort_description": "Learn MS Word from scratch: interface, text & paragraph formatting, tables, images, page layout, shortcuts, tips, and hands-on mini projects like resumes and reports.",
         "categories": [
             "Computer Basics",
@@ -3108,7 +3455,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "MS Word Advanced - 1 Month",
+        "title": "MS Word for Advanced",
         "sort_description": "Master advanced MS Word skills: Mail Merge, Macros, advanced tables, templates, collaboration tools, advanced formatting, and hands-on projects.",
         "categories": [
             "Computer Basics",
@@ -3256,7 +3603,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Git & GitHub Basics - 1 Month",
+        "title": "Git & GitHub Basics",
         "sort_description": "Learn version control with Git and GitHub. Understand repositories, commits, branches, merges, pull requests, and collaboration workflows with real-world practice.",
         "categories": [
             "Version Control",
@@ -3354,7 +3701,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "MS PowerPoint - 1 Month",
+        "title": "MS PowerPoint for Beginners",
         "sort_description": "Learn to create professional presentations with Microsoft PowerPoint. Master slides, themes, animations, transitions, and presentation skills in 1 month.",
         "categories": [
             "Productivity Tools",
@@ -3447,7 +3794,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "MS Excel for Beginners - 1 Month",
+        "title": "MS Excel for Beginners",
         "sort_description": "Learn the basics of Microsoft Excel, including spreadsheets, formatting, simple formulas, and basic charts. Perfect for students and beginners.",
         "categories": [
             "Productivity Tools",
@@ -3540,7 +3887,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "MS Excel for Intermediate - 2 Months",
+        "title": "MS Excel for Intermediate",
         "sort_description": "Upgrade your Excel skills with intermediate-level functions, conditional formatting, tables, pivot tables, and data handling techniques.",
         "categories": [
             "Productivity Tools",
@@ -3641,7 +3988,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "MS Excel Advanced - 2 Months",
+        "title": "MS Excel for Advanced",
         "sort_description": "Master advanced Excel features including advanced formulas, nested functions, macros, dashboards, and automation techniques.",
         "categories": [
             "Productivity Tools",
@@ -3747,7 +4094,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Power BI for Beginners - 1 Month",
+        "title": "Power BI for Beginners",
         "sort_description": "Learn Power BI from scratch: data import, modeling, DAX basics, interactive visualizations, and dashboards.",
         "categories": [
             "Data Analytics",
@@ -3848,7 +4195,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Power BI Intermediate - 1 Month",
+        "title": "Power BI for Intermediate",
         "sort_description": "Master advanced Power BI skills: DAX functions, data modeling, row-level security, advanced visualizations, and real-world dashboards.",
         "categories": [
             "Data Analytics",
@@ -3948,7 +4295,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Power BI Advanced - 1 Month",
+        "title": "Power BI for Advanced",
         "sort_description": "Learn enterprise-level Power BI: advanced DAX, security, performance optimization, deployment pipelines, paginated reports, AI visuals, and Azure integration.",
         "categories": [
             "Data Analytics",
@@ -4054,9 +4401,12 @@
             }
         ]
     },
+
+
+
     {
         "status": "PUBLISH",
-        "title": "Python for Data Analysis - Basics & Pandas - 1 Month",
+        "title": "Data Analysis - Basics & Pandas",
         "sort_description": "Learn Python for data analysis with Jupyter Notebook, NumPy, and Pandas basics. Focus on data manipulation and exploratory data analysis.",
         "categories": [
             "Programming",
@@ -4126,7 +4476,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Python for Data Analysis - Visualization & Statistics - 1 Month",
+        "title": "Data Analysis - Visualization & Statistics",
         "sort_description": "Learn data visualization in Python using Matplotlib & Seaborn, and apply basic statistical concepts for data analysis.",
         "categories": [
             "Programming",
@@ -4195,7 +4545,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Python for Data Analysis - Advanced Pandas & ML Basics - 1 Month",
+        "title": "Data Analysis - Advanced Pandas & ML Basics",
         "sort_description": "Learn advanced data manipulation in Pandas, and get introduced to machine learning concepts with scikit-learn.",
         "categories": [
             "Programming",
@@ -4265,7 +4615,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Tableau for Beginners - 1 Month",
+        "title": "Tableau for Beginners",
         "sort_description": "Learn Tableau from scratch: connect to data, create visualizations, dashboards, and interactive reports.",
         "categories": [
             "Data Analytics",
@@ -4358,7 +4708,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Django for Backend Development - 2 Months",
+        "title": "Django for Backend Development",
         "sort_description": "Learn backend development with Python Django using the latest version. Build web apps, REST APIs, implement authentication, and deploy projects.",
         "categories": [
             "Programming",
@@ -4470,7 +4820,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "ORM Concepts for Backend Development - 1 Month",
+        "title": "ORM Concepts for Backend Development",
         "sort_description": "Master Django ORM and understand SQLAlchemy basics. Learn models, relationships, advanced queries, and database optimization for backend applications.",
         "categories": [
             "Programming",
@@ -4566,7 +4916,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "REST API Development with Django - 1 Month",
+        "title": "REST API Development with Django",
         "sort_description": "Learn to build RESTful APIs using Django REST Framework. Master serializers, authentication, permissions, filtering, and deploy production-ready APIs.",
         "categories": [
             "Programming",
@@ -4671,7 +5021,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Authentication & Authorization for Backend - 1 Month",
+        "title": "Authentication & Authorization for Backend",
         "sort_description": "Learn Django authentication and authorization techniques including JWT, OAuth2, session-based auth, and role-based access control for secure backend development.",
         "categories": [
             "Programming",
@@ -4768,7 +5118,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Deployment & Hosting for Backend - 1 Month",
+        "title": "Deployment & Hosting for Backend",
         "sort_description": "Learn how to deploy Python Django backend applications to production using Heroku, AWS, or Digital Ocean. Manage databases, static files, security, and monitoring.",
         "categories": [
             "Programming",
@@ -4865,7 +5215,7 @@
     },
     {
         "status": "PUBLISH",
-        "title": "Advanced Backend Concepts - 1 Month",
+        "title": "Advanced Backend Concepts",
         "sort_description": "Master advanced backend concepts including middleware, caching, logging, performance optimization, asynchronous tasks, security, and scalability in Django.",
         "categories": [
             "Programming",

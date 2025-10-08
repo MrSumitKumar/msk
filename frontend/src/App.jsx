@@ -40,6 +40,7 @@ const App = () => {
     /^\/courses(\/.*)?$/,
     /^\/forgot-password$/,
     /^\/reset-password(\/.*)?$/,
+    /^\/verify-certificate$/,
   ];
 
   const isPublic = publicRegex.some((regex) => regex.test(location.pathname));

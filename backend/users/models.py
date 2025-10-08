@@ -25,7 +25,6 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(username, email, password, **extra_fields)
 
-
 class CustomUser(AbstractUser):
     class Role(models.TextChoices):
         STUDENT = 'STUDENT', 'Student'
@@ -70,7 +69,6 @@ class CustomUser(AbstractUser):
         else:
             self.is_staff = False
         super().save(*args, **kwargs)
-
 
 class UserSession(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

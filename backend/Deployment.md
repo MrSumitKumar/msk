@@ -46,15 +46,15 @@ sudo vim /etc/systemd/system/api.shikohabad.in.gunicorn.service
 
 ```ini
 [Unit]
-Description=Gunicorn daemon for MSK backend
+Description=Gunicorn daemon for E-Kharidari.in backend
 After=network.target
 
 [Service]
 User=sumit
 Group=www-data
-WorkingDirectory=/home/sumit/msk/backend
-Environment="PYTHONPATH=/home/sumit/msk/backend"
-ExecStart=/home/sumit/msk/backend/env/bin/gunicorn --workers 3 --bind unix:/home/sumit/msk/backend/run/api.shikohabad.in.gunicorn.sock backend.wsgi:application
+WorkingDirectory=/home/sumit/ekharidari/backend
+Environment="PYTHONPATH=/home/sumit/ekharidari/backend"
+ExecStart=/home/sumit/ekharidari/backend/env/bin/gunicorn --workers 3 --bind unix:/home/sumit/ekharidari/backend/run/api.ekharidari.in.gunicorn.sock backend.wsgi:application
 
 [Install]
 WantedBy=multi-user.target
@@ -73,8 +73,8 @@ sudo systemctl daemon-reload
 ✅ Enable & start Gunicorn service:
 
 ```bash
-sudo systemctl enable api.shikohabad.in.gunicorn.service
-sudo systemctl start api.shikohabad.in.gunicorn.service
+sudo systemctl enable api.ekharidari.in.gunicorn.service
+sudo systemctl start api.ekharidari.in.gunicorn.service
 ```
 
 ✅ Restart Nginx
@@ -86,13 +86,13 @@ sudo systemctl restart nginx
 
 ✅ Check Gunicorn status
 ```bash
-sudo systemctl status api.shikohabad.in.gunicorn.service
+sudo systemctl status api.ekharidari.in.gunicorn.service
 ```
 
 ### 6. **Nginx Configuration**
 
 ```bash
-sudo vim /etc/nginx/sites-available/api.shikohabad.in
+sudo vim /etc/nginx/sites-available/api.ekharidari.in
 ```
 
 Paste:
@@ -100,16 +100,16 @@ Paste:
 ```nginx
 server {
     listen 80;
-    server_name api.shikohabad.in;
+    server_name api.ekharidari.in;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
-        root /home/sumit/msk/backend;
+        root /home/sumit/ekharidari/backend;
     }
 
     location / {
         include proxy_params;
-        proxy_pass http://unix:/home/sumit/msk/backend/run/api.shikohabad.in.gunicorn.sock;
+        proxy_pass http://unix:/home/sumit/ekharidari/backend/run/api.ekharidari.in.gunicorn.sock;
     }
 }
 ```
@@ -117,7 +117,7 @@ server {
 Enable site:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/api.shikohabad.in /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/api.ekharidari.in /etc/nginx/sites-enabled
 sudo nginx -t
 sudo systemctl restart nginx
 ```
@@ -126,7 +126,7 @@ sudo systemctl restart nginx
 
 ```bash
 sudo apt install certbot python3-certbot-nginx
-sudo certbot --nginx -d api.shikohabad.in
+sudo certbot --nginx -d api.ekharidari.in
 ```
 
 ---
@@ -170,6 +170,52 @@ server {
     }
 }
 ```
+
+```bash
+server {
+    server_name msk.shikohabad.in;
+
+    root /home/sumit/msk/frontend/dist;
+    index index.html index.htm;
+
+    location / {
+        try_files $uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass http://127.0.0.1:8003/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/msk.shikohabad.in/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/msk.shikohabad.in/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = msk.shikohabad.in) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name msk.shikohabad.in;
+    return 404; # managed by Certbot
+}
+```
+
+
+
+
+
+
+
 
 Enable site:
 

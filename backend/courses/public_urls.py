@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .views import (
     CourseViewSet, CourseReviewViewSet,
-    CategoryViewSet, LevelViewSet, LanguageViewSet
+    CategoryViewSet, LevelViewSet, LanguageViewSet, verify_certificate
 )
 
 router = DefaultRouter()
@@ -20,5 +20,6 @@ router.register(r'languages', LanguageViewSet, basename='language')
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('verify-certificate/<str:enrollment_no>/', verify_certificate, name='verify-certificate'),
 ]
 

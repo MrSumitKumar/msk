@@ -40,16 +40,6 @@ DEFAULT_EMI_DISCOUNTS = {
 # Default OTP discount if PlatformSettings is not present
 DEFAULT_OTP_DISCOUNT = Decimal("10.00")
 
-def validate_youtube_url(value):
-    youtube_regex = (
-        r'^(https?://)?(www\.)?'
-        r'(youtube\.com/watch\?v=|youtu\.be/)'
-        r'[\w-]{11}($|&)'
-    )
-    if not re.search(youtube_regex, value):
-        raise ValidationError("Only valid YouTube URLs are allowed.")
-
-
 class PlatformSettings(models.Model):
     """Global settings for the courses platform. Only one instance allowed."""
     otp_discount = models.DecimalField(
@@ -187,7 +177,7 @@ class Course(models.Model):
     status = models.CharField(choices=StatusChoices.choices, max_length=10, default=StatusChoices.DRAFT)
     featured_image = models.ImageField(upload_to="course/poster/", null=True, blank=True,)
 
-    featured_video = models.URLField(max_length=255, null=True, blank=True, validators=[validate_youtube_url])
+    featured_video = models.TextField(max_length=20, null=True, blank=True)
     title = models.CharField(max_length=500, unique=True)
     sort_description = models.TextField(null=True, blank=True)
     github_readme_link = models.URLField(blank=True, null=True)
@@ -264,11 +254,6 @@ class ChapterTopic(models.Model):
     def __str__(self):
         return f"{self.chapter.course.title} - {self.chapter.title} - {self.title}"
 
-
-
-# ----------------------------------
-# Enrollment & Payment Models
-# ----------------------------------
 
 
 class CourseReview(models.Model):

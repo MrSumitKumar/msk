@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from '../../api/axios';
 import { toast } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
+import VideoPlayer from '../../components/video/VideoPlayer';
 import CourseCard from '../../components/course/CourseCard';
 import {
   Play, CalendarDays, BookOpenCheck, Users, Languages, Star,
@@ -198,36 +199,27 @@ const CourseDetail = () => {
               {/* Left: Video + Price */}
               <div className="space-y-6">
                 <div className="relative">
-                  <a
-                    href={`https://www.youtube.com/watch?v=${course.featured_video}`}
-                    className="block aspect-video rounded-xl overflow-hidden relative group shadow-2xl"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <img
-                      src={course.featured_image?.url || `https://placehold.co/800x400/0f172a/ffffff?text=${encodeURIComponent(course.title)}`}
-                      alt={course.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                  {course.featured_video ? (
+                    <VideoPlayer 
+                      videoId={course.featured_video}
+                      poster={course.featured_image?.url || `https://placehold.co/800x400/0f172a/ffffff?text=${encodeURIComponent(course.title)}`}
                     />
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/60 transition-colors">
-                      <div className="h-16 w-16 bg-white rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform">
-                        <Play className="text-black w-6 h-6" />
+                  ) : (
+                    <div className="aspect-video rounded-xl overflow-hidden relative shadow-2xl bg-gray-800 flex items-center justify-center">
+                      <img
+                        src={course.featured_image?.url || `https://placehold.co/800x400/0f172a/ffffff?text=${encodeURIComponent(course.title)}`}
+                        alt={course.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <div className="text-center text-gray-400">
+                          <Play className="w-16 h-16 mx-auto mb-2 opacity-50" />
+                          <p>No video available</p>
+                        </div>
                       </div>
                     </div>
-                  </a>
-                  {/* Overlay stats */}
-                  <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-1 bg-black/60 text-white px-3 py-1 rounded-full">
-                        <Clock className="w-4 h-4" />
-                        <span className="text-sm">{course.duration} {course.duration === 1 ? "Month" : "Months"}</span>
-                      </div>
-                      <div className="flex items-center gap-1 bg-black/60 text-white px-3 py-1 rounded-full">
-                        <Users className="w-4 h-4" />
-                        <span className="text-sm">{course.enrolled_count || 0} Students</span>
-                      </div>
-                    </div>
-                  </div>
+                  )}
+                  
                 </div>
 
                 {/* Price Section */}

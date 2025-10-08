@@ -25,17 +25,6 @@ find . -name "*.pyc" -delete
 ```
 
 
-अगर आपने PostgreSQL से direct SQL backup लिया है, जैसे:
-```bash
-pg_dump -U msk_user -h localhost -d msk_shikohabad_in -t users_customuser > users_backup.sql
-```
-
-तो restore करने के लिए:
-```bash
-psql -U msk_user -h localhost -d msk_shikohabad_in < users_backup.sql
-```
-
-
 ```sh
 python manage.py createsuperuser
 ```
@@ -53,5 +42,47 @@ sudo systemctl restart api.shikohabad.in.gunicorn
 
 
 ```sh
-python manage.py import_courses courses.json
+python manage.py import_courses updated_courses.json
 ```
+
+
+
+1. **Backup Command**:
+```bash
+# Basic usage
+python manage.py backup_users
+
+# With pretty printing (formatted JSON)
+python manage.py backup_users --pretty
+
+# Custom output filename
+python manage.py backup_users --output custom_backup.json
+```
+
+2. **Restore Command**:
+```bash
+# Basic usage
+python manage.py restore_users --input users_backup_20250924_123456.json
+
+# Skip existing users (don't update them)
+python manage.py restore_users --input users_backup_20250924_123456.json --skip-existing
+```
+
+Features:
+
+**Backup Command (`backup_users`):**
+- Creates timestamped backups (e.g., `users_backup_20250924_123456.json`)
+- Saves files in a `backups` directory
+- Option for pretty-printed JSON
+- Provides restore command instructions
+
+**Restore Command (`restore_users`):**
+- Restores users from backup file
+- Can update existing users or skip them
+- Preserves original passwords
+- Provides detailed statistics:
+  - New users created
+  - Existing users updated
+  - Users skipped
+  - Errors encountered
+- Error handling for each user

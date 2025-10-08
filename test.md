@@ -92,3 +92,7 @@ mv ~/.bashrc.bak ~/.bashrc
 mv ~/.profile.bak ~/.profile
 chown sumit:sumit ~/.bashrc ~/.profile
 ```
+
+
+
+https://msk.shikohabad.in/verify-certificate?enrollment=470205796756

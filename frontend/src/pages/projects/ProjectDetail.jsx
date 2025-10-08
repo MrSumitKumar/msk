@@ -52,11 +52,13 @@ const ProjectDetail = () => {
         >
           {/* Meta */}
           <div className="flex flex-wrap gap-3 mb-8">
+            {/* ✅ FIXED: render level.name instead of object */}
             {project.level && (
               <span className="px-4 py-1 text-sm font-medium rounded-full bg-purple-100 text-purple-800 dark:bg-purple-700 dark:text-white">
-                {project.level}
+                {project.level?.name || "No Level"}
               </span>
             )}
+
             {project.categories?.map((cat) => (
               <span
                 key={cat.id}
@@ -65,6 +67,7 @@ const ProjectDetail = () => {
                 {cat.name}
               </span>
             ))}
+
             {project.languages?.map((lang) => (
               <span
                 key={lang.id}

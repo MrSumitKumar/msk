@@ -134,7 +134,7 @@ class EnrollmentAdmin(admin.ModelAdmin):
         'user__last_name', 'course__title'
     ]
     ordering = ['-enrolled_at']
-    readonly_fields = ('enrolled_at',)
+    readonly_fields = ('enrollment_no',)
     autocomplete_fields = ('user', 'course')
     inlines = [FeeHistoryInline]
 

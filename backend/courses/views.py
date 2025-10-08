@@ -4,7 +4,7 @@ from rest_framework import viewsets, permissions, filters, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view, permission_classes
 from django.shortcuts import get_object_or_404
 from django.db.models import Avg, Count, Prefetch
 from rest_framework.exceptions import ValidationError
@@ -22,6 +22,70 @@ from rest_framework.authentication import BasicAuthentication
 
 import pandas as pd
 from io import BytesIO
+
+# --------------------------
+# Certificate Verification View
+# --------------------------
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def verify_certificate(request, enrollment_no):
+    """
+    Verify a certificate using enrollment number.
+    Returns enrollment details if valid certificate exists.
+    """
+    try:
+        enrollment = Enrollment.objects.select_related(
+            'user', 
+            'course',
+            'course__level'
+        ).get(
+            enrollment_no=enrollment_no,
+            certificate=True,
+            payment_complete=True,
+            status=Enrollment.StatusChoices.APPROVED
+        )
+        
+        data = {
+            'valid': True,
+            # Student Details
+            'student': {
+                'name': f"{enrollment.user.first_name} {enrollment.user.last_name}",
+                'profile_image': enrollment.user.picture.url if enrollment.user.picture else None,
+                'enrollment_no': enrollment.enrollment_no,
+                'dob': enrollment.user.date_of_birth,
+            },
+            # Course Details
+            'course': {
+                'name': enrollment.course.title,
+                'slug': enrollment.course.slug,
+                'thumbnail': enrollment.course.featured_image.url if enrollment.course.featured_image else None,
+                'level': enrollment.course.level.name if enrollment.course.level else None,
+                'duration': enrollment.course.duration,
+                'description': enrollment.course.sort_description[:200] + '...' if enrollment.course.sort_description and len(enrollment.course.sort_description) > 200 else (enrollment.course.sort_description or ''),
+            },
+            # Certificate Details
+            'certificate': {
+                'enrollment_date': enrollment.enrolled_at,
+                'completion_date': enrollment.end_at,
+            },
+            # Marketing Section
+            'marketing': {
+                'course_url': f"/courses/{enrollment.course.slug}",
+                'total_students': enrollment.course.enrollments.filter(status=Enrollment.StatusChoices.APPROVED).count(),
+                'rating': enrollment.course.reviews.aggregate(avg_rating=Avg('rating'))['avg_rating'] or 0,
+                'review_count': enrollment.course.reviews.count(),
+                'next_batch_start': enrollment.course.next_batch_date if hasattr(enrollment.course, 'next_batch_date') else None,
+                'success_story': "Join thousands of successful students who have transformed their career with our courses!",
+                'cta_text': "Enroll now and start your journey to success!",
+            }
+        }
+        return Response(data)
+    except Enrollment.DoesNotExist:
+        return Response({
+            'valid': False,
+            'message': 'Invalid certificate. No matching enrollment found with this number.'
+        }, status=status.HTTP_404_NOT_FOUND)
 
 # --------------------------
 # Permissions
